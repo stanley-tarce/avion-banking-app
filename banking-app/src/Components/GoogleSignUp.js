@@ -26,14 +26,14 @@ export default class GoogleSignUp extends Component {
 
     //If Login is successful
     onSuccess(response) {
-        // const { email, familyName, givenName, googleId, imageUrl } = response.profileObj
-        // console.log(`[Login Success]`)
-        // console.log(`Email:${email}`)
-        // console.log(`Family Name:${familyName}`)
-        // console.log(`Given Name:${givenName}`)
-        // console.log(`Google ID:${googleId}`)
-        // console.log(`imageURL:${imageUrl}`)
-        console.log(response)
+        const { email, familyName, givenName, googleId, imageUrl } = response.profileObj
+        console.log(`[Login Success]`)
+        console.log(`Email:${email}`)
+        console.log(`Family Name:${familyName}`)
+        console.log(`Given Name:${givenName}`)
+        console.log(`Google ID:${googleId}`)
+        console.log(`imageURL:${imageUrl}`) 
+        // console.log(response)
     }
     //If login failed
     onFailure(response) {

@@ -28,20 +28,29 @@ export default class Register extends Component {
 
     }
     // Send the data to local storage
-    sendDataToLocalStorage(e) {
-        e.preventDefault();
+    sendDataToLocalStorage(event) {
+        event.preventDefault();
         console.log(this.state);
         let data = JSON.stringify(this.state);
-        localStorage.setItem(this.state.lastname, data);
+        localStorage.setItem(this.state.accountID, data);
     }
     //Create Account ID
     createAccountID() {
         let date = new Date();
-        let day = date.getDay();
+        let day = date.getDate().toString();
         let fullyear = date.getFullYear().toString();
-        let month = date.getMonth().toString();
-        let randomAccountNumber = Math.floor(Math.random() * 1000000).toString();
-        let accountID = fullyear + month + day + randomAccountNumber;
+        let month = (date.getMonth()+1).toString();
+        const accountNumber = () => 
+        {
+            let randomAccountNumber = Math.floor(Math.random() * 1000000).toString();
+            if (randomAccountNumber.length < 6) {
+                randomAccountNumber = "0" + randomAccountNumber;
+            }
+            return randomAccountNumber;
+            
+        }
+        
+        let accountID = fullyear + month + day + accountNumber();
         return accountID;
 
     }

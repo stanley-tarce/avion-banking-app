@@ -77,6 +77,21 @@ export default class Register extends Component {
         this.setState({ initialbalance: event.target.value });
     }
 
+    //React Life Cycle
+    componentDidMount() {
+        console.log("Component Mounted");
+        this.setState( {
+            accountID: this.createAccountID(),
+            lastname: '',
+            firstname: '',
+            middlename: '',
+            contactnumber: '',
+            email: '',
+            address: '',
+            initialbalance: 0,
+        });
+    }
+
     // Render the component
     render() {
         return (

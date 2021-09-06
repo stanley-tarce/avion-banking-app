@@ -3,8 +3,10 @@ import React, { Component } from 'react'
 export default class Register extends Component {
     constructor() {
         super();
+        // Initialize the state
         this.state =
-        {
+        {   
+            accountID: this.createAccountID(),
             lastname: '',
             firstname: '',
             middlename: '',
@@ -13,6 +15,7 @@ export default class Register extends Component {
             address: '',
             initialbalance: 0,
         }
+        // Bind the handlers to this class
         this.sendDataToLocalStorage = this.sendDataToLocalStorage.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -21,13 +24,28 @@ export default class Register extends Component {
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.changeValue = this.changeValue.bind(this);
+        this.createAccountID = this.createAccountID.bind(this);
 
     }
+    // Send the data to local storage
     sendDataToLocalStorage(e) {
         e.preventDefault();
         console.log(this.state);
+        let data = JSON.stringify(this.state);
+        localStorage.setItem(this.state.lastname, data);
     }
+    //Create Account ID
+    createAccountID() {
+        let date = new Date();
+        let day = date.getDay();
+        let fullyear = date.getFullYear().toString();
+        let month = date.getMonth().toString();
+        let randomAccountNumber = Math.floor(Math.random() * 1000000).toString();
+        let accountID = fullyear + month + day + randomAccountNumber;
+        return accountID;
 
+    }
+    // Handle the change in the input field
     handleLastNameChange(event) {
         this.setState({ lastname: event.target.value });
     }
@@ -50,10 +68,14 @@ export default class Register extends Component {
         this.setState({ initialbalance: event.target.value });
     }
 
+    // Render the component
     render() {
         return (
             <div>
+
                 <form onSubmit={this.sendDataToLocalStorage}>
+                    <label>Account ID:</label>
+                    <input type="text" value={this.state.accountID} disabled />
                     <label>LastName:</label>
                     <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleLastNameChange} />
                     <br />

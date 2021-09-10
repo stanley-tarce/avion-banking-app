@@ -1,5 +1,5 @@
 import { Select, MenuItem, TextField, FormLabel, FormControlLabel, RadioGroup, Radio, Button } from '@material-ui/core';
-import React, { Component } from 'react'
+import React, { Component } from 'react'    
 
 
 
@@ -23,15 +23,7 @@ class Registerv2 extends Component {
             dateofbirth: '',
             accountype: '',
             initialbalance: 0,
-            transactions:
-                [{
-                    transactionID: '',
-                    transactionType: '',
-                    amount: '',
-                    balance: '',
-                    date: '',
-                    remarks: ''
-                }]
+            transactions: []
         }
 
     }
@@ -58,31 +50,33 @@ class Registerv2 extends Component {
     sendDataToLocalStorage = (event) => {
         event.preventDefault();
         console.log(this.state);
-        if (localStorage.getItem('userData')) {
-            if (JSON.parse(localStorage.getItem('userData')).length >= 2) {
-                const container = [];
-                console.log('Data is already present');
-                for (let i = 0; i < JSON.parse(localStorage.getItem('userData')).length; i++) {
-                    container.push(JSON.parse(localStorage.getItem('userData'))[i]);
-                }
-                container.push(this.state);
-                localStorage.setItem('userData', JSON.stringify(container));
+        if (localStorage.getItem('userData') !== null) {
+            console.log("existing data")
+            let container = [];
+            for (let i = 0; i < JSON.parse(localStorage.getItem('userData')).length; i++) {
+                container.push(JSON.parse(localStorage.getItem('userData'))[i])
             }
-            else {
-                const container = [];
-                container.push(JSON.parse(localStorage.getItem('userData')))
-                container.push(this.state)
-                localStorage.setItem('userData', JSON.stringify(container));
+            console.log('Done Migrating Data')
+            console.log('Pushing Current State')
+            container.push(this.state)
+            console.log('Done Pushing Current State')
+            console.log('Parsing Initial Balance')
+            for (let i = 0; i < container.length; i++) {
+                container[i].initialbalance = parseInt(container[i].initialbalance);
             }
+            localStorage.setItem('userData', JSON.stringify(container));
+
         }
         else {
-            localStorage.setItem('userData', JSON.stringify(this.state));
+            let container = [];
+            container.push(this.state);
+            localStorage.setItem('userData', JSON.stringify(container));
         }
         //Set Default State to Empty
         this.setState
             (
                 {
-                    accountID: this.createAccountID.bind(this),
+                    accountID: this.createAccountID(),
                     lastname: '',
                     firstname: '',
                     middlename: '',
@@ -95,15 +89,7 @@ class Registerv2 extends Component {
                     dateofbirth: '',
                     accountype: '',
                     initialbalance: 0,
-                    transactions:
-                        [{
-                            transactionID: '',
-                            transactionType: '',
-                            amount: '',
-                            balance: '',
-                            date: '',
-                            remarks: ''
-                        }] // List of Transactions for the account could be another state 
+                    transactions: [] // List of Transactions for the account could be another state 
                 }
             )
 
@@ -132,8 +118,24 @@ class Registerv2 extends Component {
             this.setState({ zipcode: number });
         }
     }
+    handleParseInt = event => {
+        this.setState({ initialbalance: parseInt(event.target.value) });
+    }
+
+
+
     render() {
-        const { accountID, lastname, firstname, middlename, gender, contactnumber, email, homeaddress, zipcode, city,dateofbirth,accountype,initialbalance } = this.state
+        const 
+        { 
+            accountID, lastname, 
+            firstname, middlename, 
+            gender, contactnumber, email, 
+            homeaddress, zipcode, city, dateofbirth, 
+            accountype, initialbalance 
+        } 
+            = this.state
+
+        
         return (
             <>
                 <TextField id="accountID" label="Account ID" value={accountID} disabled />

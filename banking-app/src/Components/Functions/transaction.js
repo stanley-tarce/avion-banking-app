@@ -85,35 +85,43 @@ const withdraw = (balance, amount, accountnumber, setaccountnumber, setbalance) 
      setbalance(0)
 }
 
-const transfer =  (balance1,balance2,amount,accountnumber1,accountnumber2,setamount,setaccountnumber1,setaccountnumber2) => {
+const transfer = (balance1, balance2, amount, accountnumber1, accountnumber2, setamount, setaccountnumber1, setaccountnumber2) => {
      /*
-
+     const [accountNum1, setAccountNum1] = React.useState('')
+     const [accountNum2, setAccountNum2] = React.useState('')
+     const [balance1, setBalance1] = React.useState(0)
+     const [balance2, setBalance2] = React.useState(0)
+     const [amount, setAmount] = React.useState(0)
+     const [name1, setName1] = React.useState('')
+     const [name2, setName2] = React.useState('')
+     const [accountType1, setAccountType1] = React.useState('')
+     const [accountType2, setAccountType2] = React.useState('')
      */
 
      //INSERT CODE HERE
-     let account1newbalance = balance1 - amount
-     let account2newbalance = balance2 + amount
+     let account1newbalance = parseInt(balance1 - amount)
+     let account2newbalance = parseInt(balance2 + amount)
      let container = []
      let userData = JSON.parse(localStorage.getItem('userData'))
      for (let i = 0; i < userData.length; i++) {
           container.push(userData[i])
      }
      for (let i = 0; i < container.length; i++) {
-          if (container[i].accountID === accountnumber1 || container[i].accountNumber === accountnumber2) {
-               if (container[i].accountID === accountnumber1) {
-                    container[i].initialbalance = account1newbalance
-                    console.log('New Balance for ' + account1newbalance)
-                    transaction(parseInt(amount), account1newbalance, container[i], 'transfer')
-               }
-               if (container[i].accountID === accountnumber2) {
-                    container[i].initialbalance = account2newbalance
-               }
+          if (container[i].accountID === accountnumber1) {
+               container[i].   initialbalance = account1newbalance
+               console.log('New Balance for ' + account1newbalance)
+               transaction(parseInt(amount), account1newbalance, container[i], 'transfer')
+          }
+          else if (container[i].accountID === accountnumber2) {
+               console.log('Account #2 balance changed')
+               container[i].initialbalance = account2newbalance
           }
      }
-     localStorage.setItem('userData', JSON.stringify(container))
-     setamount(0)
-     setaccountnumber1('')
-     setaccountnumber2('')
+
+localStorage.setItem('userData', JSON.stringify(container))
+setamount(0)
+setaccountnumber1('')
+setaccountnumber2('')
 
 }
 

@@ -1,14 +1,24 @@
+import emailFormat from "./emailjs";
+import hookUserDataFunctions from './hookUserData'
+
+const { createFullName } = hookUserDataFunctions
+
+
+
 const transaction = (amount, newbalance, account, type) => {
      const date = new Date();
      const year = date.getFullYear();
      const month = date.getMonth() + 1;
      const day = date.getDate();
      const timeStamp = `${year}-${month}-${day}`;
+     const transactionID = Math.floor(Math.random() * 1000000)
+
      let receipt = {
           amount: amount,
           balance: newbalance,
           date: timeStamp,
-          type: 'deposit'
+          transactionID: transactionID,
+          type: ''
      }
      switch (type) {
           case 'deposit':
@@ -26,6 +36,7 @@ const transaction = (amount, newbalance, account, type) => {
           default:
                break;
      }
+     return receipt //returns the receipt
 }
 
 
@@ -37,6 +48,7 @@ const deposit = (balance, amount, accountnumber, setaccountnumber, setbalance) =
           const [accountNumber, setAccountNumber] = React.useState(0)  //accountNumber === accountID
           const [accountName, setAccountName] = React.useState('')
           const [accountType, setAccountType] = React.useState('')
+          (accountname, accountemail,transactionid, accountnumber, balance, amount, transactiontype,timestamp
      */
      //INSERT CODE HERE
      let totalbalance = parseInt(balance) + parseInt(amount)
@@ -49,7 +61,10 @@ const deposit = (balance, amount, accountnumber, setaccountnumber, setbalance) =
           if (container[i].accountID === accountnumber) {
                container[i].initialbalance = totalbalance
                console.log('new balance is ' + totalbalance)
-               transaction(parseInt(amount), totalbalance, container[i], 'deposit')
+               const { transactionID, date, type, balance } = transaction(parseInt(amount), totalbalance, container[i], 'deposit')
+               emailFormat(createFullName(container[i].firstname, container[i].middlename, container[i].lastname), container[i].email, transactionID, container[i].accountID, balance, amount, type, date)
+
+
           }
      }
 
@@ -76,7 +91,8 @@ const withdraw = (balance, amount, accountnumber, setaccountnumber, setbalance) 
           if (container[i].accountID === accountnumber) {
                container[i].initialbalance = totalbalance
                console.log('new balance is ' + totalbalance)
-               transaction(parseInt(amount), totalbalance, container[i], 'withdraw')
+               const {transactionID,date,type,balance} = transaction(parseInt(amount), totalbalance, container[i], 'deposit')
+               emailFormat(createFullName(container[i].firstname, container[i].middlename, container[i].lastname), container[i].email, transactionID, container[i].accountID, balance, amount, type, date)
           }
      }
 
@@ -108,9 +124,10 @@ const transfer = (balance1, balance2, amount, accountnumber1, accountnumber2, se
      }
      for (let i = 0; i < container.length; i++) {
           if (container[i].accountID === accountnumber1) {
-               container[i].   initialbalance = account1newbalance
+               container[i].initialbalance = account1newbalance
                console.log('New Balance for ' + account1newbalance)
-               transaction(parseInt(amount), account1newbalance, container[i], 'transfer')
+               const { transactionID, date, type, balance } = transaction(parseInt(amount), account1newbalance, container[i], 'transfer')
+               emailFormat(createFullName(container[i].firstname, container[i].middlename, container[i].lastname), container[i].email, transactionID, container[i].accountID, balance, amount, type, date)
           }
           else if (container[i].accountID === accountnumber2) {
                console.log('Account #2 balance changed')
@@ -118,10 +135,10 @@ const transfer = (balance1, balance2, amount, accountnumber1, accountnumber2, se
           }
      }
 
-localStorage.setItem('userData', JSON.stringify(container))
-setamount(0)
-setaccountnumber1('')
-setaccountnumber2('')
+     localStorage.setItem('userData', JSON.stringify(container))
+     setamount(0)
+     setaccountnumber1('')
+     setaccountnumber2('')
 
 }
 

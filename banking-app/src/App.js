@@ -5,19 +5,23 @@ import Registerv2 from './Components/Registerv2';
 import Withdraw from './Components/Withdraw';
 import Deposit from './Components/Deposit';
 import Transfer from './Components/Transfer';
+import TransactionList from './Components/TransactionList';
+import userEvent from '@testing-library/user-event';
+
 
 
 
 function App() {
   return (
     <div className="App">
-      {/* <Register />
+      {/* <Register /> */}
       {/* <GoogleSignUp /> */}
-        {/* <Registerv2 /> */}
-       {/* <Deposit />  */}
+      <Registerv2 />
+      {/* <Deposit />  */}
       {/* <Withdraw /> */}
-      <Transfer />
-    </div>  
+      {/* <Transfer /> */}
+      {/* <TransactionList/> */}
+    </div>
   );
 }
 

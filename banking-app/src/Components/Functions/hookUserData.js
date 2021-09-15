@@ -1,4 +1,4 @@
-const hookUserData = (accountnumber, setname, setfullname, setaccounttype, setbalance) => {
+const hookUserData = (accountnumber, setname, setfullname, setaccounttype, setbalance, settransactions) => {
      const USER_DATA = 'userData';
      const userlists = JSON.parse(localStorage.getItem(USER_DATA));
      if (userlists) {
@@ -9,6 +9,7 @@ const hookUserData = (accountnumber, setname, setfullname, setaccounttype, setba
                     setname(setfullname(userlists[i].firstname, userlists[i].middlename, userlists[i].lastname))
                     setaccounttype(userlists[i].accountype)
                     setbalance(userlists[i].initialbalance)
+                    settransactions(userlists[i].transactions)
                     break;
                }
 
@@ -17,6 +18,7 @@ const hookUserData = (accountnumber, setname, setfullname, setaccounttype, setba
                     setname('')
                     setaccounttype('')
                     setbalance(0)
+                    settransactions([])
 
                }
           }
@@ -30,6 +32,6 @@ const createFullName = (firstName, middleName, lastName) => {
      return `${firstName} ${middleName} ${lastName}`
 }
 
-const hookUserDataFunctions = {hookUserData, createFullName}
+const hookUserDataFunctions = { hookUserData, createFullName }
 
-export default  hookUserDataFunctions;
+export default hookUserDataFunctions;

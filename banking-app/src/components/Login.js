@@ -256,6 +256,7 @@ const Login = (props) => {
                         borderRadius: '3px'
                     }}>Create Account</button>
                     <form 
+                    onSubmit={signIn}
                     className={classes.form}
                     action="">
                         <label

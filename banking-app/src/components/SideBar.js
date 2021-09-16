@@ -10,6 +10,7 @@ import SyncAltIcon from '@material-ui/icons/SyncAlt';
 import CreditCardSharpIcon from '@material-ui/icons/CreditCardSharp';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import SettingsIcon from '@material-ui/icons/Settings';
+import YsLogo from '../assets/YsWhite.svg';
 
 
 const theme = createTheme({
@@ -125,7 +126,13 @@ function SideBar() {
                                 variant='h4'
                                 className={classes.options}
                             >
-                            Caterpillar
+                            <img 
+                            style={{
+                                width: '300px',
+                                height: '80px',
+                                paddingLeft: '1.2em',
+                                marginTop: '-0.65rem'
+                            }} src={YsLogo}></img>
                             </Typography>
                         </Box>
                         <Box

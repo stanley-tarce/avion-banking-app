@@ -3,6 +3,7 @@ import hookUserDataFunctions from './Functions/hookUserData'
 import transactions from './Functions/transaction'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import TransactionList from './TransactionList'
+import validate from './Functions/TransactionValidation'
 
 const useStyles = makeStyles(() => ({
      root: {
@@ -19,9 +20,10 @@ const useStyles = makeStyles(() => ({
           border: '1px solid black',
           backgroundColor: 'white',
           width: '350px',
+          maxHeight: '25px',
 
 
-           
+
      },
      submitbutton: {
           backgroundColor: '#686F80',
@@ -33,6 +35,7 @@ const useStyles = makeStyles(() => ({
                boxShadow: '0px 0px 0px 0px',
           },
           textTransform: 'none',
+          marginTop: '20px',
      }
 }))
 
@@ -52,9 +55,15 @@ export default function Transfer() {
      const [accountType2, setAccountType2] = React.useState('')
      const [transaction1, setTransaction1] = React.useState([])
      const [transaction2, setTransaction2] = React.useState([]) //dummy array
+     const [error, setError] = React.useState({})
      const transferbutton = (event) => {
           event.preventDefault()
-          transfer(balance1, balance2, amount, accountNum1, accountNum2, setAmount, setAccountNum1, setAccountNum2)
+          if (validate(balance1, amount, setError)) {
+               transfer(balance1, balance2, amount, accountNum1, accountNum2, setAmount, setAccountNum1, setAccountNum2)
+          }
+          else {
+               alert('error!')
+          }
      }
 
      React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
@@ -116,7 +125,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Amount
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error && {error:true, helperText: error.amount})} />
                          </Container>
                          <Container>
                               <Button className={classes.submitbutton} onClick={transferbutton}>

@@ -3,6 +3,7 @@ import transactions from './Functions/transaction'
 import hookUserDataFunctions from './Functions/hookUserData'
 import TransactionList from './TransactionList'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
+import validate from './Functions/TransactionValidation'
 const useStyles = makeStyles(() => ({
    root: {
       position: 'absolute',
@@ -14,6 +15,7 @@ const useStyles = makeStyles(() => ({
    textfield: {
       // marginTop: '15px',
       // marginBottom: '25px',
+      maxHeight: '25px',
       borderRadius: '0px',
       border: '1px solid black',
       backgroundColor: 'white',
@@ -31,6 +33,7 @@ const useStyles = makeStyles(() => ({
          boxShadow: '0px 0px 0px 0px',
       },
       textTransform: 'none',
+      marginTop: '25px',
    }
 }))
 
@@ -45,11 +48,19 @@ export default function Withdraw() {
    const [accountName, setAccountName] = React.useState('')
    const [accountType, setAccountType] = React.useState('')
    const [transactionlist, setTransactionList] = React.useState([])
+   const [error, setError] = React.useState({})
    const button = event => {
       event.preventDefault()
+      if (validate(balance,amount,setError)){
+         withdraw(balance, amount, accountNumber, setAccountNumber, setBalance)
+         setAmount(0)
+      }
+      else {
+         alert('error!')
+      }
       //INSERT CODE HERE
-      withdraw(balance, amount, accountNumber, setAccountNumber, setBalance)
-      setAmount(0)
+      // if validate is true - return the functions else return error 
+
    }
    React.useEffect(() => { hookUserData(accountNumber, setAccountName, createFullName, setAccountType, setBalance,setTransactionList) }, [hookUserData, accountNumber, createFullName])
    return (
@@ -84,7 +95,7 @@ export default function Withdraw() {
                <Typography variant="h6" align="left">
                   Amount
                </Typography>
-               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} />
+               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error && {error:true,helperText:error.amount})} />
             </Container>
             <Container>
                <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>

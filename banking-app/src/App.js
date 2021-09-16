@@ -16,10 +16,10 @@ function App() {
     <div className="App">
       {/* <Register /> */}
       {/* <GoogleSignUp /> */}
-      <Registerv2 />
+      {/* <Registerv2 /> */}
       {/* <Deposit />  */}
       {/* <Withdraw /> */}
-      {/* <Transfer /> */}
+      <Transfer />
       {/* <TransactionList/> */}
     </div>
   );

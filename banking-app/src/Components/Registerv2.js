@@ -1,11 +1,12 @@
 import {
     Select, MenuItem, TextField, FormControlLabel,
-    RadioGroup, Radio, Button, Typography,
+    RadioGroup, Radio, Button, Typography, FormControl, FormHelperText,
 } from '@material-ui/core';
 import React, { Component } from 'react'
 import { withStyles } from "@material-ui/core/styles";
 import { PropTypes } from 'prop-types';
 import { Container, Grid } from '@material-ui/core';
+import validate from './Functions/RegisterValidation'
 
 const styles = () => ({
     root: {
@@ -30,13 +31,15 @@ const styles = () => ({
     textfield: {
         borderRadius: '0px',
         border: '2px solid black',
-        disableUnderline: true
+        disableUnderline: true,
+        maxHeight: '25px',
 
     },
     textfielddate: {
         borderRadius: '0px',
         border: '2px solid black',
         disableUnderline: true,
+        maxHeight: '25px',
 
 
     },
@@ -96,7 +99,9 @@ class Registerv2 extends Component {
             dateofbirth: '',
             accountype: '',
             initialbalance: 0,
-            transactions: []
+            transactions: [],
+            //Modals and Error Handling
+            errors: {},
         }
 
     }
@@ -123,48 +128,64 @@ class Registerv2 extends Component {
     sendDataToLocalStorage = (event) => {
         event.preventDefault();
         console.log(this.state);
-        if (localStorage.getItem('userData') !== null) {
-            console.log("existing data")
-            let container = [];
-            for (let i = 0; i < JSON.parse(localStorage.getItem('userData')).length; i++) {
-                container.push(JSON.parse(localStorage.getItem('userData'))[i])
-            }
-            console.log('Done Migrating Data')
-            console.log('Pushing Current State')
-            container.push(this.state)
-            console.log('Done Pushing Current State')
-            console.log('Parsing Initial Balance')
-            for (let i = 0; i < container.length; i++) {
-                container[i].initialbalance = parseInt(container[i].initialbalance);
-            }
-            localStorage.setItem('userData', JSON.stringify(container));
+        
+        if (validate(this)) {
+            console.log('no Error!')
+            console.log("No error all clean")
+            if (localStorage.getItem('userData') !== null) {
+                console.log("existing data")
+                let container = [];
+                for (let i = 0; i < JSON.parse(localStorage.getItem('userData')).length; i++) {
+                    container.push(JSON.parse(localStorage.getItem('userData'))[i])
+                }
+                console.log('Done Migrating Data')
+                console.log('Pushing Current State')
+                delete (this.state.errors)
+                container.push(this.state)
 
+                console.log('Done Pushing Current State')
+                console.log('Parsing Initial Balance')
+                for (let i = 0; i < container.length; i++) {
+                    container[i].initialbalance = parseInt(container[i].initialbalance);
+                }
+                localStorage.setItem('userData', JSON.stringify(container));
+
+            }
+            else {
+                let container = [];
+                delete (this.state.errors)
+                container.push(this.state);
+                localStorage.setItem('userData', JSON.stringify(container));
+            }
+            //Set Default State to Empty
+            this.setState
+                (
+                    {
+                        accountID: this.createAccountID(),
+                        lastname: '',
+                        firstname: '',
+                        middlename: '',
+                        contactnumber: '',
+                        email: '',
+                        gender: '',
+                        homeaddress: '',
+                        zipcode: '',
+                        city: '',
+                        dateofbirth: '',
+                        accountype: '',
+                        initialbalance: 0,
+                        transactions: [], // List of Transactions for the account could be another state
+                        errors: {}
+                    }
+                )
         }
         else {
-            let container = [];
-            container.push(this.state);
-            localStorage.setItem('userData', JSON.stringify(container));
+            console.log('Error')
+            alert('error')
+
+
         }
-        //Set Default State to Empty
-        this.setState
-            (
-                {
-                    accountID: this.createAccountID(),
-                    lastname: '',
-                    firstname: '',
-                    middlename: '',
-                    contactnumber: '',
-                    email: '',
-                    gender: '',
-                    homeaddress: '',
-                    zipcode: '',
-                    city: '',
-                    dateofbirth: '',
-                    accountype: '',
-                    initialbalance: 0,
-                    transactions: [] // List of Transactions for the account could be another state 
-                }
-            )
+
 
     }
     handleChange = type => event => {
@@ -179,7 +200,6 @@ class Registerv2 extends Component {
             const number = onlyNums.replace(/(\d{4})(\d{3})(\d{4})/, "($1)-$2-$3");
             this.setState({ contactnumber: number });
         }
-
     }
     handleZipCodeChange = event => {
         const onlyNums = event.target.value.replace(/[^0-9]/g, '');
@@ -194,6 +214,9 @@ class Registerv2 extends Component {
     handleParseInt = event => {
         this.setState({ initialbalance: parseInt(event.target.value) });
     }
+
+   
+
     render() {
         const { classes } = this.props;
 
@@ -226,6 +249,8 @@ class Registerv2 extends Component {
                                 }}
                                 className={classes.textfield}
                                 fullWidth
+                                required
+                                {...(this.state.errors.lastname && { error: true, helperText: this.state.errors.lastname })}
                             />
                         </Container>
                     </Grid>
@@ -243,7 +268,9 @@ class Registerv2 extends Component {
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
-                                className={classes.textfield} />
+                                {...(this.state.errors.firstname && { error: true, helperText: this.state.errors.firstname })}
+                                className={classes.textfield}
+                            />
                         </Container>
                     </Grid>
                     <Grid item xs={4}>
@@ -260,6 +287,7 @@ class Registerv2 extends Component {
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
+                                {...(this.state.errors.middlename && { error: true, helperText: this.state.errors.middlename })}
                                 className={classes.textfield} />
                         </Container>
                     </Grid>
@@ -279,6 +307,7 @@ class Registerv2 extends Component {
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
+                                {...(this.state.errors.email && { error: true, helperText: this.state.errors.email })}
                                 className={classes.textfield} />
                         </Container>
                     </Grid>
@@ -300,16 +329,22 @@ class Registerv2 extends Component {
                                     maxLength: 11,
                                     disableUnderline: true,
                                 }}
+                                {...(this.state.errors.contactnumber && { error: true, helperText: this.state.errors.contactnumber })}
                                 className={classes.textfield} />
                         </Container>
                     </Grid>
                     <Grid item xs={4}>
                         <Container>
                             <Typography>Gender: </Typography>
-                            <RadioGroup className={classes.radio} value={gender} onChange={this.handleChange('gender')}>
-                                <FormControlLabel value={'male'} label="Male" control={<Radio />} />
-                                <FormControlLabel value={'female'} label="Female" control={<Radio />} />
-                            </RadioGroup>
+                            <FormControl {...(this.state.errors.gender && { error: true })}>
+                                <RadioGroup className={classes.radio} value={gender} onChange={this.handleChange('gender')
+                                }
+                                >
+                                    <FormControlLabel value={'male'} label="Male" control={<Radio />} />
+                                    <FormControlLabel value={'female'} label="Female" control={<Radio />} />
+                                </RadioGroup>
+                                <FormHelperText>{this.state.errors.gender}</FormHelperText>
+                            </FormControl>
                         </Container>
 
                     </Grid>
@@ -329,6 +364,7 @@ class Registerv2 extends Component {
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
+                                {...(this.state.errors.homeaddress && { error: true, helperText: this.state.errors.homeaddress })}
                                 className={classes.textfield} />
                         </Container>
                     </Grid>
@@ -345,6 +381,7 @@ class Registerv2 extends Component {
                                 id="city"
                                 value={city}
                                 onChange={this.handleChange('city')}
+                                {...(this.state.errors.city && { error: true, helperText: this.state.errors.city })}
                                 InputProps={{
                                     disableUnderline: true,
                                 }}
@@ -365,6 +402,7 @@ class Registerv2 extends Component {
                                 id="zipcode"
                                 value={zipcode}
                                 onChange={this.handleZipCodeChange}
+                                {...(this.state.errors.zipcode && { error: true, helperText: this.state.errors.zipcode })}
                                 InputProps={{
                                     maxLength: 4,
                                     disableUnderline: true,
@@ -385,14 +423,16 @@ class Registerv2 extends Component {
                                 id="dateofbirth"
                                 value={dateofbirth}
                                 onChange={this.handleChange('dateofbirth')}
-
+                                
                                 InputProps={{
                                     disableUnderline: true,
 
 
                                 }}
                                 className={classes.textfielddate}
-                                fullWidth />
+
+                                fullWidth
+                                {...(this.state.errors.dateofbirth && {error:true,helperText: this.state.errors.dateofbirth})} />
                         </Container>
                     </Grid>
                     <Grid item xs={4}>
@@ -418,19 +458,22 @@ class Registerv2 extends Component {
                     <Grid item xs={4}>
                         <Container maxWidth={"xs"}>
                             <Typography>Account Type </Typography>
-                            <Select
-                                className={classes.textfield}
-                                value={accountype}
-                                onChange={this.handleChange('accountype')}
-                                disableUnderline={true}
-                                fullWidth
-                            >
-                                <MenuItem className={classes.selectfont} value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem className={classes.selectfont} value={'Savings'}>Savings</MenuItem>
-                                <MenuItem className={classes.selectfont} value={'Checking'}>Checking</MenuItem>
-                            </Select>
+                            <FormControl fullWidth {...(this.state.errors.accounttype && { error: true })}>
+                                <Select
+                                    className={classes.textfield}
+                                    value={accountype}
+                                    onChange={this.handleChange('accountype')}
+                                    disableUnderline={true}
+                                    fullWidth
+                                >
+                                    <MenuItem className={classes.selectfont} value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem className={classes.selectfont} value={'Savings'}>Savings</MenuItem>
+                                    <MenuItem className={classes.selectfont} value={'Checking'}>Checking</MenuItem>
+                                </Select>
+                                <FormHelperText style={{color:'red'}}>{this.state.errors.accountype}</FormHelperText>
+                            </FormControl>
                         </Container>
                     </Grid>
                     <Grid item xs={4}>

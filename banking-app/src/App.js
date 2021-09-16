@@ -1,26 +1,24 @@
+import React, { useState } from 'react'
 import './App.css';
-import Register from './Components/Register';
-import GoogleSignUp from './Components/GoogleSignUp';
-import Registerv2 from './Components/Registerv2';
-import Withdraw from './Components/Withdraw';
-import Deposit from './Components/Deposit';
-import Transfer from './Components/Transfer';
-import TransactionList from './Components/TransactionList';
+
+import Main from './components/Main';
+import Login from './components/Login';
+
 import userEvent from '@testing-library/user-event';
 
 
 
 
+
 function App() {
+
+  const [loginDisplay, setloginDisplay] = useState(true)
+  const [mainDisplay, setMainDisplay] = useState(false)
+
   return (
     <div className="App">
-      {/* <Register /> */}
-      {/* <GoogleSignUp /> */}
-      {/* <Registerv2 /> */}
-      {/* <Deposit />  */}
-      {/* <Withdraw /> */}
-      <Transfer />
-      {/* <TransactionList/> */}
+      {mainDisplay ? <Main showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
+      {loginDisplay ? <Login showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
     </div>
   );
 }

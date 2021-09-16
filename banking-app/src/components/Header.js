@@ -8,6 +8,7 @@ import united from '../assets/flags/united.png';
 import unitedK from '../assets/flags/unitedK.png';
 import china from '../assets/flags/china.png';
 import MyAccount from './MyAccount';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const useStyles = makeStyles({
     card: {
@@ -31,13 +32,15 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '88px',
         right: '65px',
-        margin: 0
+        margin: 0,
+        color: '#4B4848'
     },
     icon: {
         position: 'absolute',
         top: '88px',
         right: '40px',
-        margin: 0
+        margin: 0,
+        color: '#4B4848'
     },
     div: {
         display: 'flex',
@@ -65,7 +68,8 @@ const useStyles = makeStyles({
     },
     textCurrency: {
         marginLeft: '10px',
-        marginTop: '15px'
+        marginTop: '15px',
+        color: '#393939'
     },
     rateCurrency: {
         position: 'absolute',
@@ -78,7 +82,7 @@ const useStyles = makeStyles({
 
 
 
-const Header = () => {
+const Header = (props) => {
 
     const todayMonth = new Date().toLocaleString('en-us', {month: 'short'});
     const todayDate = new Date().toLocaleString('en-us', {day: 'numeric'});
@@ -86,6 +90,7 @@ const Header = () => {
     const today = `${todayMonth} ${todayDate}, ${todayYear}`;
 
     const [ logOut, setLogOut ] = useState(false);
+    const [ logOff, setLogOff] = useState(false);
     const showAccount = () => {
         setLogOut(!logOut);
     }
@@ -93,11 +98,33 @@ const Header = () => {
     const classes = useStyles();
     return (
         <div>
-            { logOut ? <MyAccount />: null }
+            { logOut ? <MyAccount setLogOff={setLogOff} /> : null }
+            { logOff ? props.setLogOut(true) : null}
             <Card
             className={classes.card}
             elevation={0}
             >
+                {/* <div
+                style={{
+                    width:'250px',
+                    height: '60px',
+                    backgroundColor: '#384859',
+                    position:'absolute',
+                    right: '40px',
+                    top: '68px',
+                    borderTopLeftRadius: '35.5px',
+                    borderBottomLeftRadius: '35.5px'
+                    }}></div> */}
+                <NotificationsIcon
+                className={classes.image}
+                style={{
+                    marginRight: '2.65em',
+                    height: '24px',
+                    width: '24px',
+                    marginTop: '0.7rem',
+                    cursor: 'pointer',
+                    color: '#4B4848'
+                }} />
                 <img 
                 className={classes.image}
                 src={hero} 
@@ -117,7 +144,7 @@ const Header = () => {
                 className={classes.div}
                 >
                     <h4
-                    style={{fontSize: '24px', marginBottom: 0}}
+                    style={{fontSize: '24px', marginBottom: 0, color: '#5F5E5E'}}
                     >1 EUR =</h4>
                     <span>as of {today}</span>
                 </div>

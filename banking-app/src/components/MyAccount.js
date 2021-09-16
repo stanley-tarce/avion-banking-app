@@ -1,8 +1,11 @@
 import Card from '@material-ui/core/Card';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const MyAccount = () => {
+const MyAccount = (props) => {
 
+    const logOff = () => {
+        props.setLogOff(true)
+    }
     
     return (
         <Card
@@ -22,9 +25,11 @@ const MyAccount = () => {
             style={{
                 fontWeight:'500',
                 fontSize: '14px',
-                marginTop: '8px'
+                marginTop: '8px',
+                cursor: 'pointer'
             }}>My Account</h5>
             <h4
+            onClick={logOff}
             style={{
                 width: '80%',
                 fontSize: '14px',
@@ -36,13 +41,15 @@ const MyAccount = () => {
                 transform: 'translateX(-50%)',
                 marginTop: '-0.5rem',
                 borderTop: '1px solid #C6C6C6',
-                paddingTop: '0.8rem'
+                paddingTop: '0.8rem',
+                cursor: 'pointer'
             }}>
             <ExitToAppIcon
             style={{paddingRight: '4px',
             width: '18px',
             height: '18px',
-            marginTop: '2px'
+            marginTop: '2px',
+            cursor: 'pointer'
             }}/>
             Log out
             </h4>

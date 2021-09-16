@@ -1,0 +1,61 @@
+.App {
+  text-align: center;
+}
+
+.highlight:hover {
+  background-color: #dee6e9;
+  transition: all 0.09s ease-out;
+}
+
+.user-name,
+.acct-icon {
+  cursor: pointer;
+}
+
+input:focus {
+  border-color: blue !important;
+}
+
+.box {
+  cursor: pointer;
+}
+
+.forgotPass:hover {
+  text-decoration: underline;
+}
+
+.Or {
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  grid-column-gap: 1.2rem;
+  align-items: center;
+  width: 58%;
+  color: #ababab;
+}
+
+.Or::before,
+.Or::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #ababab;
+  margin-top: 5px;
+}
+
+.createAccountBtn:hover {
+  background-color: #40556b;
+  color: white;
+}
+
+.createAccountBtn {
+  background-color: white;
+  color: 384859;
+}
+
+.GoogleButton {
+  background-color: #ebebeb;
+}
+
+.GoogleButton:hover {
+  background-color: #e2e2e2;
+}

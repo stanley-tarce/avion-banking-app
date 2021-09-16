@@ -84,8 +84,13 @@ const UserList = () => {
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = useState('');
     const [ modal, setModal ] = useState(false);
-    const [ data, setData ] = useState();
+    const [ accountNumber, setAccountNumber ] = useState();
+    const [ name, setName ] = useState();
+    const [ accountType, setAccountType] = useState();
+    const [ address, setAddres ] = useState();
+    const [ currentBalance, setCurentBalance] = useState();
 
+  
     const showModal = () => {
         setModal(!modal);
     }
@@ -99,6 +104,8 @@ const UserList = () => {
                 className={classes.input}
                 type="text" 
                 placeholder='Search User...'
+                style={{
+                    outlineColor: '#A7B2D6'}}
                 onChange={(event) => {
                     setSearchTerm(event.target.value);
                 }}
@@ -172,8 +179,13 @@ const UserList = () => {
                     } return false;
                 }).map((val, key) => {
                     const testClick =(e) => {
-                    setData(val.AccountNumber)
+                    setAccountNumber(val.AccountNumber)
+                    setName(val.Name)
+                    setAccountType(val.AccountType)
+                    setAddres(val.Location)
+                    setCurentBalance(val.CurrentBalance);
                     setModal(!modal)
+                    
                     }
                     return <div key={key}
                         onClick={testClick}
@@ -197,7 +209,14 @@ const UserList = () => {
                     </div>
                     
                 })}
-                {modal ? <Modal data={data} setModal={setModal} /> : null }
+                {modal ? <Modal 
+                setModals={setModal} 
+                data={accountNumber} 
+                setName={name} 
+                accountType={accountType}
+                address={address}
+                currentBalance={currentBalance}
+                /> : null }
             </div>
         </div>
     )

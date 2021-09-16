@@ -15,7 +15,13 @@ const styles = () => ({
         backgroundColor: '#FEFEFE',
         fontFamily: 'Roboto',
         fontSize: '16px',
-        position: 'absolute'
+        height: '70vh',
+        
+        position: 'absolute',
+        bottom: '20px',
+        right: '40px',
+        left: '350px',
+        borderTop: '1px solid grey'
     },
     accountnum: {
 

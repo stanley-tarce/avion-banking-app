@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './App.css';
 
-import Main from './components/Main';
-import Login from './components/Login';
+import Main from './Components/Main';
+import Login from './Components/Login';
 
 import userEvent from '@testing-library/user-event';
 

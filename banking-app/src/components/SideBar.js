@@ -53,7 +53,7 @@ const useStyles = makeStyles({
 
 
 
-function SideBar() {
+function SideBar(props) {
     const classes = useStyles();
     const [ overviewBg, setOverviewBg] = useState('#587EA6');
     const [ createUserBg, setCreateUserBg] = useState();
@@ -67,6 +67,11 @@ function SideBar() {
         setDepositBg('')
         setWithdrawBg('')
         setTransferBg('')
+        props.setUserList(true);
+        props.setCreateUser(false);
+        props.setDeposit(false);
+        props.setWithdraw(false);
+        props.setTransfer(false);
     };
 
     const createUserBackground = () => {
@@ -75,6 +80,12 @@ function SideBar() {
         setDepositBg('')
         setWithdrawBg('')
         setTransferBg('')
+        props.setUserList(false);
+        props.setCreateUser(true);
+        props.setDeposit(false);
+        props.setWithdraw(false);
+        props.setTransfer(false);
+        
     };
 
     const depositBackground = () => {
@@ -83,6 +94,11 @@ function SideBar() {
         setDepositBg('#587EA6')
         setWithdrawBg('')
         setTransferBg('')
+        props.setUserList(false);
+        props.setCreateUser(false);
+        props.setDeposit(true);
+        props.setWithdraw(false);
+        props.setTransfer(false);
     };
 
     const withdrawBackground = () => {
@@ -91,6 +107,11 @@ function SideBar() {
         setDepositBg('')
         setWithdrawBg('#587EA6')
         setTransferBg('')
+        props.setUserList(false);
+        props.setCreateUser(false);
+        props.setDeposit(false);
+        props.setWithdraw(true);
+        props.setTransfer(false);
     };
 
     const transferBackground = () => {
@@ -99,6 +120,11 @@ function SideBar() {
         setDepositBg('')
         setWithdrawBg('')
         setTransferBg('#587EA6')
+        props.setUserList(false);
+        props.setCreateUser(false);
+        props.setDeposit(false);
+        props.setWithdraw(false);
+        props.setTransfer(true);
     };
 
 

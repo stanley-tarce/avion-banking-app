@@ -14,10 +14,39 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles({
     root: {
+        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#384859"
+          },
+          "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#384859"
+          },
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#384859"
+          },
+          "& .MuiOutlinedInput-input": {
+            color: "#384859"
+          },
+          "&:hover .MuiOutlinedInput-input": {
+            color: "#384859"
+          },
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+            color: "#384859"
+          },
+          "& .MuiInputLabel-outlined": {
+            color: "#384859"
+          },
+          "&:hover .MuiInputLabel-outlined": {
+            color: "#384859"
+          },
+          "& .MuiInputLabel-outlined.Mui-focused": {
+            color: "#384859"
+          },
         display: 'flex',
         height: '100vh',
         width: '100vw',
-        backgroundColor: 'lightcoral'
+        background: '#aa4b6b',  /* fallback for old browsers */
+        background: 'linear-gradient(to right, #8e9eab, #eef2f3)'
+
     },
     appInfo: {
         height: '85%',
@@ -86,6 +115,9 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '20%',
         right: '20%'
+    },visibileIcons: {
+        height: '24px',
+        width: '24px'
     }
 })
 
@@ -238,6 +270,7 @@ const Login = (props) => {
                             label='Username'
                             defaultValue={user}
                             onChange={userInput}
+                            variant= 'outlined'
                             style={{
                                 marginTop: '3rem',
                             }}
@@ -247,6 +280,7 @@ const Login = (props) => {
                             type={values.showPassword ? 'text' : 'password'}
                             label='Password'
                             value={values.password}
+                            variant= 'outlined'
                             style={{
                                 marginTop: '2rem',
                                 borderColor: 'green'
@@ -256,6 +290,7 @@ const Login = (props) => {
                                 endAdornment:(
                                     <InputAdornment position='end'> 
                                         <IconButton 
+                                        className={classes.visibileIcons}
                                         onClick={handleShowPassword}
                                         onMouseDown={handleMouseDown}>
                                             {values.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}

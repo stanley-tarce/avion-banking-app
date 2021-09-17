@@ -5,16 +5,19 @@ import bg from '../assets/bg.svg';
 const useStyle = makeStyles({
     container: {
         width: '100%',
+        height: '30px',
         textAlign: 'start',
-        marginTop: '0.9rem'
+        marginTop: '0.8rem'
     },
     input: {
         position: 'absolute',
-        right: '1.2rem',
+        width: '250px',
+        right: '-2.5em',
         border: '1px solid black',
         borderRadius: '3px',
         height: '1.25rem',
-        outlineColor: 'rgba(0,0,0,0.6)'
+        outlineColor: 'rgba(0,0,0,0.6)',
+        paddingLeft: '1rem'
     },
     label: {
         fontWeight: '500'
@@ -41,11 +44,11 @@ const Modal = (props) => {
             <div
             style={{
                 position: 'relative',
-                height: '60vh',
-                width:'50vh',
+                height: '75vh',
+                width:'60vh',
                 backgroundColor: 'Whitesmoke',
                 background: `url${bg}`,
-                marginTop: '15%',
+                marginTop: '14%',
                 borderRadius: '12px'
             }}>
                 <CancelIcon 
@@ -79,20 +82,8 @@ const Modal = (props) => {
                         className={classes.input} 
                         type="text" 
                         name="accountNumber" 
-                        value={props.data} 
+                        value={props.setAccountNumber} 
                         disabled/>
-                    </div>
-                    <div
-                    className={classes.container}
-                    >
-                        <label className={classes.label}
-                        htmlFor="name"
-                        >Name</label>
-                        <input 
-                        className={classes.input} 
-                        type="text" name="Name" 
-                        value={props.setName} 
-                        readOnly/>
                     </div>
                     <div
                     className={classes.container}
@@ -103,19 +94,128 @@ const Modal = (props) => {
                         <input 
                         className={classes.input} 
                         type="text" name="accountType" 
-                        value={props.accountType} 
+                        value={props.setAccountType} 
                         disabled/>
                     </div>
                     <div
                     className={classes.container}
                     >
                         <label className={classes.label}
-                        htmlFor="address"
-                        >Address</label>
+                        htmlFor="name"
+                        >Last Name</label>
                         <input 
                         className={classes.input} 
-                        type="text" name="address" 
+                        type="text" name="lastName" 
+                        value={props.setLastName} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="name"
+                        >First Name</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="firstName" 
+                        value={props.setFirstName} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="name"
+                        >Middle Name</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="middleName" 
+                        value={props.setMiddleName} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="name"
+                        >Email Address</label>
+                        <input 
+                        className={classes.input} 
+                        type="email" name="emailAddress" 
+                        value={props.setEmail} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="name"
+                        >Contact Number</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="contactNumber" 
+                        value={props.setContactNumber} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="name"
+                        >Gender</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="gender" 
+                        value={props.setGender} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="address"
+                        >Home Address</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="homeAddress" 
                         value={props.address} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="address"
+                        >City</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="city" 
+                        value={props.setCity} 
+                        readOnly/>
+                    </div>
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="address"
+                        >Zip Code</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="city" 
+                        value={props.setLocCode} 
+                        readOnly/>
+                    </div>
+                    
+                    <div
+                    className={classes.container}
+                    >
+                        <label className={classes.label}
+                        htmlFor="address"
+                        >Date of Birth</label>
+                        <input 
+                        className={classes.input} 
+                        type="text" name="dateOFBirth" 
+                        value={props.setBirthDate} 
                         readOnly/>
                     </div>
                     <div
@@ -128,7 +228,7 @@ const Modal = (props) => {
                         className={classes.input} 
                         type="text" 
                         name="currentBalance" 
-                        value={props.currentBalance} 
+                        value={props.setCurrentBalance} 
                         disabled/>
                     </div>
                 </form>

@@ -87,13 +87,25 @@ const UserList = () => {
     const [ accountNumber, setAccountNumber ] = useState();
     const [ name, setName ] = useState();
     const [ accountType, setAccountType] = useState();
-    const [ address, setAddres ] = useState();
-    const [ currentBalance, setCurentBalance] = useState();
+    const [ address, setAddress ] = useState();
+    const [ currentBalance, setCurrentBalance] = useState();
+    const [ city, setCity] = useState();
+    const [ contactNumber, setContactNumber] = useState();
+    const [ birthDate, setBirthDate] = useState();
+    const [ email, setEmail] = useState();
+    const [ gender, setGender] = useState();
+    const [ locCode, setLocCode] = useState();
+    const [ firstName, setFirstName] = useState();
+    const [ lastName, setLastName] = useState();
+    const [ middleName, setMiddleName] = useState();
 
   
     const showModal = () => {
         setModal(!modal);
     }
+    const USER_DATA = JSON.parse(localStorage.getItem('userData'))
+    const dataContainer =[...USER_DATA]
+    console.log(dataContainer)
     return (
         <div
         className={classes.root}
@@ -171,7 +183,7 @@ const UserList = () => {
             display: 'flex',
             flexDirection: 'column'}}>
 
-                {JSONDATA.filter((val) => {
+                {dataContainer.filter((val) => {
                     if (searchTerm ==='') {
                         return val
                     } else if (val.Name.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -179,13 +191,22 @@ const UserList = () => {
                     } return false;
                 }).map((val, key) => {
                     const testClick =(e) => {
-                    setAccountNumber(val.AccountNumber)
-                    setName(val.Name)
-                    setAccountType(val.AccountType)
-                    setAddres(val.Location)
-                    setCurentBalance(val.CurrentBalance);
+                    setAccountNumber(val.accountID)
+                    setName(`${val.firstname} ${val.lastname}`)
+                    setAccountType(val.accountype)
+                    setAddress(val.homeaddress)
+                    setCurrentBalance(val.initialbalance);
                     setModal(!modal)
-                    
+
+                    setLastName(val.lastname)
+                    setFirstName(val.firstname)
+                    setMiddleName(val.middlename)
+                    setEmail(val.email)
+                    setContactNumber(val.contactnumber)
+                    setGender(val.gender)
+                    setLocCode(val.zipcode)
+                    setCity(val.city)
+                    setBirthDate(val.dateofbirth)
                     }
                     return <div key={key}
                         onClick={testClick}
@@ -193,29 +214,40 @@ const UserList = () => {
                         style={{ display: 'flex' }}>
                         <div
                             className={classes.userInfo}
-                        >{val.AccountNumber}</div>
+                        >{val.accountID}</div>
                         <div
                             className={classes.userInfo}
-                        >{val.Name}</div>
+                        >{`${val.firstname} ${val.lastname}`}</div>
                         <div
                             className={classes.userInfo}
-                        >{val.CurrentBalance}</div>
+                        >{val.initialbalance}</div>
                         <div
                             className={classes.userInfo}
-                        >{val.Location}</div>
+                        >{val.city}</div>
                         <div
                             className={classes.userInfo}
-                        >{val.AccountType}</div>
+                        >{val.accountype}</div>
                     </div>
                     
                 })}
                 {modal ? <Modal 
                 setModals={setModal} 
-                data={accountNumber} 
-                setName={name} 
+                setAccountNumber={accountNumber} 
+                setLastName={lastName} 
+                setFirstName={firstName} 
+                setMiddleName={middleName} 
                 accountType={accountType}
                 address={address}
                 currentBalance={currentBalance}
+                setAccountType={accountType}
+                setCity={city}
+                setContactNumber={contactNumber}
+                setBirthDate={birthDate}
+                setEmail={email}
+                setAddress={address}
+                setGender={gender}
+                setLocCode={locCode}
+                setCurrentBalance={currentBalance}
                 /> : null }
             </div>
         </div>

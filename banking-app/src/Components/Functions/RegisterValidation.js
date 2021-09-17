@@ -87,14 +87,18 @@ const validate = (object) => {
   }
 
   //Second Part of the validation 
-  for (const userlist of JSON.parse(localStorage.getItem(USER_DATA))) {
-    if (object.state.firstname === userlist.firstname) {
-      temp.firstname = 'Firstname already exists'
-    }
-    if (object.state.email === userlist.email) {
-      temp.email = 'Email already exists'
+
+  if (localStorage.getItem(USER_DATA)) {
+    for (const userlist of JSON.parse(localStorage.getItem(USER_DATA))) {
+      if (object.state.firstname === userlist.firstname) {
+        temp.firstname = 'Firstname already exists'
+      }
+      if (object.state.email === userlist.email) {
+        temp.email = 'Email already exists'
+      }
     }
   }
+
 
 
   // lastname: state.lastname ? '' : "Last Name is required",

@@ -36,7 +36,7 @@ function TransactionTable(props) {
      const classes = useStyle()
      return (
           <TableContainer className={classes.tablecontainer} component={Container} fullWidth>
-               <Table className={classes.table}  size={'small'}>
+               <Table className={classes.table}>
                     <TableHead>
                          <TableCell>#</TableCell>
                          <TableCell>Amount</TableCell>

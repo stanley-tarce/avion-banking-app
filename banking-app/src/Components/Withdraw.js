@@ -3,18 +3,20 @@ import transactions from './Functions/transaction'
 import hookUserDataFunctions from './Functions/hookUserData'
 import TransactionList from './TransactionList'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
-import validate from './Functions/TransactionValidation'
+import TransactionValidation from './Functions/TransactionValidation'
+import ValidateModal from './ValidateModal'
 const useStyles = makeStyles(() => ({
    root: {
       fontFamily: 'Roboto',
       fontWeight: 400,
       height: '70vh',
       backgroundColor: 'white',
-      position: 'absolute',
+      position: 'fixed',
       bottom: '20px',
       right: '40px',
       left: '350px',
-      borderTop: '1px solid grey'
+      borderTop: '1px solid grey',
+
 
    },
    textfield: {
@@ -47,6 +49,7 @@ const useStyles = makeStyles(() => ({
 export default function Withdraw() {
    const classes = useStyles()
    const { withdraw } = transactions
+   const {validate} = TransactionValidation
    const { hookUserData, createFullName } = hookUserDataFunctions
    const [amount, setAmount] = React.useState(0)
    const [balance, setBalance] = React.useState(0)
@@ -54,15 +57,28 @@ export default function Withdraw() {
    const [accountName, setAccountName] = React.useState('')
    const [accountType, setAccountType] = React.useState('')
    const [transactionlist, setTransactionList] = React.useState([])
+   const [open, setOpen] = React.useState(false)
    const [error, setError] = React.useState({})
+   const [result,setResult] = React.useState({})
    const button = event => {
       event.preventDefault()
-      if (validate(balance,amount,setError)){
+      if (validate(balance,amount,accountNumber,setError)){
          withdraw(balance, amount, accountNumber, setAccountNumber, setBalance)
+         setResult({
+            value: 'Success!',
+            style: {
+               color: 'green',
+               '@keyframes buzzout': "10% {transfor}"}
+         })
+         setOpen(true)
          setAmount(0)
       }
       else {
-         alert('error!')
+         setResult({
+            value: 'Error! Please Resolve',
+            style: { color: 'red' }
+         })
+         setOpen(true)
       }
       //INSERT CODE HERE
       // if validate is true - return the functions else return error 
@@ -70,6 +86,7 @@ export default function Withdraw() {
    }
    React.useEffect(() => { hookUserData(accountNumber, setAccountName, createFullName, setAccountType, setBalance,setTransactionList) }, [hookUserData, accountNumber, createFullName])
    return (
+      <>
       <Grid className={classes.root} container spacing={7}>
       <Grid item xs={6}>
          <Container>
@@ -77,7 +94,8 @@ export default function Withdraw() {
                <Typography variant="h6" align="left">
                   Account Number
                </Typography>
-               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNumber} onChange={(event) => setAccountNumber(event.target.value)} />
+               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield}  onChange={(event) => setAccountNumber(event.target.value)}
+               {...(error.accountNumber && {error:true, helperText: error.accountNumber})} />
             </Container>
             <Container>
                <Typography variant="h6" align="left">
@@ -101,7 +119,7 @@ export default function Withdraw() {
                <Typography variant="h6" align="left">
                   Amount
                </Typography>
-               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error && {error:true,helperText:error.amount})} />
+               <TextField InputProps={{ disableUnderline: true }} className={classes.textfield}  onChange={(event) => setAmount(event.target.value)} {...(error.amount && {error:true,helperText:error.amount})} />
             </Container>
             <Container>
                <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>
@@ -115,5 +133,6 @@ export default function Withdraw() {
          <TransactionList tabledata={transactionlist} />
       </Grid>
    </Grid>
+   <ValidateModal open={open} setOpen={setOpen} result={result} /> </>
    )
 }

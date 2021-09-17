@@ -69,7 +69,7 @@ const deposit = (balance, amount, accountnumber, setaccountnumber, setbalance) =
      }
 
      localStorage.setItem('userData', JSON.stringify(container))
-     setaccountnumber('')
+     setaccountnumber(0)
      setbalance(0)
 }
 const withdraw = (balance, amount, accountnumber, setaccountnumber, setbalance) => {

@@ -3,11 +3,12 @@ import hookUserDataFunctions from './Functions/hookUserData'
 import transactions from './Functions/transaction'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import TransactionList from './TransactionList'
-import validate from './Functions/TransactionValidation'
-
+import TransactionValidation from './Functions/TransactionValidation'
+import ValidateModal from './ValidateModal'
 const useStyles = makeStyles(() => ({
      root: {
           fontFamily: 'Roboto',
+          fontSize: '10px',
           fontWeight: 400,
           height: '70vh',
           backgroundColor: 'white',
@@ -61,19 +62,34 @@ export default function Transfer() {
      const [transaction1, setTransaction1] = React.useState([])
      const [transaction2, setTransaction2] = React.useState([]) //dummy array
      const [error, setError] = React.useState({})
-     const transferbutton = (event) => {
+     const [result, setResult] = React.useState({})
+     const [open, setOpen] = React.useState(false)
+     const {customValidateForTransfer } =TransactionValidation   
+       const transferbutton = (event) => {
           event.preventDefault()
-          if (validate(balance1, amount, setError)) {
+          if (customValidateForTransfer(balance1, amount,accountNum1,accountNum2, setError)) {
                transfer(balance1, balance2, amount, accountNum1, accountNum2, setAmount, setAccountNum1, setAccountNum2)
+               setResult({
+                    value: 'Success!',
+                    style: {
+                       color: 'green',
+                       '@keyframes buzzout': "10% {transfor}"}
+                 })
+                 setOpen(true)
           }
           else {
-               alert('error!')
+               setResult({
+                    value: 'Error! Please Resolve',
+                    style: { color: 'red' }
+                 })
+                 setOpen(true)
           }
      }
 
      React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
      React.useEffect(() => { hookUserData(accountNum2, setName2, createFullName, setAccountType2, setBalance2, setTransaction2) }, [accountNum2, createFullName, hookUserData])
      return (
+          <>
           <Grid className={classes.root} container spacing={7}>
                <Grid item xs={6}>
                     <Container>
@@ -81,7 +97,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Account Number
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum1} onChange={(event) => setAccountNum1(event.target.value)} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum1} onChange={(event) => setAccountNum1(event.target.value)}{...(error.accountNumber && {error:true, helperText:error.accountNumber})} />
                          </Container>
                          <Container>
                               <Typography variant="h6" align="left">
@@ -106,7 +122,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Sending to
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum2} onChange={(event) => setAccountNum2(event.target.value)} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum2} onChange={(event) => setAccountNum2(event.target.value)}{...(error.accountNumber2 && {error:true, helperText: error.accountNumber2})} />
                          </Container>
                          <Container>
                               <Typography variant="h6" align="left">
@@ -130,7 +146,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Amount
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error && {error:true, helperText: error.amount})} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error.amount && {error:true, helperText: error.amount})} />
                          </Container>
                          <Container>
                               <Button className={classes.submitbutton} onClick={transferbutton}>
@@ -143,6 +159,7 @@ export default function Transfer() {
                     <TransactionList tabledata={transaction1} />
                </Grid>
           </Grid>
+          <ValidateModal open={open} setOpen={setOpen} result={result} /> </>
 
 
 

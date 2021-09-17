@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { PropTypes } from 'prop-types';
 import { Container, Grid } from '@material-ui/core';
 import validate from './Functions/RegisterValidation'
-
+import ValidateModal from './ValidateModal';
 const styles = () => ({
     root: {
         marginTop: '20px',
@@ -16,7 +16,7 @@ const styles = () => ({
         fontFamily: 'Roboto',
         fontSize: '16px',
         height: '70vh',
-        position: 'absolute',
+        position: 'fixed',
         bottom: '20px',
         right: '40px',
         left: '350px',
@@ -38,6 +38,9 @@ const styles = () => ({
         border: '2px solid black',
         disableUnderline: true,
         maxHeight: '25px',
+        '&$error': {
+            color: 'black'
+          }
 
     },
     textfielddate: {
@@ -61,12 +64,13 @@ const styles = () => ({
     },
     button: {
         backgroundColor: '#384859',
-        marginTop: '2.7em',
+        // marginTop: '2.7em',
         width: '200px',
         fontSize: '16px',
         textTransform: 'none',
         borderRadius: '30px',
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        marginTop: '1em',
         "&:hover": {
             backgroundColor: '#446181',
         }
@@ -77,7 +81,6 @@ const styles = () => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '20px'
     }
     , accountNumContainer: {
         display: 'flex',
@@ -109,6 +112,8 @@ class Registerv2 extends Component {
             transactions: [],
             //Modals and Error Handling
             errors: {},
+            open: false,
+            result: {}
         }
 
     }
@@ -135,8 +140,15 @@ class Registerv2 extends Component {
     sendDataToLocalStorage = (event) => {
         event.preventDefault();
         console.log(this.state);
-        
+
         if (validate(this)) {
+            this.handleResultChange({
+                value: 'Success!',
+                style: {
+                   color: 'green',
+                   '@keyframes buzzout': "10% {transfor}"}
+             })
+             this.setState({open: true})
             console.log('no Error!')
             console.log("No error all clean")
             if (localStorage.getItem('userData') !== null) {
@@ -188,8 +200,22 @@ class Registerv2 extends Component {
         }
         else {
             console.log('Error')
-            alert('error')
-
+            // alert('error')
+            // this.handleResultChange({result:{
+            //     value: 'Success!',
+            //     style: {
+            //        color: 'green',
+            //        '@keyframes buzzout': "10% {transfor}"}
+            //     }
+            //  })
+            this.setState({
+                open: true,
+                result:{
+                    value: 'Error! Please resolve',
+                    style: {
+                       color: 'red',
+                       '@keyframes buzzout': "10% {transfor}"}
+                    }})
 
         }
 
@@ -221,8 +247,14 @@ class Registerv2 extends Component {
     handleParseInt = event => {
         this.setState({ initialbalance: parseInt(event.target.value) });
     }
+    handleResultChange = properties => {
+        this.setState({ result: properties });
+    }
+    handleModalChange = boolean => {
+        return this.setState({ open: boolean });
+    }
 
-   
+
 
     render() {
         const { classes } = this.props;
@@ -249,7 +281,7 @@ class Registerv2 extends Component {
                                 type="text"
                                 name={"last Name"}
                                 id="lastname"
-                                value={lastname.toUpperCase}
+                                value={lastname.toUpperCase()}
                                 onChange={this.handleChange('lastname')}
                                 InputProps={{
                                     disableUnderline: true,
@@ -270,7 +302,7 @@ class Registerv2 extends Component {
                                 placeholder="First Name"
                                 name={"first Name"}
                                 id="lastname"
-                                value={firstname.toUpperCase}
+                                value={firstname.toUpperCase()}
                                 onChange={this.handleChange('firstname')}
                                 InputProps={{
                                     disableUnderline: true,
@@ -289,7 +321,7 @@ class Registerv2 extends Component {
                                 placeholder="Middle Name"
                                 name={"middle Name"}
                                 id="middlename"
-                                value={middlename}
+                                value={middlename.toUpperCase()}
                                 onChange={this.handleChange('middlename')}
                                 InputProps={{
                                     disableUnderline: true,
@@ -430,7 +462,7 @@ class Registerv2 extends Component {
                                 id="dateofbirth"
                                 value={dateofbirth}
                                 onChange={this.handleChange('dateofbirth')}
-                                
+
                                 InputProps={{
                                     disableUnderline: true,
 
@@ -439,7 +471,7 @@ class Registerv2 extends Component {
                                 className={classes.textfielddate}
 
                                 fullWidth
-                                {...(this.state.errors.dateofbirth && {error:true,helperText: this.state.errors.dateofbirth})} />
+                                {...(this.state.errors.dateofbirth && { error: true, helperText: this.state.errors.dateofbirth })} />
                         </Container>
                     </Grid>
                     <Grid item xs={4}>
@@ -479,7 +511,7 @@ class Registerv2 extends Component {
                                     <MenuItem className={classes.selectfont} value={'Savings'}>Savings</MenuItem>
                                     <MenuItem className={classes.selectfont} value={'Checking'}>Checking</MenuItem>
                                 </Select>
-                                <FormHelperText style={{color:'red'}}>{this.state.errors.accountype}</FormHelperText>
+                                <FormHelperText style={{ color: 'red' }}>{this.state.errors.accountype}</FormHelperText>
                             </FormControl>
                         </Container>
                     </Grid>
@@ -502,20 +534,23 @@ class Registerv2 extends Component {
                             />
                         </Container>
                     </Grid>
+                    <Grid item xs={4}>
+                        <Container className={classes.buttonContainer} maxWidth={false} fullWidth>
+                            <Button className={classes.button}
+                                label="Create New User"
+                                variant="contained"
+                                color="primary"
+                                onClick={this.sendDataToLocalStorage}
 
+                            >Create New User
+                            </Button>
 
+                        </Container>
+
+                    </Grid>
                 </Grid>
-                <Container className={classes.buttonContainer} maxWidth={false} fullWidth>
-                    <Button className={classes.button}
-                        label="Create New User"
-                        variant="contained"
-                        color="primary"
-                        onClick={this.sendDataToLocalStorage}
 
-                    >Create New User
-                    </Button>
-                </Container>
-
+                <ValidateModal open={this.state.open} setOpen={this.handleModalChange} result={this.state.result} />
 
             </div>
         )

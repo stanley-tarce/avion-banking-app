@@ -16,7 +16,6 @@ const styles = () => ({
         fontFamily: 'Roboto',
         fontSize: '16px',
         height: '70vh',
-        
         position: 'absolute',
         bottom: '20px',
         right: '40px',
@@ -61,13 +60,15 @@ const styles = () => ({
         fontFamily: 'Roboto',
     },
     button: {
-        backgroundColor: '#686F80',
+        backgroundColor: '#384859',
+        marginTop: '2.7em',
+        width: '200px',
         fontSize: '16px',
         textTransform: 'none',
         borderRadius: '30px',
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         "&:hover": {
-            backgroundColor: '#686F80',
+            backgroundColor: '#446181',
         }
 
     },
@@ -248,7 +249,7 @@ class Registerv2 extends Component {
                                 type="text"
                                 name={"last Name"}
                                 id="lastname"
-                                value={lastname}
+                                value={lastname.toUpperCase}
                                 onChange={this.handleChange('lastname')}
                                 InputProps={{
                                     disableUnderline: true,
@@ -269,7 +270,7 @@ class Registerv2 extends Component {
                                 placeholder="First Name"
                                 name={"first Name"}
                                 id="lastname"
-                                value={firstname}
+                                value={firstname.toUpperCase}
                                 onChange={this.handleChange('firstname')}
                                 InputProps={{
                                     disableUnderline: true,
@@ -346,8 +347,8 @@ class Registerv2 extends Component {
                                 <RadioGroup className={classes.radio} value={gender} onChange={this.handleChange('gender')
                                 }
                                 >
-                                    <FormControlLabel value={'male'} label="Male" control={<Radio />} />
-                                    <FormControlLabel value={'female'} label="Female" control={<Radio />} />
+                                    <FormControlLabel value={'Male'} label="Male" control={<Radio />} />
+                                    <FormControlLabel value={'Female'} label="Female" control={<Radio />} />
                                 </RadioGroup>
                                 <FormHelperText>{this.state.errors.gender}</FormHelperText>
                             </FormControl>

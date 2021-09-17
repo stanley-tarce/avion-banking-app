@@ -7,11 +7,15 @@ import validate from './Functions/TransactionValidation'
 
 const useStyles = makeStyles(() => ({
      root: {
-          position: 'absolute',
-          top: '25%',
           fontFamily: 'Roboto',
           fontWeight: 400,
-
+          height: '70vh',
+          backgroundColor: 'white',
+          position: 'absolute',
+          bottom: '20px',
+          right: '40px',
+          left: '350px',
+          borderTop: '1px solid grey'
      },
      textfield: {
           // marginTop: '15px',
@@ -26,12 +30,13 @@ const useStyles = makeStyles(() => ({
 
      },
      submitbutton: {
-          backgroundColor: '#686F80',
-          borderRadius: '31px',
+          backgroundColor: '#384859',
+          width: '200px',
+          borderRadius: '32.5px',
           boxShadow: '0px 0px 0px 0px',
           color: 'white',
           '&:hover': {
-               backgroundColor: '#686F80',
+               backgroundColor: '#446181',
                boxShadow: '0px 0px 0px 0px',
           },
           textTransform: 'none',

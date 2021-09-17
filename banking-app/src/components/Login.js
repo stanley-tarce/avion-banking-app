@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Divider, InputAdornment, makeStyles, TextField, withStyles } from '@material-ui/core';
+import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from '../assets/login/chart.svg';
 import contract from '../assets/login/contract.svg';
@@ -10,6 +10,7 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import FirebaseOtp from './Firebase/FirebaseOtp';
 
 
 const useStyles = makeStyles({
@@ -357,6 +358,7 @@ const Login = (props) => {
                     </form>
                 </div>
             </div>
+            <FirebaseOtp />
         </div>
     )
 }

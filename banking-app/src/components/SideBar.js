@@ -153,6 +153,7 @@ function SideBar(props) {
                                 className={classes.options}
                             >
                             <img 
+                            alt='logo'
                             style={{
                                 width: '300px',
                                 height: '80px',

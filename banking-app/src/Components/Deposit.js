@@ -10,6 +10,7 @@ const useStyles = makeStyles(() => ({
       fontFamily: 'Roboto',
       fontWeight: 400,
       height: '70vh',
+      width:'inherit',
       backgroundColor: 'white',
       position: 'absolute',
       bottom: '20px',

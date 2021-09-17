@@ -10,7 +10,7 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import FirebaseOtp from './Firebase/FirebaseOtp';
+import FirebaseOtp from './FirebaseOtp';
 
 
 const useStyles = makeStyles({
@@ -161,11 +161,14 @@ const Login = (props) => {
         e.preventDefault();
         
         if(user === admins.userName && values.password === admins.passCode) {
-            props.showLogin(false)
-            props.showMain(true)
+            
+            setOtpDisplay(true);
         } else console.log('not accepted')
         
     }
+
+    const [otpDisplay, setOtpDisplay] = useState(false);
+    const [otpValidation, setOtpValidation] = useState(false);
 
     return (
         <div
@@ -358,7 +361,12 @@ const Login = (props) => {
                     </form>
                 </div>
             </div>
-            <FirebaseOtp />
+            {otpDisplay ? <FirebaseOtp setOtpDisplay={setOtpDisplay} setOtpValidation={setOtpValidation} /> : null}
+            {otpValidation ? props.showLogin(false) : null}
+            {otpValidation ? props.showMain(true) : null}
+
+            // 
+            // 
         </div>
     )
 }

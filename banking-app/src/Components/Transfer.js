@@ -58,7 +58,7 @@ export default function Transfer() {
      const [error, setError] = React.useState({})
      const transferbutton = (event) => {
           event.preventDefault()
-          if (validate(balance1, amount, setError)) {
+          if (validate(accountNum1,balance1, amount, setError)) {
                transfer(balance1, balance2, amount, accountNum1, accountNum2, setAmount, setAccountNum1, setAccountNum2)
           }
           else {
@@ -76,7 +76,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Account Number
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum1} onChange={(event) => setAccountNum1(event.target.value)} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum1} onChange={(event) => setAccountNum1(event.target.value)}{...(error.accountID && {error:true,helperText:error.accountID})} />
                          </Container>
                          <Container>
                               <Typography variant="h6" align="left">
@@ -125,7 +125,7 @@ export default function Transfer() {
                               <Typography variant="h6" align="left">
                                    Amount
                               </Typography>
-                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error && {error:true, helperText: error.amount})} />
+                              <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error.amount && {error:true, helperText: error.amount})} />
                          </Container>
                          <Container>
                               <Button className={classes.submitbutton} onClick={transferbutton}>

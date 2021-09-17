@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import './App.css';
-
-import Main from './components/Main';
-import Login from './components/Login';
-
+import ModalErrorHandling from './Components/ModalErrorHandling';
+import Main from './Components/Main';
+import Login from './Components/Login'
+import Deposit from './Components/Deposit';
 import userEvent from '@testing-library/user-event';
+import Transfer from './Components/Transfer';
+import Registerv2 from './Components/Registerv2';
+
 
 
 
@@ -17,8 +20,12 @@ function App() {
 
   return (
     <div className="App">
-      {mainDisplay ? <Main showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
-      {loginDisplay ? <Login showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
+      {/* {mainDisplay ? <Main showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
+      <Main showLogin={setloginDisplay} showMain={setMainDisplay} />
+      {loginDisplay ? <Login showLogin={setloginDisplay} showMain={setMainDisplay} /> : null} */}
+     <Deposit/>
+     {/* <Transfer/> */}
+     {/* <Registerv2/> */}
     </div>
   );
 }

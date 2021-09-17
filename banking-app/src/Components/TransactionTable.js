@@ -1,4 +1,4 @@
-import { withStyles, makeStyles, Table, TableBody, TableCell, TableHead, TableContainer, Container, TableRow } from '@material-ui/core'
+     import { withStyles, makeStyles, Table, TableBody, TableCell, TableHead, TableContainer, Container, TableRow } from '@material-ui/core'
 import React from 'react'
 
 
@@ -27,11 +27,11 @@ const useStyle = makeStyles(() => ({
 
 
 
-function TransactionTable(props) {
-     const { tabledata } = props //Table data is an array of objects
+function TransactionTable(    ) {
+     const {    } = props //Table data is an array of objects
      // const tabledata = [{ amount: 75000, balance: 675000, date: "2021-9-11", type: "transfer" },
      // { amount: 675000, balance: 0, date: "2021-9-11", type: "withdraw" }
-
+     
 
      const classes = useStyle()
      return (

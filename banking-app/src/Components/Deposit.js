@@ -3,11 +3,12 @@ import React from 'react'
 import hookUserDataFunctions from './Functions/hookUserData'
 import transactions from './Functions/transaction'
 import TransactionList from './TransactionList'
-
+import ModalErrorHandling from './ModalErrorHandling'
+import validate from './Functions/TransactionValidation'
 
 const useStyles = makeStyles(() => ({
    root: {
-      position: 'absolute',
+      position: 'fixed', 
       top: '25%',
       fontFamily: 'Roboto',
       fontWeight: 400,
@@ -19,9 +20,11 @@ const useStyles = makeStyles(() => ({
       borderRadius: '0px',
       border: '1px solid black',
       backgroundColor: 'white',
-      width: '350px',
+      width: '100%',
+      maxHeight: '25px',
 
-      
+
+
 
    },
    submitbutton: {
@@ -33,6 +36,10 @@ const useStyles = makeStyles(() => ({
          boxShadow: '0px 0px 0px 0px',
       },
       textTransform: 'none',
+   },
+   modal:{
+      position: 'absolute',
+      zIndex: '10',
    }
 }))
 
@@ -47,22 +54,38 @@ export default function Deposit() {
    const [accountNumber, setAccountNumber] = React.useState(0)  //accountNumber === accountID
    const [accountName, setAccountName] = React.useState('')
    const [accountType, setAccountType] = React.useState('')
+   const [open, setOpen] = React.useState(false)
+   const [error, setError] = React.useState({})
+   const [message,setMessage] = React.useState('')
    const button = (event) => {
       event.preventDefault()
-      deposit(balance, amount, accountNumber, setAccountNumber, setBalance)
-      setAmount(0)
+      if (validate(accountNumber, balance, amount, setError)) {
+         deposit(balance, amount, accountNumber, setAccountNumber, setBalance)
+         setMessage('Transaction Finished!')
+         setOpen(true)
+         setAmount(0);
+
+
+      }
+      else {
+         setMessage('Transaction Failed! Resolve the issue')
+         setOpen(true)
+        
+      }
+
+
    }
    React.useEffect(() => hookUserData(accountNumber, setAccountName, createFullName, setAccountType, setBalance, setTransactionList), [accountNumber, createFullName, hookUserData])
    return (
 
-      <Grid className={classes.root} container spacing={7}>
+      <>  <Grid className={classes.root} container spacing={7}>
          <Grid item xs={6}>
             <Container>
                <Container>
                   <Typography variant="h6" align="left">
                      Account Number
                   </Typography>
-                  <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNumber} onChange={(event) => setAccountNumber(event.target.value)} />
+                  <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} placeholder={accountNumber} onChange={(event) => setAccountNumber(event.target.value)} {...(error.accountID && { error: true, helperText: error.accountID })} />
                </Container>
                <Container>
                   <Typography variant="h6" align="left">
@@ -86,7 +109,7 @@ export default function Deposit() {
                   <Typography variant="h6" align="left">
                      Amount
                   </Typography>
-                  <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} />
+                  <TextField InputProps={{ disableUnderline: true }} className={classes.textfield}{...(error.amount && {error:true, helperText: error.amount})} value={amount} onChange={(event) => setAmount(event.target.value)} />
                </Container>
                <Container>
                   <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>
@@ -94,11 +117,12 @@ export default function Deposit() {
                   </Button>
                </Container>
             </Container>
-           
          </Grid>
          <Grid item s={6}>
             <TransactionList tabledata={transactionlist} />
          </Grid>
       </Grid>
+         <ModalErrorHandling className={classes.modal} open={open} setOpen={setOpen} message={message} />
+      </>
    )
 }

@@ -11,6 +11,8 @@ const useStyles = makeStyles(() => ({
           fontFamily: 'Roboto',
           height: '310px',
           width: '525px',
+
+          position: 'relative',
      },
      cardTitle: {
           fontSize: '30px !important',
@@ -53,7 +55,7 @@ function TransactionList(props) {
                          <CardHeader className={css.cardTitle} title="Transactions" />
                     </Grid>
                     <Grid className={css.calendarContainer} item xs={6}>
-                         <Select
+                         {/* <Select
                               label={"Select Month"}
                               value={month}
                               onChange={(e) => setMonth(e.target.value)}
@@ -71,11 +73,11 @@ function TransactionList(props) {
                               <MenuItem value={10}>October</MenuItem>
                               <MenuItem value={11}>November</MenuItem>
                               <MenuItem value={12}>December</MenuItem>
-                         </Select>
+                         </Select> */}
                     </Grid>
 
                </Grid>
-               <Grid className={css.secondContainer} fullHeight container>
+               <Grid>
                     {/* <Grid item xs={1} /> */}
                     
                          <TransactionTable tabledata={tabledata}/>

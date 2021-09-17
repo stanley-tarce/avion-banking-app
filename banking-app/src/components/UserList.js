@@ -4,6 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import JSONDATA from '../assets/MOCK_DATA.json';
 import Modal from './Modal';
+import { TablePagination } from '@material-ui/core';
 
 
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles({
         position: 'relative',
         marginTop: '1.2em',
         left: '0',
+        top:'-8px', //Added to fix the issue of the input being cut off
         height: '34px',
         border: '1px solid #C6C6C6',
         
@@ -44,7 +46,7 @@ const useStyles = makeStyles({
     tagsContainer: {
         position: 'absolute',
         display: 'flex',
-        top: '73px',
+        top: '50px', //from 75 to 50px
         left: '0',
         right: '0px',
         backgroundColor: '#384859'
@@ -57,7 +59,8 @@ const useStyles = makeStyles({
         color: '#F7F9FE',
         fontSize: '1.05rem',
         paddingTop: '0.4rem',
-        paddingBottom: '0.4rem'
+        paddingBottom: '0.4rem',
+
     },
     foldIcon: {
         position: 'absolute',
@@ -98,8 +101,11 @@ const UserList = () => {
     const [ firstName, setFirstName] = useState();
     const [ lastName, setLastName] = useState();
     const [ middleName, setMiddleName] = useState();
-
-  
+    const [page,setPage] = useState(0);
+    const [rowsPerPage,setRowsPerPage] = useState(7);
+    const handlePageChange = (event, newPage) => {
+        setPage(newPage);
+    }
     const showModal = () => {
         setModal(!modal);
     }
@@ -107,6 +113,7 @@ const UserList = () => {
     const dataContainer =[...USER_DATA]
     console.log(dataContainer)
     return (
+        <div>
         <div
         className={classes.root}
         >
@@ -173,6 +180,20 @@ const UserList = () => {
             right: '5px',
             bottom: '82%'}}
             /> */}
+            <TablePagination style={{
+                position: 'absolute',
+                bottom: '0px',
+                right: '0px',
+                zIndex: '1'
+            }}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={rowsPerPage}
+            count={dataContainer.length}
+            onChangePage={handlePageChange}
+            component = 'div'
+
+        />
 
             <div
             style={{position: 'absolute',
@@ -189,7 +210,7 @@ const UserList = () => {
                     } else if (val.Name.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return val
                     } return false;
-                }).map((val, key) => {
+                }).slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((val, key) => {
                     const testClick =(e) => {
                     setAccountNumber(val.accountID)
                     setName(`${val.firstname} ${val.lastname}`)
@@ -250,6 +271,9 @@ const UserList = () => {
                 setCurrentBalance={currentBalance}
                 /> : null }
             </div>
+
+        </div>
+
         </div>
     )
 }

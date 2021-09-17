@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
       fontWeight: 400,
       height: '70vh',
       backgroundColor: 'white',
-      position: 'fixed',
+      position: 'absolute',
       bottom: '20px',
       right: '40px',
       left: '350px',

@@ -7,12 +7,16 @@ const useStyle = makeStyles({
         width: '100%',
         height: '30px',
         textAlign: 'start',
-        marginTop: '0.8rem'
+        marginTop: '0.8rem',
+   
+    
+        // justifyContent: 'space-around',
+       
     },
     input: {
         position: 'absolute',
         width: '250px',
-        right: '-2.5em',
+        right: '-6.5em',
         border: '1px solid black',
         borderRadius: '3px',
         height: '1.25rem',
@@ -20,7 +24,9 @@ const useStyle = makeStyles({
         paddingLeft: '1rem'
     },
     label: {
-        fontWeight: '500'
+        fontWeight: '500',
+        position: 'absolute',
+        left: '-2.9em',
     }
 })
 
@@ -43,6 +49,7 @@ const Modal = (props) => {
             backgroundColor: 'rgba(0,0,0,0.85)',
             zIndex: '10',
             display: 'flex',
+            
             justifyContent: 'center'}}
         >
             <div
@@ -53,7 +60,8 @@ const Modal = (props) => {
                 backgroundColor: 'Whitesmoke',
                 background: `url${bg}`,
                 marginTop: '5%',
-                borderRadius: '12px'
+                borderRadius: '12px',
+                overflowY: 'scroll',
             }}>
                 <CancelIcon 
                 style={{

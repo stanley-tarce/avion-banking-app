@@ -10,28 +10,30 @@ const useStyles = makeStyles(() => ({
       fontFamily: 'Roboto',
       fontWeight: 400,
       height: '70vh',
+      width:'inherit',
       backgroundColor: 'white',
-      position: 'fixed',
+      position: 'absolute',
       bottom: '20px',
       right: '40px',
       left: '350px',
-      borderTop: '1px solid grey',
-
+      borderTop: '1px solid grey'
 
    },
    textfield: {
       // marginTop: '15px',
       // marginBottom: '25px',
-      maxHeight: '25px',
       borderRadius: '0px',
       border: '1px solid black',
       backgroundColor: 'white',
       width: '350px',
+      maxHeight: '25px',
+      marginBottom: '25px',
 
-      
+
 
    },
    submitbutton: {
+      marginTop: '10px',
       backgroundColor: '#384859',
       width: '200px',
       borderRadius: '31px',
@@ -41,7 +43,14 @@ const useStyles = makeStyles(() => ({
          boxShadow: '0px 0px 0px 0px',
       },
       textTransform: 'none',
-      marginTop: '25px',
+   },
+   withdraw:{
+      width: '100%'
+   },
+   tabledata:{
+      position: 'absolute',
+      top: '0',
+      right: '0px',
    }
 }))
 
@@ -88,9 +97,9 @@ export default function Withdraw() {
    return (
       <>
       <Grid className={classes.root} container spacing={7}>
-      <Grid item xs={6}>
-         <Container>
-            <Container>
+      <Grid item xs={6} >
+         <Container className={classes.withdraw} >
+            <Container >
                <Typography variant="h6" align="left">
                   Account Number
                </Typography>
@@ -129,7 +138,7 @@ export default function Withdraw() {
          </Container>
         
       </Grid>
-      <Grid item s={6}>
+      <Grid item s={6} className={classes.tabledata} >
          <TransactionList tabledata={transactionlist} />
       </Grid>
    </Grid>

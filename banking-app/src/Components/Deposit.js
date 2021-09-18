@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
       backgroundColor: 'white',
       width: '350px',
       maxHeight: '25px',
+      marginBottom: '25px',
 
 
 
@@ -43,6 +44,14 @@ const useStyles = makeStyles(() => ({
          boxShadow: '0px 0px 0px 0px',
       },
       textTransform: 'none',
+   },
+   deposit:{
+      // width: '100%'
+   },
+   tabledata:{
+      position: 'absolute',
+      top: '0',
+      right: '0px',
    }
 }))
 
@@ -92,7 +101,7 @@ export default function Deposit() {
       <>
          <Grid className={classes.root} container spacing={3}>
             <Grid item xs={6}>
-               <Container>
+               <Container className={classes.deposit}>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Number
@@ -131,9 +140,8 @@ export default function Deposit() {
                </Container>
 
             </Grid>
-            <Grid item xs={6}>
+            <Grid className={classes.tabledata} item xs={6}>
                <TransactionList tabledata={transactionlist} />
-
             </Grid>
          </Grid>
          <ValidateModal open={open} setOpen={setOpen} result={result} />

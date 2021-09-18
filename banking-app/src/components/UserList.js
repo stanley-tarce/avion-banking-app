@@ -121,7 +121,7 @@ const UserList = () => {
             window.removeEventListener('keydown', escapeSearchBar);
         };
     }, []);
-
+    
     const USER_DATA = JSON.parse(localStorage.getItem('userData'))
     const dataContainer =[...USER_DATA]
     console.log(dataContainer)
@@ -216,7 +216,6 @@ const UserList = () => {
             bottom: '0',
             display: 'flex',
             flexDirection: 'column'}}>
-
                 {dataContainer.filter((val) => {
                     if (searchTerm ==='') {
                         return val

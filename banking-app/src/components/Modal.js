@@ -31,11 +31,15 @@ const Modal = (props) => {
     return (
         <div
         style={{
-            position: 'absolute',
-            bottom: '-1%',
-            right: '-2.95%',
-            top: '-100%',
-            left: '-25%',
+            position: 'fixed',
+            // bottom: '-1%',
+            // right: '-2.95%',
+            // top: '-100%',
+            // left: '-25%',
+            bottom: '0',
+            right: '0',
+            top: '0',
+            left: '0',
             backgroundColor: 'rgba(0,0,0,0.85)',
             zIndex: '10',
             display: 'flex',
@@ -48,7 +52,7 @@ const Modal = (props) => {
                 width:'60vh',
                 backgroundColor: 'Whitesmoke',
                 background: `url${bg}`,
-                marginTop: '14%',
+                marginTop: '5%',
                 borderRadius: '12px'
             }}>
                 <CancelIcon 

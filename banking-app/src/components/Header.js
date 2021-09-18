@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
-import allen from '../assets/allen.jpg';
+import user from '../assets/user.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import philippines from '../assets/flags/philippines.png';
 import united from '../assets/flags/united.png';
@@ -21,12 +21,12 @@ const useStyles = makeStyles({
     },
     image: {
         position: 'absolute',
-        width: '45px',
-        height: '45px',
+        width: '35px',
+        height: '35px',
         borderRadius: '50%',
         objectFit: 'cover',
-        top: '78px',
-        right: '194px'
+        top: '81px',
+        right: '134px'
     },
     user: {
         position: 'absolute',
@@ -139,16 +139,16 @@ const Header = (props) => {
                 <NotificationsIcon
                 className={classes.image}
                 style={{
-                    marginRight: '2.65em',
+                    marginRight: '2.15em',
                     height: '24px',
                     width: '24px',
-                    marginTop: '0.7rem',
+                    marginTop: '0.5rem',
                     cursor: 'pointer',
                     color: '#4B4848'
                 }} />
                 <img 
                 className={classes.image}
-                src={allen} 
+                src={user} 
                 alt="" 
                 />
                 <h4
@@ -156,7 +156,7 @@ const Header = (props) => {
                 onClick={showAccount}
                 style={{userSelect:'none'}}
                 >
-                    Allen Manaloto
+                    Admin
                 </h4>
                 <ArrowDropDownIcon className={`${classes.icon} acct-icon`}
                 onClick={showAccount}

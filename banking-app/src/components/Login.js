@@ -1,3 +1,5 @@
+
+import GoogleSignUp from './GoogleSignUp';
 import React, { useState } from 'react'
 import { Divider, InputAdornment, makeStyles, TextField, withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -348,11 +350,13 @@ const Login = (props) => {
                                 borderRadius: '5px',
                                 cursor: 'pointer'
                             }}>
-                                <img 
+                                {/* <img 
                                 style={{ paddingRight: '1rem'}}
                                 src={GoogleLogo} 
                                 alt="google-logo" 
-                                /> Sign in with Google
+                                /> Sign in with Google */}
+                         
+                            <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain}/>
                             </div>
                     </form>
                 </div>

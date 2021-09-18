@@ -18,10 +18,15 @@ const googleData = {
 
 
 export default class GoogleSignUp extends Component {
-    constructor() {
+    constructor(props) {
         super()
         this.onSuccess = this.onSuccess.bind(this)
         this.onFailure = this.onFailure.bind(this)
+
+        this.props = {
+            showLogin: props,
+            showMain: props
+        }
     }
 
     //If Login is successful
@@ -33,6 +38,8 @@ export default class GoogleSignUp extends Component {
         console.log(`Given Name:${givenName}`)
         console.log(`Google ID:${googleId}`)
         console.log(`imageURL:${imageUrl}`) 
+        this.props.showLogin(false)
+        this.props.showMain(true)
         // console.log(response)
     }
     //If login failed
@@ -42,10 +49,10 @@ export default class GoogleSignUp extends Component {
 
     render() {
         return (  
-                <GoogleLogin
+                <GoogleLogin style={{fontWeight:'normal'}}
                     className={"google-login"}
                     clientId={googleData.web.client_id}
-                    buttonText="Create Account with Google"
+                    buttonText="Sign in with Google"
                     onSuccess={this.onSuccess}
                     onFailure={this.onFailure}
                     cookiePolicy={'single_host_origin'}

@@ -72,9 +72,9 @@ const ValidateModal = ({ open, setOpen,result }) => {
                         flexDirection: 'column',
                     }
                 }>
-                    <h2 style={{ textAlign: 'center' }}>Transaction Result:</h2>
+                    <h2 style={{ textAlign: 'center' }}>Result: </h2>
                     <div>
-                        <h3 {...result}>{result.value}</h3>
+                        <h1 {...result}>{result.value}</h1>
                         
                     </div>
                 </div>

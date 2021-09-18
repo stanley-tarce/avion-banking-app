@@ -1,5 +1,14 @@
 .google-login {
   color: #000 !important;
-  background-color: red;
-  font-weight: bold !important;
+  font-weight: 100 !important;
+  font-family: Roboto,sans-serif !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: '52px';
+  /* width: '296px', */
+  border-radius: '5px';
+  cursor: pointer;
+  padding-right: 1em;
 }

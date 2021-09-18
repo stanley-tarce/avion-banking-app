@@ -95,6 +95,27 @@ const Header = (props) => {
         setLogOut(!logOut);
     }
 
+    const [usd, setUsd] = useState();
+    const [php, setPhp] = useState();
+    const [sgd, setSgd] = useState();
+    const [jpy, setJpy] = useState();
+
+    const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
+    const fetchCurrency = () =>{ 
+        fetch(api)
+        .then(response => response.json())
+        .then(data => {
+            const { USD, PHP, GBP, CNY } = data.rates
+
+            setUsd(USD.toFixed(2))
+            setPhp(PHP.toFixed(2))
+            setSgd(GBP.toFixed(2))
+            setJpy(CNY.toFixed(2))
+    })
+    }
+
+    fetchCurrency()
+
     const classes = useStyles();
     return (
         <div>
@@ -163,7 +184,7 @@ const Header = (props) => {
                         <h4
                         className={classes.rateCurrency}
                         >
-                            59.80
+                            {php}
                         </h4>
                 </Card>
                 <Card 
@@ -182,7 +203,7 @@ const Header = (props) => {
                         <h4
                         className={classes.rateCurrency}
                         >
-                            59.80
+                            {usd}
                         </h4>
                 </Card>
                 <Card 
@@ -201,7 +222,7 @@ const Header = (props) => {
                         <h4
                         className={classes.rateCurrency}
                         >
-                            59.80
+                            {sgd}
                         </h4>
                 </Card>
                 <Card 
@@ -215,12 +236,12 @@ const Header = (props) => {
                         />
                         <h4
                         className={classes.textCurrency}>
-                            CHY
+                            CNY
                         </h4>
                         <h4
                         className={classes.rateCurrency}
                         >
-                            59.80
+                            {jpy}
                         </h4>
                 </Card>
             </Card>

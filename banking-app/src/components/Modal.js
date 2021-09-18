@@ -1,5 +1,5 @@
 import CancelIcon from '@material-ui/icons/Cancel';
-import { makeStyle, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import bg from '../assets/bg.svg';
 
 const useStyle = makeStyles({

@@ -1,8 +1,14 @@
+body,
+html {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
 }
 
 .highlight:hover {
@@ -61,4 +67,12 @@ input:focus {
 
 .GoogleButton:hover {
   background-color: #e2e2e2;
+}
+
+.my-account:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.log-out:hover {
+  background-color: rgb(235, 235, 235);
 }

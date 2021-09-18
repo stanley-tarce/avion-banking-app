@@ -55,14 +55,14 @@ const useStyles = makeStyles({
 
 function SideBar(props) {
     const classes = useStyles();
-    const [ overviewBg, setOverviewBg] = useState('#587EA6');
+    const [ overviewBg, setOverviewBg] = useState('#44586D');
     const [ createUserBg, setCreateUserBg] = useState();
     const [ depositBg, setDepositBg] = useState();
     const [ withdrawBg, setWithdrawBg] = useState();
     const [ transferBg, setTransferBg] = useState();
 
     const overviewBackground = () => {
-        setOverviewBg('#587EA6')
+        setOverviewBg('#44586D')
         setCreateUserBg('')
         setDepositBg('')
         setWithdrawBg('')
@@ -76,7 +76,7 @@ function SideBar(props) {
 
     const createUserBackground = () => {
         setOverviewBg('')
-        setCreateUserBg('#587EA6')
+        setCreateUserBg('#44586D')
         setDepositBg('')
         setWithdrawBg('')
         setTransferBg('')
@@ -91,7 +91,7 @@ function SideBar(props) {
     const depositBackground = () => {
         setOverviewBg('')
         setCreateUserBg('')
-        setDepositBg('#587EA6')
+        setDepositBg('#44586D')
         setWithdrawBg('')
         setTransferBg('')
         props.setUserList(false);
@@ -105,7 +105,7 @@ function SideBar(props) {
         setOverviewBg('')
         setCreateUserBg('')
         setDepositBg('')
-        setWithdrawBg('#587EA6')
+        setWithdrawBg('#44586D')
         setTransferBg('')
         props.setUserList(false);
         props.setCreateUser(false);
@@ -119,7 +119,7 @@ function SideBar(props) {
         setCreateUserBg('')
         setDepositBg('')
         setWithdrawBg('')
-        setTransferBg('#587EA6')
+        setTransferBg('#44586D')
         props.setUserList(false);
         props.setCreateUser(false);
         props.setDeposit(false);
@@ -153,6 +153,7 @@ function SideBar(props) {
                                 className={classes.options}
                             >
                             <img 
+                            alt='logo'
                             style={{
                                 width: '300px',
                                 height: '80px',

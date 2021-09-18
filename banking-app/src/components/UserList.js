@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
@@ -109,6 +109,19 @@ const UserList = () => {
     const showModal = () => {
         setModal(!modal);
     }
+
+    useEffect(() => {
+        const escapeSearchBar = (event) => {
+            if (event.keyCode === 27) {
+                setSearchTerm('')
+            }
+        };
+        window.addEventListener('keydown', escapeSearchBar);
+        return () => {
+            window.removeEventListener('keydown', escapeSearchBar);
+        };
+    }, []);
+
     const USER_DATA = JSON.parse(localStorage.getItem('userData'))
     const dataContainer =[...USER_DATA]
     console.log(dataContainer)
@@ -207,7 +220,10 @@ const UserList = () => {
                 {dataContainer.filter((val) => {
                     if (searchTerm ==='') {
                         return val
-                    } else if (val.Name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    } else if (val.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+                                || val.firstname.toLowerCase().includes(searchTerm.toLowerCase())
+                                || val.accountID.toLowerCase().includes(searchTerm.toLowerCase())
+                                || val.city.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return val
                     } return false;
                 }).slice(page*rowsPerPage,page*rowsPerPage+rowsPerPage).map((val, key) => {

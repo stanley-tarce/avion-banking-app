@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
-import hero from '../assets/hero.jpg';
+import allen from '../assets/allen.jpg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import philippines from '../assets/flags/philippines.png';
 import united from '../assets/flags/united.png';
@@ -127,7 +127,7 @@ const Header = (props) => {
                 }} />
                 <img 
                 className={classes.image}
-                src={hero} 
+                src={allen} 
                 alt="" 
                 />
                 <h4

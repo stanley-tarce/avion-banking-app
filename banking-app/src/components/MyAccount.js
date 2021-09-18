@@ -18,41 +18,54 @@ const MyAccount = (props) => {
             zIndex: '10',
             border: '1px solid #C6C6C6',
             borderRadius: '5px',
-            backgroundColor: 'rgba(104, 111, 128, 0.05)'
+            backgroundColor: 'rgba(104, 111, 128, 0.05)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
         }}
         >
-            <h5
+            <div
+            className='my-account'
+            style={{height: '45px'}}>
+                <h5
+                style={{
+                    fontWeight:'500',
+                    fontSize: '14px',
+                    marginTop: '12px',
+                    cursor: 'pointer'
+                }}>My Account</h5>
+            </div>
+            <div
+            className='log-out'
             style={{
-                fontWeight:'500',
-                fontSize: '14px',
-                marginTop: '8px',
-                cursor: 'pointer'
-            }}>My Account</h5>
-            <h4
-            onClick={logOff}
-            style={{
-                width: '80%',
-                fontSize: '14px',
-                fontWeight: '400',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginLeft: '50%',
-                transform: 'translateX(-50%)',
-                marginTop: '-0.5rem',
                 borderTop: '1px solid #C6C6C6',
-                paddingTop: '0.8rem',
-                cursor: 'pointer'
             }}>
-            <ExitToAppIcon
-            style={{paddingRight: '4px',
-            width: '18px',
-            height: '18px',
-            marginTop: '2px',
-            cursor: 'pointer'
-            }}/>
-            Log out
-            </h4>
+                <h4
+                onClick={logOff}
+                style={{
+                    width: '80%',
+                    fontSize: '14px',
+                    fontWeight: '400',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: '50%',
+                    transform: 'translateX(-50%)',
+                    marginTop: '-0.2rem',
+                    paddingTop: '0.8rem',
+                    cursor: 'pointer'
+                }}>
+                <ExitToAppIcon
+                style={{paddingRight: '4px',
+                width: '18px',
+                height: '18px',
+                marginTop: '2px',
+                cursor: 'pointer'
+                }}/>
+                Log out
+                </h4>
+            </div>
+           
         </Card>
     )
 }

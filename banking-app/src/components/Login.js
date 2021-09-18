@@ -1,7 +1,7 @@
 
 import GoogleSignUp from './GoogleSignUp';
 import React, { useState } from 'react'
-import { Divider, InputAdornment, makeStyles, TextField, withStyles } from '@material-ui/core';
+import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from '../assets/login/chart.svg';
 import contract from '../assets/login/contract.svg';
@@ -12,6 +12,7 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import FirebaseOtp from './FirebaseOtp';
 
 
 const useStyles = makeStyles({
@@ -162,11 +163,14 @@ const Login = (props) => {
         e.preventDefault();
         
         if(user === admins.userName && values.password === admins.passCode) {
-            props.showLogin(false)
-            props.showMain(true)
+            
+            setOtpDisplay(true);
         } else console.log('not accepted')
         
     }
+
+    const [otpDisplay, setOtpDisplay] = useState(false);
+    const [otpValidation, setOtpValidation] = useState(false);
 
     return (
         <div
@@ -361,6 +365,12 @@ const Login = (props) => {
                     </form>
                 </div>
             </div>
+            {otpDisplay ? <FirebaseOtp setOtpDisplay={setOtpDisplay} setOtpValidation={setOtpValidation} /> : null}
+            {otpValidation ? props.showLogin(false) : null}
+            {otpValidation ? props.showMain(true) : null}
+
+            // 
+            // 
         </div>
     )
 }

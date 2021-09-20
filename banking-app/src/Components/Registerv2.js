@@ -40,7 +40,7 @@ const styles = () => ({
         maxHeight: '25px',
         '&$error': {
             color: 'black'
-          }
+        }
 
     },
     textfielddate: {
@@ -111,11 +111,9 @@ class Registerv2 extends Component {
             initialbalance: 0,
             transactions: [],
             //Modals and Error Handling
-            errors: {},
-            open: false,
+            errors: {}, 
             result: {}
-        }
-
+        } 
     }
     //Create Account ID
     createAccountID() {
@@ -142,13 +140,17 @@ class Registerv2 extends Component {
         console.log(this.state);
 
         if (validate(this)) {
-            this.handleResultChange({
-                value: 'Success!',
-                style: {
-                   color: 'green',
-                   '@keyframes buzzout': "10% {transfor}"}
-             })
-             this.setState({open: true})
+            this.setState({
+                open: true,
+                result: {
+                    value: 'Success!',
+                    style: {
+                        color: 'green',
+                        '@keyframes buzzout': "10% {transfor}"
+                    }
+                }
+            })
+            this.setState({ open: true })
             console.log('no Error!')
             console.log("No error all clean")
             if (localStorage.getItem('userData') !== null) {
@@ -194,7 +196,9 @@ class Registerv2 extends Component {
                         accountype: '',
                         initialbalance: 0,
                         transactions: [], // List of Transactions for the account could be another state
-                        errors: {}
+                        errors: {},
+                        open: false,
+                        result: {}
                     }
                 )
         }
@@ -210,12 +214,14 @@ class Registerv2 extends Component {
             //  })
             this.setState({
                 open: true,
-                result:{
+                result: {
                     value: 'Error! Please resolve',
                     style: {
-                       color: 'red',
-                       '@keyframes buzzout': "10% {transfor}"}
-                    }})
+                        color: 'red',
+                        '@keyframes buzzout': "10% {transfor}"
+                    }
+                }
+            })
 
         }
 

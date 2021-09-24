@@ -76,7 +76,7 @@ const Modal = (props) => {
                 <h2>User Information</h2>
 
                 <form
-                    style={{ 
+                    style={{
                         backgroundColor: 'none',
                         position: 'absolute',
                         top: '7em',
@@ -98,17 +98,17 @@ const Modal = (props) => {
                             value={props.setAccountNumber}
                             disabled />
                     </div>
-                    <div
-                        className={classes.container}
-                    >
+                    <div className={classes.container}>
                         <label className={classes.label}
                             htmlFor="accountType"
                         >Account Type</label>
                         <input
                             className={classes.input}
-                            type="text" name="accountType"
+                            type="text"
+                            name="accountType"
                             value={props.setAccountType}
-                            disabled />
+                            disabled
+                        />
                     </div>
                     <div
                         className={classes.container}

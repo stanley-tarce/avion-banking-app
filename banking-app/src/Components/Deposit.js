@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
       fontFamily: 'Roboto',
       fontWeight: 400,
       height: '70vh',
-      width:'inherit',
+      width: 'inherit',
       backgroundColor: 'white',
       position: 'absolute',
       bottom: '20px',
@@ -45,10 +45,10 @@ const useStyles = makeStyles(() => ({
       },
       textTransform: 'none',
    },
-   deposit:{
+   deposit: {
       // width: '100%'
    },
-   tabledata:{
+   tabledata: {
       position: 'absolute',
       top: '0',
       right: '0px',
@@ -80,7 +80,8 @@ export default function Deposit() {
             value: 'Success!',
             style: {
                color: 'green',
-               '@keyframes buzzout': "10% {transfor}"}
+               '@keyframes buzzout': "10% {transfor}"
+            }
          })
          setOpen(true)
          setAmount(0)

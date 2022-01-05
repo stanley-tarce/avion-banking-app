@@ -77,20 +77,20 @@ const useStyles = makeStyles({
         marginTop: '32px',
         fontSize: '18px',
         fontWeight: '500'
-    }
+    },
 });
 
 
 
 const Header = (props) => {
 
-    const todayMonth = new Date().toLocaleString('en-us', {month: 'short'});
-    const todayDate = new Date().toLocaleString('en-us', {day: 'numeric'});
+    const todayMonth = new Date().toLocaleString('en-us', { month: 'short' });
+    const todayDate = new Date().toLocaleString('en-us', { day: 'numeric' });
     const todayYear = new Date().getFullYear();
     const today = `${todayMonth} ${todayDate}, ${todayYear}`;
 
-    const [ logOut, setLogOut ] = useState(false);
-    const [ logOff, setLogOff] = useState(false);
+    const [logOut, setLogOut] = useState(false);
+    const [logOff, setLogOff] = useState(false);
     const showAccount = () => {
         setLogOut(!logOut);
     }
@@ -101,29 +101,29 @@ const Header = (props) => {
     const [jpy, setJpy] = useState();
 
     const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
-    const fetchCurrency = () =>{ 
+    const fetchCurrency = () => {
         fetch(api)
-        .then(response => response.json())
-        .then(data => {
-            const { USD, PHP, GBP, CNY } = data.rates
+            .then(response => response.json())
+            .then(data => {
+                const { USD, PHP, GBP, CNY } = data.rates
 
-            setUsd(USD.toFixed(2))
-            setPhp(PHP.toFixed(2))
-            setSgd(GBP.toFixed(2))
-            setJpy(CNY.toFixed(2))
-    })
+                setUsd(USD.toFixed(2))
+                setPhp(PHP.toFixed(2))
+                setSgd(GBP.toFixed(2))
+                setJpy(CNY.toFixed(2))
+            })
     }
 
     fetchCurrency()
 
     const classes = useStyles();
     return (
-        <div>
-            { logOut ? <MyAccount setLogOff={setLogOff} /> : null }
-            { logOff ? props.setLogOut(true) : null}
+        <div className=''>
+            {logOut ? <MyAccount setLogOff={setLogOff} /> : null}
+            {logOff ? props.setLogOut(true) : null}
             <Card
-            className={classes.card}
-            elevation={0}
+                className={classes.card}
+                elevation={0}
             >
                 {/* <div
                 style={{
@@ -137,112 +137,112 @@ const Header = (props) => {
                     borderBottomLeftRadius: '35.5px'
                     }}></div> */}
                 <NotificationsIcon
-                className={classes.image}
-                style={{
-                    marginRight: '2.15em',
-                    height: '24px',
-                    width: '24px',
-                    marginTop: '0.5rem',
-                    cursor: 'pointer',
-                    color: '#4B4848'
-                }} />
-                <img 
-                className={classes.image}
-                src={user} 
-                alt="" 
+                    className={classes.image}
+                    style={{
+                        marginRight: '2.15em',
+                        height: '24px',
+                        width: '24px',
+                        marginTop: '0.5rem',
+                        cursor: 'pointer',
+                        color: '#4B4848'
+                    }} />
+                <img
+                    className={classes.image}
+                    src={user}
+                    alt=""
                 />
                 <h4
-                className={`${classes.user} user-name`}
-                onClick={showAccount}
-                style={{userSelect:'none'}}
+                    className={`${classes.user} user-name`}
+                    onClick={showAccount}
+                    style={{ userSelect: 'none' }}
                 >
-                    Admin
+                    {localStorage.getItem('googleSignIn') ? JSON.parse(localStorage.getItem('googleSignIn')).givenName : "Admin"}
                 </h4>
                 <ArrowDropDownIcon className={`${classes.icon} acct-icon`}
-                onClick={showAccount}
+                    onClick={showAccount}
                 />
                 <div
-                className={classes.div}
+                    className={classes.div}
                 >
                     <h4
-                    style={{fontSize: '24px', marginBottom: 0, color: '#5F5E5E'}}
+                        style={{ fontSize: '24px', marginBottom: 0, color: '#5F5E5E' }}
                     >1 EUR =</h4>
                     <span>as of {today}</span>
                 </div>
-                <Card 
-                className={classes.cardCurrency}>
-                   
-                        <img 
+                <Card
+                    className={classes.cardCurrency}>
+
+                    <img
                         className={classes.flag}
-                        src={philippines} 
+                        src={philippines}
                         alt='PH'
-                        />
-                        <h4
+                    />
+                    <h4
                         className={classes.textCurrency}>
-                            PHP
-                        </h4>
-                        <h4
+                        PHP
+                    </h4>
+                    <h4
                         className={classes.rateCurrency}
-                        >
-                            {php}
-                        </h4>
+                    >
+                        {php}
+                    </h4>
                 </Card>
-                <Card 
-                className={classes.cardCurrency}
-                style={{marginLeft: '170px'}}
+                <Card
+                    className={classes.cardCurrency}
+                    style={{ marginLeft: '170px' }}
                 >
-                        <img 
+                    <img
                         className={classes.flag}
-                        src={united} 
+                        src={united}
                         alt='USA'
-                        />
-                        <h4
+                    />
+                    <h4
                         className={classes.textCurrency}>
-                            USD
-                        </h4>
-                        <h4
+                        USD
+                    </h4>
+                    <h4
                         className={classes.rateCurrency}
-                        >
-                            {usd}
-                        </h4>
+                    >
+                        {usd}
+                    </h4>
                 </Card>
-                <Card 
-                className={classes.cardCurrency}
-                style={{marginLeft: '340px'}}
+                <Card
+                    className={classes.cardCurrency}
+                    style={{ marginLeft: '340px' }}
                 >
-                        <img 
+                    <img
                         className={classes.flag}
-                        src={unitedK} 
+                        src={unitedK}
                         alt='UK'
-                        />
-                        <h4
+                    />
+                    <h4
                         className={classes.textCurrency}>
-                            GBP
-                        </h4>
-                        <h4
+                        GBP
+                    </h4>
+                    <h4
                         className={classes.rateCurrency}
-                        >
-                            {sgd}
-                        </h4>
+                    >
+                        {sgd}
+                    </h4>
                 </Card>
-                <Card 
-                className={classes.cardCurrency}
-                style={{marginLeft: '510px'}}
+                <Card
+                    className={classes.cardCurrency}
+                    style={{ marginLeft: '510px' }}
                 >
-                        <img 
+                    <img
                         className={classes.flag}
-                        src={china} 
+                        src={china}
                         alt='CHN'
-                        />
-                        <h4
+                    />
+                    <h4
                         className={classes.textCurrency}>
-                            CNY
-                        </h4>
-                        <h4
+                        CNY
+                    </h4>
+                    <h4
                         className={classes.rateCurrency}
-                        >
-                            {jpy}
-                        </h4>
+                    >
+                        {jpy}
+                    </h4>
                 </Card>
             </Card>
         </div>

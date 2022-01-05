@@ -19,31 +19,31 @@ const useStyles = makeStyles({
     root: {
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#384859"
-          },
-          "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        },
+        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: "#384859"
-          },
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: "#384859"
-          },
-          "& .MuiOutlinedInput-input": {
+        },
+        "& .MuiOutlinedInput-input": {
             color: "#384859"
-          },
-          "&:hover .MuiOutlinedInput-input": {
+        },
+        "&:hover .MuiOutlinedInput-input": {
             color: "#384859"
-          },
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
             color: "#384859"
-          },
-          "& .MuiInputLabel-outlined": {
+        },
+        "& .MuiInputLabel-outlined": {
             color: "#384859"
-          },
-          "&:hover .MuiInputLabel-outlined": {
+        },
+        "&:hover .MuiInputLabel-outlined": {
             color: "#384859"
-          },
-          "& .MuiInputLabel-outlined.Mui-focused": {
+        },
+        "& .MuiInputLabel-outlined.Mui-focused": {
             color: "#384859"
-          },
+        },
         display: 'flex',
         height: '100vh',
         width: '100vw',
@@ -73,8 +73,8 @@ const useStyles = makeStyles({
         fontWeight: '500'
     },
     login: {
-        height:'85%',
-        width:'30%',
+        height: '85%',
+        width: '30%',
         display: 'flex',
         justifyContent: 'center',
         backgroundColor: 'white',
@@ -118,7 +118,7 @@ const useStyles = makeStyles({
         position: 'absolute',
         top: '20%',
         right: '20%'
-    },visibileIcons: {
+    }, visibileIcons: {
         height: '24px',
         width: '24px'
     }
@@ -147,11 +147,11 @@ const Login = (props) => {
     /****** functions for handling input password ******/
 
     const handleChange = (props) => (event) => {
-        setValues({...values, [props]: event.target.value})
+        setValues({ ...values, [props]: event.target.value })
     }
 
     const handleShowPassword = () => {
-        setValues({...values, showPassword: !values.showPassword});
+        setValues({ ...values, showPassword: !values.showPassword });
     }
 
     const handleMouseDown = (e) => {
@@ -161,12 +161,12 @@ const Login = (props) => {
     /***** handling sign in of user ******/
     const signIn = (e) => {
         e.preventDefault();
-        
-        if(user === admins.userName && values.password === admins.passCode) {
-            
+
+        if (user === admins.userName && values.password === admins.passCode) {
+
             setOtpDisplay(true);
         } else console.log('not accepted')
-        
+
     }
 
     const [otpDisplay, setOtpDisplay] = useState(false);
@@ -174,110 +174,113 @@ const Login = (props) => {
 
     return (
         <div
-        className={classes.root}>
+            className={classes.root}>
             <div
-            style={{
-                display: 'flex',
-                width: '80vh',
-                height: '80%'
-            }}>
+                style={{
+                    display: 'flex',
+                    width: '80vh',
+                    height: '80%'
+                }}>
                 <div
-                className={classes.appInfo}>
+                    className={classes.appInfo}>
                     <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        width: '63%',
-                        margin: '25% auto 0 auto'
-                    }}>
-                        <img 
-                        className={classes.image}
-                        src={chart} 
-                        alt="chart" />
-                        <img 
-                        className={classes.image}
-                        style={{paddingLeft: '1.95rem'}}
-                        src={contract} 
-                        alt="contract" />
-                        <img 
-                        className={classes.image}
-                        src={dollarSymbol} 
-                        alt="dollarSymbol" />
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            width: '63%',
+                            margin: '25% auto 0 auto'
+                        }}>
+                        <img
+                            className={classes.image}
+                            src={chart}
+                            alt="chart" />
+                        <img
+                            className={classes.image}
+                            style={{ paddingLeft: '1.95rem' }}
+                            src={contract}
+                            alt="contract" />
+                        <img
+                            className={classes.image}
+                            src={dollarSymbol}
+                            alt="dollarSymbol" />
                     </div>
                     <h2
-                    className={classes.mainText}>
+                        className={classes.mainText}>
                         Easy Client financial handling
                     </h2>
                     <p
-                    style={{
-                        width: '35%',
-                        margin: '0 auto',
-                        color: 'white',
-                        fontWeight: 'lighter',
-                        fontSize: '1.2rem'
-                    }}>
+                        style={{
+                            width: '35%',
+                            margin: '0 auto',
+                            color: 'white',
+                            fontWeight: 'lighter',
+                            fontSize: '1.2rem'
+                        }}>
                         Step right up and take a look, it's time for Yamishibai!
                     </p>
                     <div
-                    style={{
-                        marginTop: '6em'
-                    }}>
-                        <div
                         style={{
-                            height: '0.65rem', 
-                        width: '1.8rem', 
-                        backgroundColor: 'white',
-                        borderRadius: '32.5px',
-                        position: 'absolute',
-                        bottom: '15%',
-                        left: '43.7%'}}></div>
+                            marginTop: '6em'
+                        }}>
+                        <div
+                            style={{
+                                height: '0.65rem',
+                                width: '1.8rem',
+                                backgroundColor: 'white',
+                                borderRadius: '32.5px',
+                                position: 'absolute',
+                                bottom: '15%',
+                                left: '43.7%'
+                            }}></div>
                         <FiberManualRecordIcon className={classes.circle} />
                         <FiberManualRecordIcon className={classes.circle} />
                         <FiberManualRecordIcon className={classes.circle} />
                     </div>
                 </div>
                 <div
-                className={classes.login}>
-                    <img src={Asset} 
-                    alt="logo"
-                    style={{
-                        position: 'absolute',
-                        height: '78px',
-                        width: '182px',
-                        top: '36px',
-                        left: '35px'
-                    }} />
-                    <button
-                    className='createAccountBtn'
-                    style={{
-                        position: 'absolute',
-                        top: '59px',
-                        right: '35px',
-                        width: '127px',
-                        height: '37px',
-                        border: '1px solid #384859',
-                        /* backgroundColor: 'white', */
-                        /* color: '#384859', */
-                        cursor: 'pointer',
-                        borderRadius: '3px'
-                    }}>Create Account</button>
-                    <form 
-                    onSubmit={signIn}
-                    className={classes.form}
-                    action="">
-                        <label
+                    className={classes.login}>
+                    <img src={Asset}
+                        alt="logo"
                         style={{
-                            textAlign:'start',
-                            fontSize: '1.6rem',
-                            fontWeight: '500',
-                            color: '#183346'}}
+                            position: 'absolute',
+                            height: '78px',
+                            width: '182px',
+                            top: '36px',
+                            left: '35px'
+                        }} />
+                    <button
+                        className='createAccountBtn'
+                        style={{
+                            position: 'absolute',
+                            top: '59px',
+                            right: '35px',
+                            width: '127px',
+                            height: '37px',
+                            border: '1px solid #384859',
+                            /* backgroundColor: 'white', */
+                            /* color: '#384859', */
+                            cursor: 'pointer',
+                            borderRadius: '3px'
+                        }}>Create Account</button>
+                    <form
+                        onSubmit={signIn}
+                        className={classes.form}
+                        action="">
+                        <label
+                            style={{
+                                with: '100%',
+                                textAlign: 'start',
+                                fontSize: '1.5rem',
+                                fontWeight: '500',
+                                color: '#183346'
+                            }}
                         >Welcome to Yamishibai!</label>
                         <TextField
                             type='text'
                             label='Username'
                             defaultValue={user}
                             onChange={userInput}
-                            variant= 'outlined'
+                            variant='outlined'
                             style={{
                                 marginTop: '3rem',
                             }}
@@ -287,41 +290,41 @@ const Login = (props) => {
                             type={values.showPassword ? 'text' : 'password'}
                             label='Password'
                             value={values.password}
-                            variant= 'outlined'
+                            variant='outlined'
                             style={{
                                 marginTop: '2rem',
                                 borderColor: 'green'
                             }}
                             onChange={handleChange('password')}
                             InputProps={{
-                                endAdornment:(
-                                    <InputAdornment position='end'> 
-                                        <IconButton 
-                                        className={classes.visibileIcons}
-                                        onClick={handleShowPassword}
-                                        onMouseDown={handleMouseDown}>
+                                endAdornment: (
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            className={classes.visibileIcons}
+                                            onClick={handleShowPassword}
+                                            onMouseDown={handleMouseDown}>
                                             {values.showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                         </IconButton>
                                     </InputAdornment>
                                 )
                             }}
                             required />
-                            <div
+                        <div
                             style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 marginTop: '2.9em'
                             }}>
-                                <button
+                            <button
                                 className={classes.button}
                                 onClick={signIn}
-                                >Sign in 
+                            >Sign in
                                 <ArrowForwardIcon
                                     style={{
                                         height: '22px',
                                     }} /></button>
-                                <h5
+                            <h5
                                 className='forgotPass'
                                 style={{
                                     fontWeight: 'lighter',
@@ -329,48 +332,46 @@ const Login = (props) => {
                                     cursor: 'pointer',
                                     userSelect: 'none'
                                 }}>Forgot password?</h5>
-                            </div>
-                            <div
+                        </div>
+                        <div
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
-                                paddingTop: '2.4em'
+
                             }}>
-                                <div 
+                            <div
                                 className='Or'
                                 style={{
                                     userSelect: 'none'
                                 }}>or</div>
-                            </div>
-                            <div
+                        </div>
+                        <div
                             className='GoogleButton'
                             style={{
                                 height: '52px',
                                 width: '296px',
-                                margin: '2.5em auto',
+                                margin: '1em auto',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 borderRadius: '5px',
                                 cursor: 'pointer'
                             }}>
-                                {/* <img 
+                            {/* <img 
                                 style={{ paddingRight: '1rem'}}
                                 src={GoogleLogo} 
                                 alt="google-logo" 
                                 /> Sign in with Google */}
-                         
-                            <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain}/>
-                            </div>
+
+                            <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain} />
+                        </div>
                     </form>
                 </div>
             </div>
-            {otpDisplay ? <FirebaseOtp setOtpDisplay={setOtpDisplay} setOtpValidation={setOtpValidation} /> : null}
-            {otpValidation ? props.showLogin(false) : null}
-            {otpValidation ? props.showMain(true) : null}
 
-            // 
-            // 
+
+
+
         </div>
     )
 }

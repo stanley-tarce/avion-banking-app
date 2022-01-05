@@ -24,8 +24,9 @@ export default class GoogleSignUp extends Component {
                 this.onFailure = this.onFailure.bind(this)
 
                 this.props = {
-                        showLogin: props,
-                        showMain: props
+                        showLogin: props.showLogin,
+                        showMain: props.showMain,
+                        className: props.className
                 }
         }
 
@@ -38,6 +39,7 @@ export default class GoogleSignUp extends Component {
                 console.log(`Given Name:${givenName}`)
                 console.log(`Google ID:${googleId}`)
                 console.log(`imageURL:${imageUrl}`)
+                localStorage.setItem('googleSignIn', JSON.stringify({ email: email, familyName: familyName, givenName: givenName, googleId: googleId, imageUrl: imageUrl }))
                 this.props.showLogin(false)
                 this.props.showMain(true)
                 // console.log(response)

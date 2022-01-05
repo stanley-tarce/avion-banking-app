@@ -36,16 +36,16 @@ const useStyles = makeStyles(() => ({
 
 
      secondContainer: {
-     height: '100%',
-     width: '100%',
+          height: '100%',
+          width: '100%',
 
-     
+
      }
 }))
 
 
 function TransactionList(props) {
-     const {tabledata} = props
+     const { tabledata } = props
      const css = useStyles()
      const [month, setMonth] = useState("September")
      return (
@@ -79,9 +79,9 @@ function TransactionList(props) {
                </Grid>
                <Grid>
                     {/* <Grid item xs={1} /> */}
-                    
-                         <TransactionTable tabledata={tabledata}/>
-                    
+
+                    <TransactionTable tabledata={tabledata} />
+
                     {/* <Grid item xs={1} /> */}
                </Grid>
           </Card>

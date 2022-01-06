@@ -1,6 +1,6 @@
 {
   "name": "banking-app",
-  "homepage": "http://stanley-tarce.github.io/avion-banking-app",
+  "homepage": "https://avion-banking-app.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

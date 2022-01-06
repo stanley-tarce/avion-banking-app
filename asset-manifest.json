@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/avion-banking-app/static/css/main.fea7cf84.chunk.css",
-    "main.js": "/avion-banking-app/static/js/main.1434fe2e.chunk.js",
-    "main.js.map": "/avion-banking-app/static/js/main.1434fe2e.chunk.js.map",
+    "main.js": "/avion-banking-app/static/js/main.3db73803.chunk.js",
+    "main.js.map": "/avion-banking-app/static/js/main.3db73803.chunk.js.map",
     "runtime-main.js": "/avion-banking-app/static/js/runtime-main.84343f46.js",
     "runtime-main.js.map": "/avion-banking-app/static/js/runtime-main.84343f46.js.map",
     "static/js/2.c2e2f699.chunk.js": "/avion-banking-app/static/js/2.c2e2f699.chunk.js",
@@ -25,6 +25,6 @@
     "static/js/runtime-main.84343f46.js",
     "static/js/2.c2e2f699.chunk.js",
     "static/css/main.fea7cf84.chunk.css",
-    "static/js/main.1434fe2e.chunk.js"
+    "static/js/main.3db73803.chunk.js"
   ]
 }

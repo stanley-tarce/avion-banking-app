@@ -1,19 +1,18 @@
 {
   "files": {
     "main.css": "/avion-banking-app/static/css/main.fea7cf84.chunk.css",
-    "main.js": "/avion-banking-app/static/js/main.3db73803.chunk.js",
-    "main.js.map": "/avion-banking-app/static/js/main.3db73803.chunk.js.map",
-    "runtime-main.js": "/avion-banking-app/static/js/runtime-main.84343f46.js",
-    "runtime-main.js.map": "/avion-banking-app/static/js/runtime-main.84343f46.js.map",
-    "static/js/2.c2e2f699.chunk.js": "/avion-banking-app/static/js/2.c2e2f699.chunk.js",
-    "static/js/2.c2e2f699.chunk.js.map": "/avion-banking-app/static/js/2.c2e2f699.chunk.js.map",
-    "static/js/3.8cb4b3bd.chunk.js": "/avion-banking-app/static/js/3.8cb4b3bd.chunk.js",
-    "static/js/3.8cb4b3bd.chunk.js.map": "/avion-banking-app/static/js/3.8cb4b3bd.chunk.js.map",
+    "main.js": "/avion-banking-app/static/js/main.de85de13.chunk.js",
+    "main.js.map": "/avion-banking-app/static/js/main.de85de13.chunk.js.map",
+    "runtime-main.js": "/avion-banking-app/static/js/runtime-main.8a02d645.js",
+    "runtime-main.js.map": "/avion-banking-app/static/js/runtime-main.8a02d645.js.map",
+    "static/js/2.a3b2f842.chunk.js": "/avion-banking-app/static/js/2.a3b2f842.chunk.js",
+    "static/js/2.a3b2f842.chunk.js.map": "/avion-banking-app/static/js/2.a3b2f842.chunk.js.map",
+    "static/js/3.0138655c.chunk.js": "/avion-banking-app/static/js/3.0138655c.chunk.js",
+    "static/js/3.0138655c.chunk.js.map": "/avion-banking-app/static/js/3.0138655c.chunk.js.map",
     "index.html": "/avion-banking-app/index.html",
     "static/css/main.fea7cf84.chunk.css.map": "/avion-banking-app/static/css/main.fea7cf84.chunk.css.map",
-    "static/js/2.c2e2f699.chunk.js.LICENSE.txt": "/avion-banking-app/static/js/2.c2e2f699.chunk.js.LICENSE.txt",
+    "static/js/2.a3b2f842.chunk.js.LICENSE.txt": "/avion-banking-app/static/js/2.a3b2f842.chunk.js.LICENSE.txt",
     "static/media/Asset.8d4fade4.svg": "/avion-banking-app/static/media/Asset.8d4fade4.svg",
-    "static/media/GoogleLogo.2eec9b0f.svg": "/avion-banking-app/static/media/GoogleLogo.2eec9b0f.svg",
     "static/media/YsWhite.5e43f86e.svg": "/avion-banking-app/static/media/YsWhite.5e43f86e.svg",
     "static/media/bg.64df3b53.svg": "/avion-banking-app/static/media/bg.64df3b53.svg",
     "static/media/chart.36546efd.svg": "/avion-banking-app/static/media/chart.36546efd.svg",
@@ -22,9 +21,9 @@
     "static/media/user.2ab6e483.svg": "/avion-banking-app/static/media/user.2ab6e483.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.84343f46.js",
-    "static/js/2.c2e2f699.chunk.js",
+    "static/js/runtime-main.8a02d645.js",
+    "static/js/2.a3b2f842.chunk.js",
     "static/css/main.fea7cf84.chunk.css",
-    "static/js/main.3db73803.chunk.js"
+    "static/js/main.de85de13.chunk.js"
   ]
 }

@@ -14,8 +14,8 @@ For OTP codes
 # Images
 
 <p align="center">
-  <img src="./banking-app/Pictures/Banking%20App.jpeg" width="1440" height="900" alt="Picture1">
-  <img src="./banking-app/Pictures/Banking%20App2.jpeg" width="1440" height="900" alt="Picture2">
-  <img src="./banking-app/Pictures/Banking%20App3.jpeg" width="1440" height="900" alt="Picture3">
+  <img src="./banking-app/Pictures/Banking%20App.jpeg" width="1000" height="900" alt="Picture1">
+  <img src="./banking-app/Pictures/Banking%20App2.jpeg" width="1000" height="900" alt="Picture2">
+  <img src="./banking-app/Pictures/Banking%20App3.jpeg" width="1000" height="900" alt="Picture3">
 
 </p>

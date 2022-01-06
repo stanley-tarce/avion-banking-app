@@ -100,7 +100,7 @@ const Header = (props) => {
     const [sgd, setSgd] = useState();
     const [jpy, setJpy] = useState();
 
-    const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
+    const api = 'https://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
     const fetchCurrency = () => {
         fetch(api)
             .then(response => response.json())

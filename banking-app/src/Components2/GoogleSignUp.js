@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { GoogleLogin } from 'react-google-login'
-import '../Components/GoogleSignUp.css'
+import '../Components2/GoogleSignUp.css'
 
 // Taken from Google OAuth 2.0
 const googleData = {

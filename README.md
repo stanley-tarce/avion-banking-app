@@ -13,6 +13,9 @@ For OTP codes
 
 # Images
 
-![Picture 1](https://github.com/[stanley-tarce]/[avion-banking-app]/blob/[main-v2]/banking-app/Pictures/Banking%20App.jpeg?raw=true)
-![Picture 2](https://github.com/[stanley-tarce]/[avion-banking-app]/blob/[main-v2]/banking-app/Pictures/Banking%20App2.jpeg?raw=true)
-![Picture 3](https://github.com/[stanley-tarce]/[avion-banking-app]/blob/[main-v2]/banking-app/Pictures/Banking%20App3.jpeg?raw=true)
+<p align="center">
+  <img src="./banking-app/Pictures/Banking%20App.jpeg" width="350" alt="Picture1">
+  <img src="./banking-app/Pictures/Banking%20App2.jpeg" width="350" alt="Picture2">
+  <img src="./banking-app/Pictures/Banking%20App3.jpeg" width="350" alt="Picture3">
+
+</p>

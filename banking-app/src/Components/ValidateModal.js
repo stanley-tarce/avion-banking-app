@@ -3,27 +3,27 @@ import { makeStyles } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
 import bg from '../assets/bg.svg';
 
-const useStyle = makeStyles({
-    container: {
-        width: '100%',
-        height: '30px',
-        textAlign: 'start',
-        marginTop: '0.8rem'
-    },
-    input: {
-        position: 'absolute',
-        width: '250px',
-        right: '-2.5em',
-        border: '1px solid black',
-        borderRadius: '3px',
-        height: '1.25rem',
-        outlineColor: 'rgba(0,0,0,0.6)',
-        paddingLeft: '1rem'
-    },
-    label: {
-        fontWeight: '500'
-    }
-})
+// const useStyle = makeStyles({
+//     container: {
+//         width: '100%',
+//         height: '30px',
+//         textAlign: 'start',
+//         marginTop: '0.8rem'
+//     },
+//     input: {
+//         position: 'absolute',
+//         width: '250px',
+//         right: '-2.5em',
+//         border: '1px solid black',
+//         borderRadius: '3px',
+//         height: '1.25rem',
+//         outlineColor: 'rgba(0,0,0,0.6)',
+//         paddingLeft: '1rem'
+//     },
+//     label: {
+//         fontWeight: '500'
+//     }
+// })
 
 const ValidateModal = ({ open, setOpen, result }) => {
 

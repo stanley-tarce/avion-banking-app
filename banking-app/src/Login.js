@@ -1,5 +1,5 @@
 
-import GoogleSignUp from './GoogleSignUp';
+import GoogleSignUp from './Components/GoogleSignUp';
 import React, { useState } from 'react'
 import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +12,7 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import FirebaseOtp from './FirebaseOtp';
+import FirebaseOtp from './Components/FirebaseOtp';
 
 
 const useStyles = makeStyles({

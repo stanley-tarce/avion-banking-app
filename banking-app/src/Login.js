@@ -1,7 +1,7 @@
 
 import GoogleSignUp from './Components/GoogleSignUp';
 import React, { useState } from 'react'
-import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
+import { InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from './assets/login/chart.svg';
 import contract from './assets/login/contract.svg';
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
         display: 'flex',
         height: '100vh',
         width: '100vw',
-        background: '#aa4b6b',  /* fallback for old browsers */
+        /* fallback for old browsers */
         background: 'linear-gradient(to right, #8e9eab, #eef2f3)'
 
     },
@@ -169,8 +169,8 @@ const Login = (props) => {
 
     }
 
-    const [otpDisplay, setOtpDisplay] = useState(false);
-    const [otpValidation, setOtpValidation] = useState(false);
+    const [, setOtpDisplay] = useState(false);
+
 
     return (
         <div

@@ -1,5 +1,5 @@
 import CancelIcon from '@material-ui/icons/Cancel';
-import { makeStyle, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Modal } from '@material-ui/core';
 import bg from '../assets/bg.svg';
 
@@ -25,9 +25,9 @@ const useStyle = makeStyles({
     }
 })
 
-const ValidateModal = ({ open, setOpen,result }) => {
+const ValidateModal = ({ open, setOpen, result }) => {
 
-    const classes = useStyle();
+    // const classes = useStyle();
 
     return (
         <Modal open={open} onClose={() => setOpen(false)}
@@ -75,7 +75,7 @@ const ValidateModal = ({ open, setOpen,result }) => {
                     <h2 style={{ textAlign: 'center' }}>Result: </h2>
                     <div>
                         <h1 {...result}>{result.value}</h1>
-                        
+
                     </div>
                 </div>
 

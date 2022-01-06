@@ -93,7 +93,7 @@ export default function Transfer() {
         const [accountType1, setAccountType1] = React.useState('')
         const [accountType2, setAccountType2] = React.useState('')
         const [transaction1, setTransaction1] = React.useState([])
-        const [transaction2, setTransaction2] = React.useState([]) //dummy array
+        const [, setTransaction2] = React.useState([]) //dummy array
         const [error, setError] = React.useState({})
         const [result, setResult] = React.useState({})
         const [open, setOpen] = React.useState(false)

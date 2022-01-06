@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Header from "./Components/Header";
-import SideBar from "./Components/SideBar";
-import UserList from "./Components/UserList";
-import MyAccount from './Components/MyAccount';
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
+import UserList from "./components/UserList";
+import MyAccount from './components/MyAccount';
 import Deposit from './Components/Deposit';
 import Withdraw from './Components/Withdraw';
 import Transfer from './Components/Transfer';

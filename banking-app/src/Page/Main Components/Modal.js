@@ -1,6 +1,8 @@
 import CancelIcon from '@material-ui/icons/Cancel';
-import { makeStyles } from '@material-ui/core';
-import bg from '../assets/bg.svg';
+import { makeStyles, Typography } from '@material-ui/core';
+import bg from '../../assets/bg.svg';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const useStyle = makeStyles({
     container: {
@@ -19,7 +21,8 @@ const useStyle = makeStyles({
         right: '-6.5em',
         border: '1px solid black',
         borderRadius: '3px',
-        height: '1.25rem',
+        paddingTop: '0.5em',
+        paddingBottom: '0.5em',
         outlineColor: 'rgba(0,0,0,0.6)',
         paddingLeft: '1rem'
     },
@@ -30,10 +33,14 @@ const useStyle = makeStyles({
     }
 })
 
-const Modal = (props) => {
-
+const Modal = () => {
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
+    let dataContainer = JSON.parse(localStorage.getItem('userData'))
+    const accountID = searchParams.get('accountID')
     const classes = useStyle();
-
+    let objects = dataContainer.find(data => data.accountID === accountID)
+    console.log(objects)
     return (
         <div
             style={{
@@ -56,8 +63,8 @@ const Modal = (props) => {
             <div
                 style={{
                     position: 'relative',
-                    height: '75vh',
-                    width: '60vh',
+                    height: '80vh',
+                    width: '100vh',
                     backgroundColor: 'Whitesmoke',
                     background: `url${bg}`,
                     marginTop: '5%',
@@ -71,9 +78,15 @@ const Modal = (props) => {
                         right: '0.8rem',
                         cursor: 'pointer'
                     }}
-                    onClick={() => props.setModals(false)}
+                    onClick={() => navigate(-1)}
                 />
-                <h2>User Information</h2>
+                <Typography style={{
+                    position: 'absolute',
+                    "fontSize": '1.5rem',
+                    "fontWeight": "bold",
+                    top: "1.6rem",
+                    left: "1.6rem"
+                }}>User Information</Typography>
 
                 <form
                     style={{
@@ -95,7 +108,7 @@ const Modal = (props) => {
                             className={classes.input}
                             type="text"
                             name="accountNumber"
-                            value={props.setAccountNumber}
+                            value={objects.accountID}
                             disabled />
                     </div>
                     <div className={classes.container}>
@@ -106,7 +119,7 @@ const Modal = (props) => {
                             className={classes.input}
                             type="text"
                             name="accountType"
-                            value={props.setAccountType}
+                            value={objects.accountype}
                             disabled
                         />
                     </div>
@@ -119,7 +132,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="lastName"
-                            value={props.setLastName}
+                            value={objects.lastname}
                             readOnly />
                     </div>
                     <div
@@ -131,7 +144,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="firstName"
-                            value={props.setFirstName}
+                            value={objects.firstname}
                             readOnly />
                     </div>
                     <div
@@ -143,7 +156,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="middleName"
-                            value={props.setMiddleName}
+                            value={objects.middlename}
                             readOnly />
                     </div>
                     <div
@@ -155,7 +168,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="email" name="emailAddress"
-                            value={props.setEmail}
+                            value={objects.email}
                             readOnly />
                     </div>
                     <div
@@ -167,7 +180,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="contactNumber"
-                            value={props.setContactNumber}
+                            value={objects.contactnumber}
                             readOnly />
                     </div>
                     <div
@@ -179,7 +192,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="gender"
-                            value={props.setGender}
+                            value={objects.gender}
                             readOnly />
                     </div>
                     <div
@@ -191,7 +204,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="homeAddress"
-                            value={props.address}
+                            value={objects.homeaddress}
                             readOnly />
                     </div>
                     <div
@@ -203,7 +216,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="city"
-                            value={props.setCity}
+                            value={objects.city}
                             readOnly />
                     </div>
                     <div
@@ -215,7 +228,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="city"
-                            value={props.setLocCode}
+                            value={objects.zipcode}
                             readOnly />
                     </div>
 
@@ -228,7 +241,7 @@ const Modal = (props) => {
                         <input
                             className={classes.input}
                             type="text" name="dateOFBirth"
-                            value={props.setBirthDate}
+                            value={objects.dateofbirth}
                             readOnly />
                     </div>
                     <div
@@ -241,12 +254,12 @@ const Modal = (props) => {
                             className={classes.input}
                             type="text"
                             name="currentBalance"
-                            value={props.setCurrentBalance}
+                            value={objects.initialbalance}
                             disabled />
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     )
 }
 

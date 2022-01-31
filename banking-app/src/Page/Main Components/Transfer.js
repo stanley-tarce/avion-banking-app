@@ -1,10 +1,11 @@
-import React from 'react'
-import hookUserDataFunctions from './Functions/hookUserData'
-import transactions from './Functions/transaction'
+import React, { useContext } from 'react'
+import transactions from '../../Components2/Functions/transaction'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
-import TransactionList from './TransactionList'
-import TransactionValidation from './Functions/TransactionValidation'
-import ValidateModal from './ValidateModal'
+import TransactionList from '../Other Components/TransactionList'
+import TransactionValidation from '../../Components2/Functions/TransactionValidation'
+import ValidateModal from '../../Components2/ValidateModal'
+import { CreateContext } from '../../Data';
+import { createFullName } from '../../Function'
 const useStyles = makeStyles(() => ({
         root: {
                 fontFamily: 'Roboto',
@@ -80,9 +81,11 @@ const useStyles = makeStyles(() => ({
 
 
 export default function Transfer() {
+        const { transferToSendAccountNumber,
+                setTransferToSendAccountNumber, transferToReceiveAccountNumber,
+                setTransferToReceiveAccountNumber } = useContext(CreateContext)
         const classes = useStyles()
         const { transfer } = transactions
-        const { hookUserData, createFullName } = hookUserDataFunctions
         const [accountNum1, setAccountNum1] = React.useState('')
         const [accountNum2, setAccountNum2] = React.useState('')
         const [balance1, setBalance1] = React.useState(0)
@@ -120,8 +123,8 @@ export default function Transfer() {
                 }
         }
 
-        React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
-        React.useEffect(() => { hookUserData(accountNum2, setName2, createFullName, setAccountType2, setBalance2, setTransaction2) }, [accountNum2, createFullName, hookUserData])
+        // React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
+        // React.useEffect(() => { hookUserData(accountNum2, setName2, createFullName, setAccountType2, setBalance2, setTransaction2) }, [accountNum2, createFullName, hookUserData])
         return (
                 <>
                         <Grid className={classes.root} container spacing={7}>

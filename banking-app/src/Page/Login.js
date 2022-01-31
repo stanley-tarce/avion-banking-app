@@ -1,5 +1,5 @@
 
-import GoogleSignUp from './GoogleSignUp';
+// import GoogleSignUp from './GoogleSignUp';
 import React, { useState } from 'react'
 import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,7 +12,7 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import FirebaseOtp from './FirebaseOtp';
+// import FirebaseOtp from './FirebaseOtp';
 
 
 const useStyles = makeStyles({
@@ -218,7 +218,7 @@ const Login = (props) => {
                         }}>
                         Step right up and take a look, it's time for Yamishibai!
                     </p>
-                    <div
+                    {/* <div
                         style={{
                             marginTop: '6em'
                         }}>
@@ -235,7 +235,7 @@ const Login = (props) => {
                         <FiberManualRecordIcon className={classes.circle} />
                         <FiberManualRecordIcon className={classes.circle} />
                         <FiberManualRecordIcon className={classes.circle} />
-                    </div>
+                    </div> */}
                 </div>
                 <div
                     className={classes.login}>
@@ -357,13 +357,13 @@ const Login = (props) => {
                                 borderRadius: '5px',
                                 cursor: 'pointer'
                             }}>
-                            {/* <img 
-                                style={{ paddingRight: '1rem'}}
-                                src={GoogleLogo} 
-                                alt="google-logo" 
-                                /> Sign in with Google */}
+                            <img
+                                style={{ paddingRight: '1rem' }}
+                                src={GoogleLogo}
+                                alt="google-logo"
+                            /> Sign in with Google
 
-                            <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain} />
+                            {/* <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain} /> */}
                         </div>
                     </form>
                 </div>

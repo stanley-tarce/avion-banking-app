@@ -1,11 +1,10 @@
-import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import React from 'react'
-import hookUserDataFunctions from './Functions/hookUserData'
-import transactions from './Functions/transaction'
-import TransactionList from './TransactionList'
-import TransactionValidation from './Functions/TransactionValidation'
-import ValidateModal from './ValidateModal'
-
+import transactions from '../../Components2/Functions/transaction'
+import TransactionList from '../Other Components/TransactionList'
+import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
+import TransactionValidation from '../../Components2/Functions/TransactionValidation'
+import ValidateModal from '../../Components2/ValidateModal'
+import { createFullName } from '../../Function'
 const useStyles = makeStyles(() => ({
    root: {
       fontFamily: 'Roboto',
@@ -34,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
    },
    submitbutton: {
-      marginTop: '25px',
+      marginTop: '10px',
       backgroundColor: '#384859',
       width: '200px',
       borderRadius: '31px',
@@ -45,8 +44,8 @@ const useStyles = makeStyles(() => ({
       },
       textTransform: 'none',
    },
-   deposit: {
-      // width: '100%'
+   withdraw: {
+      width: '100%'
    },
    tabledata: {
       position: 'absolute',
@@ -56,26 +55,24 @@ const useStyles = makeStyles(() => ({
 }))
 
 
-export default function Deposit() {
-
-   const { validate } = TransactionValidation
+export default function Withdraw() {
    const classes = useStyles()
-   const { deposit } = transactions
-   const { hookUserData, createFullName } = hookUserDataFunctions
-   const [transactionlist, setTransactionList] = React.useState([])
+   const { withdraw } = transactions
+   const { validate } = TransactionValidation
+
    const [amount, setAmount] = React.useState(0)
    const [balance, setBalance] = React.useState(0)
-   const [accountNumber, setAccountNumber] = React.useState(0)  //accountNumber === accountID
+   const [accountNumber, setAccountNumber] = React.useState("")  //accountNumber === accountID
    const [accountName, setAccountName] = React.useState('')
    const [accountType, setAccountType] = React.useState('')
+   const [transactionlist, setTransactionList] = React.useState([])
+   const [open, setOpen] = React.useState(false)
    const [error, setError] = React.useState({})
    const [result, setResult] = React.useState({})
-   const [open, setOpen] = React.useState(false)
-   // const [message, setMessage] = React.userState('')
-   const button = (event) => {
+   const button = event => {
       event.preventDefault()
       if (validate(balance, amount, accountNumber, setError)) {
-         deposit(balance, amount, accountNumber, setAccountNumber, setBalance)
+         withdraw(balance, amount, accountNumber, setAccountNumber, setBalance)
          setResult({
             value: 'Success!',
             style: {
@@ -85,29 +82,30 @@ export default function Deposit() {
          })
          setOpen(true)
          setAmount(0)
-         setAccountNumber('')
       }
       else {
-         // alert('Error')
          setResult({
             value: 'Error! Please Resolve',
             style: { color: 'red' }
          })
          setOpen(true)
-
       }
+      //INSERT CODE HERE
+      // if validate is true - return the functions else return error 
+
    }
-   React.useEffect(() => hookUserData(accountNumber, setAccountName, createFullName, setAccountType, setBalance, setTransactionList), [accountNumber, createFullName, hookUserData])
+
    return (
       <>
-         <Grid className={classes.root} container spacing={3}>
-            <Grid item xs={6}>
-               <Container className={classes.deposit}>
-                  <Container>
+         <Grid className={classes.root} container spacing={7}>
+            <Grid item xs={6} >
+               <Container className={classes.withdraw} >
+                  <Container >
                      <Typography variant="h6" align="left">
                         Account Number
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAccountNumber(event.target.value)} {...(error.accountNumber && { error: true, helperText: error.accountNumber })} />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAccountNumber(event.target.value)}
+                        {...(error.accountNumber && { error: true, helperText: error.accountNumber })} />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
@@ -123,7 +121,7 @@ export default function Deposit() {
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
-                        Balance
+                        Balances
                      </Typography>
                      <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={balance} onChange={(event) => setBalance(event.target.value)} disabled />
                   </Container>
@@ -131,22 +129,20 @@ export default function Deposit() {
                      <Typography variant="h6" align="left">
                         Amount
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)}{...(error.amount && { error: true, helperText: error.amount })} />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAmount(event.target.value)} {...(error.amount && { error: true, helperText: error.amount })} />
                   </Container>
                   <Container>
                      <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>
-                        Deposit Funds
+                        Withdraw Funds
                      </Button>
                   </Container>
                </Container>
 
             </Grid>
-            <Grid className={classes.tabledata} item xs={6}>
+            <Grid item s={6} className={classes.tabledata} >
                <TransactionList tabledata={transactionlist} />
             </Grid>
          </Grid>
-         <ValidateModal open={open} setOpen={setOpen} result={result} />
-      </>
+         <ValidateModal open={open} setOpen={setOpen} result={result} /> </>
    )
 }
-

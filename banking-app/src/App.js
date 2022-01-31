@@ -1,24 +1,35 @@
 import React, { useState } from 'react'
 import './App.css';
-
-import Main from './Components2/Main';
-import Login from './Components2/Login';
-
-// import userEvent from '@testing-library/user-event';
-
-
-
+import Data from './Data'
+import Login from './Page/Login';
+import { useRoutes } from 'react-router-dom'
+import Blank from './Page/Blank';
+import Main from './Page/Main';
+import { UserList, Modal, Transfer, Withdraw, Deposit, Registerv3 } from './Page/Main Components'
 
 
 function App() {
 
-  const [loginDisplay, setloginDisplay] = useState(true)
-  const [mainDisplay, setMainDisplay] = useState(false)
+  const routes = useRoutes([
+    { path: '/', element: <Blank /> },
+    { path: '/signin', element: <Login /> },
+    {
+      path: '/main', element: <Main />, children: [
+        { path: '', element: <UserList /> },
+        { path: 'info', element: <Modal /> },
+        { path: 'create', element: <Registerv3 /> },
+        { path: 'transfer', element: <Transfer /> },
+        { path: 'withdraw', element: <Withdraw /> },
+        { path: 'deposit', element: <Deposit /> }
+      ]
+    }
 
+  ])
   return (
-    <div className="App">
-      {mainDisplay ? <Main showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
-      {loginDisplay ? <Login showLogin={setloginDisplay} showMain={setMainDisplay} /> : null}
+    <div>
+      <Data>
+        {routes}
+      </Data>
     </div>
   );
 }

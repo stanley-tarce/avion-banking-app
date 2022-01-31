@@ -1,7 +1,5 @@
 import emailFormat from "./emailjs";
-import hookUserDataFunctions from './hookUserData'
-
-const { createFullName } = hookUserDataFunctions
+import { createFullName } from '../../Function'
 
 
 
@@ -91,7 +89,7 @@ const withdraw = (balance, amount, accountnumber, setaccountnumber, setbalance) 
           if (container[i].accountID === accountnumber) {
                container[i].initialbalance = totalbalance
                console.log('new balance is ' + totalbalance)
-               const {transactionID,date,type,balance} = transaction(parseInt(amount), totalbalance, container[i], 'withdraw')
+               const { transactionID, date, type, balance } = transaction(parseInt(amount), totalbalance, container[i], 'withdraw')
                emailFormat(createFullName(container[i].firstname, container[i].middlename, container[i].lastname), container[i].email, transactionID, container[i].accountID, balance, amount, type, date)
           }
      }

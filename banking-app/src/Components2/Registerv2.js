@@ -6,8 +6,9 @@ import React, { Component } from 'react'
 import { withStyles } from "@material-ui/core/styles";
 import { PropTypes } from 'prop-types';
 import { Container, Grid } from '@material-ui/core';
-import validate from './Functions/RegisterValidation'
-import ValidateModal from './ValidateModal';
+import validate from '../../Components2/Functions/RegisterValidation'
+import ValidateModal from '../../Components2/ValidateModal';
+import { useForm } from 'react-hook-form';
 const styles = () => ({
     root: {
         marginTop: '20px',
@@ -111,9 +112,9 @@ class Registerv2 extends Component {
             initialbalance: 0,
             transactions: [],
             //Modals and Error Handling
-            errors: {}, 
+            errors: {},
             result: {}
-        } 
+        }
     }
     //Create Account ID
     createAccountID() {
@@ -134,6 +135,11 @@ class Registerv2 extends Component {
         return accountID;
 
     }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+
+    }
     //Send Data to Database
     sendDataToLocalStorage = (event) => {
         event.preventDefault();
@@ -151,8 +157,6 @@ class Registerv2 extends Component {
                 }
             })
             this.setState({ open: true })
-            console.log('no Error!')
-            console.log("No error all clean")
             if (localStorage.getItem('userData') !== null) {
                 console.log("existing data")
                 let container = [];

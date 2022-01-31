@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
-import user from '../assets/user.svg';
+import user from '../../assets/user.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import philippines from '../assets/flags/philippines.png';
-import united from '../assets/flags/united.png';
-import unitedK from '../assets/flags/unitedK.png';
-import china from '../assets/flags/china.png';
+import philippines from '../../assets/flags/philippines.png';
+import united from '../../assets/flags/united.png';
+import unitedK from '../../assets/flags/unitedK.png';
+import china from '../../assets/flags/china.png';
 import MyAccount from './MyAccount';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
@@ -100,21 +100,21 @@ const Header = (props) => {
     const [sgd, setSgd] = useState();
     const [jpy, setJpy] = useState();
 
-    const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
-    const fetchCurrency = () => {
-        fetch(api)
-            .then(response => response.json())
-            .then(data => {
-                const { USD, PHP, GBP, CNY } = data.rates
+    // const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
+    // const fetchCurrency = () => {
+    //     fetch(api)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             const { USD, PHP, GBP, CNY } = data.rates
 
-                setUsd(USD.toFixed(2))
-                setPhp(PHP.toFixed(2))
-                setSgd(GBP.toFixed(2))
-                setJpy(CNY.toFixed(2))
-            })
-    }
+    //             setUsd(USD.toFixed(2))
+    //             setPhp(PHP.toFixed(2))
+    //             setSgd(GBP.toFixed(2))
+    //             setJpy(CNY.toFixed(2))
+    //         })
+    // }
 
-    fetchCurrency()
+    // fetchCurrency()
 
     const classes = useStyles();
     return (

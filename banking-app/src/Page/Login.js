@@ -68,6 +68,9 @@ const useStyles = makeStyles({
     },
     mainText: {
         marginTop: '2.4em',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         color: 'white',
         fontSize: '2.15rem',
         fontWeight: '500'

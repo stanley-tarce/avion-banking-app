@@ -1,8 +1,10 @@
+import React, { useEffect, useContext } from 'react';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles, Typography } from '@material-ui/core';
 import bg from '../../assets/bg.svg';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { CreateContext } from '../../Data';
 
 const useStyle = makeStyles({
     container: {
@@ -34,12 +36,14 @@ const useStyle = makeStyles({
 })
 
 const Modal = () => {
+    const { accounts } = useContext(CreateContext);
+
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     let dataContainer = JSON.parse(localStorage.getItem('userData'))
     const accountID = searchParams.get('accountID')
     const classes = useStyle();
-    let objects = dataContainer.find(data => data.accountID === accountID)
+    let objects = accounts.find(data => data.account_number === accountID)
     console.log(objects)
     return (
         <div
@@ -108,7 +112,7 @@ const Modal = () => {
                             className={classes.input}
                             type="text"
                             name="accountNumber"
-                            value={objects.accountID}
+                            value={objects.account_number}
                             disabled />
                     </div>
                     <div className={classes.container}>
@@ -119,7 +123,7 @@ const Modal = () => {
                             className={classes.input}
                             type="text"
                             name="accountType"
-                            value={objects.accountype}
+                            value={objects.account_type}
                             disabled
                         />
                     </div>
@@ -132,7 +136,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="lastName"
-                            value={objects.lastname}
+                            value={objects.last_name}
                             readOnly />
                     </div>
                     <div
@@ -144,7 +148,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="firstName"
-                            value={objects.firstname}
+                            value={objects.first_name}
                             readOnly />
                     </div>
                     <div
@@ -156,7 +160,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="middleName"
-                            value={objects.middlename}
+                            value={objects.middle_name}
                             readOnly />
                     </div>
                     <div
@@ -180,7 +184,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="contactNumber"
-                            value={objects.contactnumber}
+                            value={objects.contact_number}
                             readOnly />
                     </div>
                     <div
@@ -204,7 +208,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="homeAddress"
-                            value={objects.homeaddress}
+                            value={objects.home_address}
                             readOnly />
                     </div>
                     <div
@@ -228,7 +232,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="city"
-                            value={objects.zipcode}
+                            value={objects.zip_code}
                             readOnly />
                     </div>
 
@@ -241,7 +245,7 @@ const Modal = () => {
                         <input
                             className={classes.input}
                             type="text" name="dateOFBirth"
-                            value={objects.dateofbirth}
+                            value={objects.birth_date}
                             readOnly />
                     </div>
                     <div
@@ -254,7 +258,7 @@ const Modal = () => {
                             className={classes.input}
                             type="text"
                             name="currentBalance"
-                            value={objects.initialbalance}
+                            value={objects.balance}
                             disabled />
                     </div>
                 </form>

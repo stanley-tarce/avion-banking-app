@@ -11,7 +11,7 @@ const useStyle = makeStyles(() => ({
 
 
           fontFamily: 'Roboto',
- 
+
 
      },
      tablecells: {
@@ -25,7 +25,7 @@ const useStyle = makeStyles(() => ({
      },
      tablebody: { overflowY: 'scroll' },
      paginater: {
-          position:'absolute',
+          position: 'absolute',
           bottom: '0px',
           right: '0px'
      }
@@ -68,14 +68,15 @@ function TransactionTable(props) {
                     </TableHead>
                     <TableBody>
                          {tabledata.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                              const { amount, balance, date, type } = row
+                              const { amount, balance, created_at, transaction_type } = row
+                              let date = created_at.split('T')[0]
                               return (
                                    <TableRow key={index + 1} className={classes.tablerows}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{amount}</TableCell>
                                         <TableCell>{balance}</TableCell>
                                         <TableCell>{date}</TableCell>
-                                        <TableCell>{type}</TableCell>
+                                        <TableCell>{transaction_type}</TableCell>
                                    </TableRow>
                               )
                          })}

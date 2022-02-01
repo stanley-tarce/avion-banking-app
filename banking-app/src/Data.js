@@ -4,20 +4,21 @@ export const CreateContext = createContext()
 
 export default function Data({ children }) {
     const [state, setState] = useState({
-        accountID: createAccountID(),
-        lastname: '',
-        firstname: '',
-        middlename: '',
-        contactnumber: '',
+        account_number: createAccountID(),
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        contact_number: '',
         email: '',
         gender: '',
-        homeaddress: '',
-        zipcode: '',
+        home_address: '',
+        zip_code: '',
         city: '',
-        dateofbirth: '',
-        accountype: '',
-        initialbalance: 0
+        birth_date: '',
+        account_type: '',
+        balance: 0
     })
+    const [accounts, setAccounts] = useState([])
     const [depositAccountNumber, setDepositAccountNumber] = useState('')
     const [withdrawAccountNumber, setWithdrawAccountNumber] = useState('')
     const [transferToSendAccountNumber, setTransferToSendAccountNumber] = useState('')
@@ -33,7 +34,9 @@ export default function Data({ children }) {
         transferToSendAccountNumber,
         setTransferToSendAccountNumber,
         transferToReceiveAccountNumber,
-        setTransferToReceiveAccountNumber
+        setTransferToReceiveAccountNumber,
+        accounts,
+        setAccounts
     }
     return (
         <CreateContext.Provider value={context}>

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
-import JSONDATA from '../../assets/MOCK_DATA.json';
 import { TablePagination } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { CreateContext } from '../../Data'
 
 
 
@@ -85,7 +85,7 @@ const useStyles = makeStyles({
 
 const UserList = () => {
 
-
+    const { accounts } = useContext(CreateContext)
     const navigate = useNavigate()
     const classes = useStyles();
     const [searchTerm, setSearchTerm] = useState('');
@@ -183,7 +183,7 @@ const UserList = () => {
                     page={page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={rowsPerPage}
-                    count={dataContainer.length}
+                    count={accounts.length}
                     onChangePage={handlePageChange}
                     component='div'
 
@@ -199,11 +199,11 @@ const UserList = () => {
                         display: 'flex',
                         flexDirection: 'column'
                     }}>
-                    {dataContainer.filter((val) => {
+                    {accounts && accounts.filter((val) => {
                         return Object.keys(val).filter(val => (val !== "initialbalance")).some(key => val[key].toString().toLowerCase().search(searchTerm.toLowerCase()) !== -1)
                     }).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((val, key) => {
                         const testClick = () => {
-                            return navigate(`info?accountID=${val.accountID}`)
+                            return navigate(`info?accountID=${val.account_number}`)
                         }
                         return <div key={key}
                             onClick={testClick}
@@ -212,19 +212,19 @@ const UserList = () => {
                         >
                             <div
                                 className={classes.userInfo}
-                            >{val.accountID}</div>
+                            >{val.account_number}</div>
                             <div
                                 className={classes.userInfo}
-                            >{`${val.firstname} ${val.lastname}`}</div>
+                            >{`${val.first_name} ${val.last_name}`}</div>
                             <div
                                 className={classes.userInfo}
-                            >{val.initialbalance}</div>
+                            >{`$ ${val.balance}`}</div>
                             <div
                                 className={classes.userInfo}
                             >{val.city}</div>
                             <div
                                 className={classes.userInfo}
-                            >{val.accountype}</div>
+                            >{val.account_type}</div>
                         </div>
 
                     })}

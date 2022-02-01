@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import transactions from '../../Components2/Functions/transaction'
 import TransactionList from '../Other Components/TransactionList'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import TransactionValidation from '../../Components2/Functions/TransactionValidation'
 import ValidateModal from '../../Components2/ValidateModal'
-import { createFullName } from '../../Function'
+import { createFullName, fetchInfo } from '../../Function'
+import { CreateContext } from '../../Data'
+import { api } from '../../Utility/API'
+import { useNavigate } from 'react-router-dom'
 const useStyles = makeStyles(() => ({
    root: {
       fontFamily: 'Roboto',
@@ -56,7 +59,9 @@ const useStyles = makeStyles(() => ({
 
 
 export default function Withdraw() {
+   const { withdrawAccountNumber, setWithdrawAccountNumber, accounts, setAccounts } = useContext(CreateContext)
    const classes = useStyles()
+   const navigate = useNavigate()
    const { withdraw } = transactions
    const { validate } = TransactionValidation
 
@@ -71,30 +76,24 @@ export default function Withdraw() {
    const [result, setResult] = React.useState({})
    const button = event => {
       event.preventDefault()
-      if (validate(balance, amount, accountNumber, setError)) {
-         withdraw(balance, amount, accountNumber, setAccountNumber, setBalance)
-         setResult({
-            value: 'Success!',
-            style: {
-               color: 'green',
-               '@keyframes buzzout': "10% {transfor}"
-            }
-         })
-         setOpen(true)
-         setAmount(0)
+      let token = localStorage.getItem('token')
+      let data = {
+         id: withdrawAccountNumber,
+         body: { amount: amount },
+         headers: { Authorization: token }
       }
-      else {
-         setResult({
-            value: 'Error! Please Resolve',
-            style: { color: 'red' }
-         })
-         setOpen(true)
-      }
-      //INSERT CODE HERE
-      // if validate is true - return the functions else return error 
+      api('accounts#withdraw', data).then(r => {
+         setWithdrawAccountNumber('')
+         console.log(r)
+      }).catch(e => console.log(e.response)).then(r => {
+         let obj = { headers: { Authorization: token } }
+         api('accounts#index', obj).then(res => {
+            setAccounts(res.data)
+         }).catch(e => console.log(e.response))
+      }).then(r => navigate('/main'))
 
    }
-
+   let objectData = fetchInfo(accounts, withdrawAccountNumber)
    return (
       <>
          <Grid className={classes.root} container spacing={7}>
@@ -104,32 +103,37 @@ export default function Withdraw() {
                      <Typography variant="h6" align="left">
                         Account Number
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAccountNumber(event.target.value)}
-                        {...(error.accountNumber && { error: true, helperText: error.accountNumber })} />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setWithdrawAccountNumber(event.target.value)}
+                     // {...(error.accountNumber && { error: true, helperText: error.accountNumber })} 
+
+                     />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Name
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountName} onChange={(event) => setAccountName(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountName} onChange={(event) => setAccountName(event.target.value)} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Type
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountType} onChange={(event) => setAccountType(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountType} onChange={(event) => setAccountType(event.target.value)} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Balances
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={balance} onChange={(event) => setBalance(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.balance} onChange={(event) => setBalance(event.target.value)} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Amount
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAmount(event.target.value)} {...(error.amount && { error: true, helperText: error.amount })} />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAmount(event.target.value)}
+                     // {...(error.amount && { error: true, helperText: error.amount })} 
+
+                     />
                   </Container>
                   <Container>
                      <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>
@@ -140,7 +144,7 @@ export default function Withdraw() {
 
             </Grid>
             <Grid item s={6} className={classes.tabledata} >
-               <TransactionList tabledata={transactionlist} />
+               <TransactionList tabledata={objectData.transactions} />
             </Grid>
          </Grid>
          <ValidateModal open={open} setOpen={setOpen} result={result} /> </>

@@ -1,12 +1,14 @@
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import React from 'react'
-import { createFullName } from '../../Function/'
+import { createFullName, fetchInfo } from '../../Function/'
 import transactions from '../../Components2/Functions/transaction'
 import TransactionList from '../Other Components/TransactionList'
 import TransactionValidation from '../../Components2/Functions/TransactionValidation'
 import ValidateModal from '../../Components2/ValidateModal'
 import { CreateContext } from '../../Data';
 import { useContext } from 'react'
+import { api } from '../../Utility/API'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
    root: {
@@ -59,9 +61,8 @@ const useStyles = makeStyles(() => ({
 
 
 export default function Deposit() {
-   const userData = JSON.parse(localStorage.getItem('userData'))
    const { depositAccountNumber,
-      setDepositAccountNumber } = useContext(CreateContext)
+      setDepositAccountNumber, accounts, setAccounts } = useContext(CreateContext)
    const { validate } = TransactionValidation
    const classes = useStyles()
    const { deposit } = transactions
@@ -75,39 +76,32 @@ export default function Deposit() {
    const [result, setResult] = React.useState({})
    const [open, setOpen] = React.useState(false)
    // const [message, setMessage] = React.userState('')
-
+   const navigate = useNavigate()
    const button = (event) => {
+
+      let token = localStorage.getItem('token')
       event.preventDefault()
-      if (validate(balance, amount, depositAccountNumber, setError)) {
-         deposit(balance, amount, depositAccountNumber, setDepositAccountNumber, setBalance)
-         setResult({
-            value: 'Success!',
-            style: {
-               color: 'green',
-               '@keyframes buzzout': "10% {transfor}"
-            }
-         })
-         setOpen(true)
-         setAmount(0)
-         setDepositAccountNumber('')
+      let obj = {
+         headers: { Authorization: token },
+         body: {
+            amount: amount,
+         },
+         id: depositAccountNumber
       }
-      else {
-         // alert('Error')
-         setResult({
-            value: 'Error! Please Resolve',
-            style: { color: 'red' }
-         })
-         setOpen(true)
+      api('accounts#deposit', obj).then(response => {
+         setDepositAccountNumber(0)
+         console.log(response)
+      }).catch(e => console.log(e)).then(i => {
+         let a = {
+            headers: { Authorization: token }
+         }
+         api('accounts#index', a).then(response => { setAccounts(response.data) }).catch(e => console.log(e))
+      }).then(r => navigate('/main'))
 
-      }
    }
 
-   const fetchInfo = (data, accounNumber) => { //Better to use this 
-      let filteredData = data.find((item) => item.accountID === accounNumber)
 
-      return filteredData ? { accountName: createFullName(filteredData.lastname, filteredData.firstname, filteredData.middlename), accountType: filteredData.accountype, balance: filteredData.initialbalance } : { accountName: '', accountType: '', balance: 0 }
-   }
-   let objectData = fetchInfo(userData, depositAccountNumber)
+   let objectData = fetchInfo(accounts, depositAccountNumber)
    // React.useEffect(() => hookUserData(depositAccountNumber, setAccountName, createFullName, setAccountType, setBalance, setTransactionList), [depositAccountNumber, createFullName, hookUserData])
    // React.useEffect(() => {
    //    console.log(fetchInfo(userData, depositAccountNumber))
@@ -156,7 +150,7 @@ export default function Deposit() {
 
             </Grid>
             <Grid className={classes.tabledata} item xs={6}>
-               <TransactionList tabledata={transactionlist} />
+               <TransactionList tabledata={objectData.transactions} />
             </Grid>
          </Grid>
          <ValidateModal open={open} setOpen={setOpen} result={result} />

@@ -8,8 +8,10 @@ import { PropTypes } from 'prop-types';
 import { Container, Grid } from '@material-ui/core';
 import validate from '../../Components2/Functions/RegisterValidation'
 import ValidateModal from '../../Components2/ValidateModal';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { CreateContext } from '../../Data'
+import { api } from '../../Utility/API'
+import { useNavigate } from 'react-router-dom'
 const styles = makeStyles(() => ({
     root: {
         marginTop: '20px',
@@ -95,21 +97,29 @@ const styles = makeStyles(() => ({
 }));
 
 function Registerv3() {
-    console.log(useContext(CreateContext))
-    const { state, setState } = useContext(CreateContext)
+    const navigate = useNavigate()
+    let token = localStorage.getItem('token')
+    const { state, setState, accounts, setAccounts } = useContext(CreateContext)
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Insert API Call here with .then and .catch
+        let data = { account: state }
+        let headers = { Authorization: token }
+        let obj = { body: data, headers: headers }
+        api('accounts#create', obj).then(response => {
+            console.log(response)
+            let o = { headers: headers }
+            api('accounts#index', o).then(response => setAccounts([...response.data])).catch(e => console.log(e.response))
+        }).catch(e => console.log(e.response)).then(r => navigate(-1))
     }
     const classes = styles();
     const handleFirstNameChange = (e) => {
-        setState({ ...state, firstname: e.target.value.toUpperCase() });
+        setState({ ...state, first_name: e.target.value });
     }
     const handleLastNameChange = (e) => {
-        setState({ ...state, lastname: e.target.value.toUpperCase() });
+        setState({ ...state, last_name: e.target.value });
     }
     const handleMiddleNameChange = (e) => {
-        setState({ ...state, middlename: e.target.value.toUpperCase() });
+        setState({ ...state, middle_name: e.target.value });
     }
     const handleEmailChange = (e) => {
         setState({ ...state, email: e.target.value });
@@ -118,39 +128,42 @@ function Registerv3() {
         setState({ ...state, gender: e.target.value })
     }
     const handleContactNumberChange = event => {
-        const onlyNums = event.target.value.replace(/[^0-9]/g, '');
-        if (onlyNums.length < 11) {
-            setState({ ...state, contactnumber: event.target.value });
-        }
-        else if (onlyNums.length === 11) {
-            const number = onlyNums.replace(/(\d{4})(\d{3})(\d{4})/, "($1)-$2-$3");
-            setState({ ...state, contactnumber: number });
-        }
+        setState({ ...state, contact_number: event.target.value })
+        // const onlyNums = event.target.value.replace(/[^0-9]/g, '');
+        // if (onlyNums.length < 11) {
+        //     setState({ ...state, contact_number: event.target.value });
+        // }
+        // else if (onlyNums.length === 11) {
+        //     const number = onlyNums.replace(/(\d{4})(\d{3})(\d{4})/, "($1)-$2-$3");
+        //     setState({ ...state, contactnumber: number });
+        // }
+
     }
     const handleHomeAddressChange = (e) => {
-        setState({ ...state, homeaddress: e.target.value });
+        setState({ ...state, home_address: e.target.value });
     }
     const handleCityChange = (e) => {
         setState({ ...state, city: e.target.value });
     }
     const handleAccountTypeChange = (e) => {
-        setState({ ...state, accountype: e.target.value });
+        setState({ ...state, account_type: e.target.value });
     }
     const handleDateOfBirthChange = (e) => {
-        setState({ ...state, dateofbirth: e.target.value });
+        setState({ ...state, birth_date: e.target.value });
     }
     const handleZipCodeChange = event => {
-        const onlyNums = event.target.value.replace(/[^0-9]/g, '');
-        if (onlyNums.length < 4) {
-            setState({ ...state, zipcode: event.target.value });
-        }
-        else if (onlyNums.length === 4) {
-            const number = onlyNums.replace(/(\d{2})(\d{2})/, "$1-$2");
-            setState({ ...state, zipcode: number });
-        }
+        setState({ ...state, zip_code: event.target.value });
+        // const onlyNums = event.target.value.replace(/[^0-9]/g, '');
+        // if (onlyNums.length < 4) {
+        //     setState({ ...state, zip_code: event.target.value });
+        // }
+        // else if (onlyNums.length === 4) {
+        //     const number = onlyNums.replace(/(\d{2})(\d{2})/, "$1-$2");
+        //     setState({ ...state, zip_code: number });
+        // }
     }
     const handleParseInt = event => {
-        setState({ ...state, initialbalance: parseInt(event.target.value) });
+        setState({ ...state, balance: parseInt(event.target.value) });
     }
     const handleResultChange = properties => {
         setState({ ...state, result: properties });
@@ -377,7 +390,7 @@ function Registerv3() {
                         className={classes.accountnum}
                         InputProps={{ disableUnderline: true, }}
                         id="accountID"
-                        value={state.accountID}
+                        value={state.account_number}
 
                         disabled />
                 </Container>

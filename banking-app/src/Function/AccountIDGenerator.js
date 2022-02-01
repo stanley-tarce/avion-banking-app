@@ -5,8 +5,8 @@ export function createAccountID() {
     let month = (date.getMonth() + 1).toString();
     const accountNumber = () => {
         let randomAccountNumber = Math.floor(Math.random() * 1000000).toString();
-        if (randomAccountNumber.length < 6) {
-            randomAccountNumber = "0" + randomAccountNumber;
+        if (randomAccountNumber.length !== 6) {
+            return createAccountID
         }
         return randomAccountNumber;
 

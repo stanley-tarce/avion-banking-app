@@ -1,6 +1,6 @@
 
 // import GoogleSignUp from './GoogleSignUp';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from '../assets/login/chart.svg';
@@ -12,8 +12,10 @@ import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 // import FirebaseOtp from './FirebaseOtp';
-
+import { api } from '../Utility/API'
 
 const useStyles = makeStyles({
     root: {
@@ -129,6 +131,7 @@ const useStyles = makeStyles({
 
 
 const Login = (props) => {
+    const navigate = useNavigate()
     const classes = useStyles();
     const [values, setValues] = useState({
         userName: '',
@@ -144,7 +147,7 @@ const Login = (props) => {
     const [user, setUser] = useState('');
 
     const userInput = (e) => {
-        setUser(e.target.value)
+        setUser(...e.target.value)
     }
 
     /****** functions for handling input password ******/
@@ -164,17 +167,29 @@ const Login = (props) => {
     /***** handling sign in of user ******/
     const signIn = (e) => {
         e.preventDefault();
+        let data = {
+            body: {
+                user: {
+                    email: values.userName,
+                    password: values.password
+                }
+            }
 
-        if (user === admins.userName && values.password === admins.passCode) {
-
-            setOtpDisplay(true);
-        } else console.log('not accepted')
-
+        }
+        api('devise#login', data).then(res => {
+            localStorage.setItem('token', res.headers.authorization)
+            console.log(localStorage.getItem('token'))
+        })
+        return navigate('/main')
     }
 
     const [otpDisplay, setOtpDisplay] = useState(false);
     const [otpValidation, setOtpValidation] = useState(false);
-
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         return navigate('/main')
+    //     }
+    // }, []) 
     return (
         <div
             className={classes.root}>
@@ -282,7 +297,7 @@ const Login = (props) => {
                             type='text'
                             label='Username'
                             defaultValue={user}
-                            onChange={userInput}
+                            onChange={handleChange('userName')}
                             variant='outlined'
                             style={{
                                 marginTop: '3rem',
@@ -321,7 +336,7 @@ const Login = (props) => {
                             }}>
                             <button
                                 className={classes.button}
-                                onClick={signIn}
+                                onClick={(e) => signIn(e)}
                             >Sign in
                                 <ArrowForwardIcon
                                     style={{

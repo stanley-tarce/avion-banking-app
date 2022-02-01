@@ -5,7 +5,10 @@ import TransactionList from '../Other Components/TransactionList'
 import TransactionValidation from '../../Components2/Functions/TransactionValidation'
 import ValidateModal from '../../Components2/ValidateModal'
 import { CreateContext } from '../../Data';
-import { createFullName } from '../../Function'
+import { createFullName, fetchInfo } from '../../Function'
+import { useNavigate } from 'react-router-dom'
+import { api } from '../../Utility/API'
+
 const useStyles = makeStyles(() => ({
         root: {
                 fontFamily: 'Roboto',
@@ -81,10 +84,11 @@ const useStyles = makeStyles(() => ({
 
 
 export default function Transfer() {
-        const { transferToSendAccountNumber,
+        const { accounts, setAccounts, transferToSendAccountNumber,
                 setTransferToSendAccountNumber, transferToReceiveAccountNumber,
-                setTransferToReceiveAccountNumber } = useContext(CreateContext)
+                setTransferToReceiveAccountNumber, } = useContext(CreateContext)
         const classes = useStyles()
+        const navigate = useNavigate()
         const { transfer } = transactions
         const [accountNum1, setAccountNum1] = React.useState('')
         const [accountNum2, setAccountNum2] = React.useState('')
@@ -103,28 +107,28 @@ export default function Transfer() {
         const { customValidateForTransfer } = TransactionValidation
         const transferbutton = (event) => {
                 event.preventDefault()
-                if (customValidateForTransfer(balance1, amount, accountNum1, accountNum2, setError)) {
-                        transfer(balance1, balance2, amount, accountNum1, accountNum2, setAmount, setAccountNum1, setAccountNum2)
-                        setResult({
-                                value: 'Success!',
-                                style: {
-                                        color: 'green',
-                                        '@keyframes buzzout': "10% {transfor}"
-                                }
-                        })
-                        setOpen(true)
+                let token = localStorage.getItem('token')
+                let data = {
+                        id: transferToSendAccountNumber,
+                        transferId: transferToReceiveAccountNumber,
+                        body: { amount: amount },
+                        headers: { Authorization: token }
                 }
-                else {
-                        setResult({
-                                value: 'Error! Please Resolve',
-                                style: { color: 'red' }
-                        })
-                        setOpen(true)
-                }
+                api('accounts#transfer', data).then(res => {
+                        console.log(res)
+                        setTransferToReceiveAccountNumber('')
+                        setTransferToSendAccountNumber('')
+                        setAmount(0)
+                }).catch(err => console.log(err.response)).then(r => {
+                        let obj = { headers: { Authorization: token } }
+                        api('accounts#index', obj).then(res => { setAccounts(res.data) }).catch(error => console.log(error.response))
+                }).then(r => navigate('/main'))
         }
 
         // React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
         // React.useEffect(() => { hookUserData(accountNum2, setName2, createFullName, setAccountType2, setBalance2, setTransaction2) }, [accountNum2, createFullName, hookUserData])
+        let objectData1 = fetchInfo(accounts, transferToSendAccountNumber)
+        let objectData2 = fetchInfo(accounts, transferToReceiveAccountNumber)
         return (
                 <>
                         <Grid className={classes.root} container spacing={7}>
@@ -134,56 +138,65 @@ export default function Transfer() {
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Number
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum1} onChange={(event) => setAccountNum1(event.target.value)}{...(error.accountNumber && { error: true, helperText: error.accountNumber })} />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={transferToSendAccountNumber} onChange={(event) => setTransferToSendAccountNumber(event.target.value)}
+                                                        // {...(error.accountNumber && { error: true, helperText: error.accountNumber })} 
+
+                                                        />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Type
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountType1} onChange={(event) => setAccountType1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountType} onChange={(event) => setAccountType1(event.target.value)} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Full Name
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={name1} onChange={(event) => setName1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountName} onChange={(event) => setName1(event.target.value)} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Balance
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={balance1} onChange={(event) => setBalance1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.balance} onChange={(event) => setBalance1(event.target.value)} disabled />
                                                 </Container>
 
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Sending to
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountNum2} onChange={(event) => setAccountNum2(event.target.value)}{...(error.accountNumber2 && { error: true, helperText: error.accountNumber2 })} />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={transferToReceiveAccountNumber} onChange={(event) => setTransferToReceiveAccountNumber(event.target.value)}
+                                                        // {...(error.accountNumber2 && { error: true, helperText: error.accountNumber2 })} 
+
+                                                        />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Type
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={accountType2} onChange={(event) => setAccountType2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountType} onChange={(event) => setAccountType2(event.target.value)} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Full Name
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={name2} onChange={(event) => setName2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountName} onChange={(event) => setName2(event.target.value)} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Balance
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={balance2} onChange={(event) => setBalance2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.balance} onChange={(event) => setBalance2(event.target.value)} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Amount
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)} {...(error.amount && { error: true, helperText: error.amount })} />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)}
+                                                        // {...(error.amount && { error: true, helperText: error.amount })} 
+
+                                                        />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Button className={classes.submitbutton} onClick={transferbutton}>
@@ -193,7 +206,7 @@ export default function Transfer() {
                                         </Container>
                                 </Grid>
                                 <Grid item xs={7} className={classes.tabledata}>
-                                        <TransactionList tabledata={transaction1} />
+                                        <TransactionList tabledata={objectData1.transactions} />
                                 </Grid>
                         </Grid>
                         <ValidateModal open={open} setOpen={setOpen} result={result} />

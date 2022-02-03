@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 function Blank() {
     const navigate = useNavigate()
     useEffect(() => {
-        if (localStorage.token !== null) {
+        if (localStorage.getItem('token')) {
             navigate('/main')
         }
         else {

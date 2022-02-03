@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
      root: {
           fontFamily: 'Roboto',
           height: '310px',
-          width: '525px',
+          width: '120%',
 
           position: 'relative',
      },

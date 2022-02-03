@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 const API_URL = `http://localhost:3002`
 export const api = (func, obj) => {
     switch (func) {
@@ -7,6 +6,10 @@ export const api = (func, obj) => {
             return axios.post(`${API_URL}/login`, obj.body);
         case 'devise#signup':
             return axios.post(`${API_URL}/signup`, obj.body);
+        case 'devise#logout':
+            return axios.delete(`${API_URL}/logout`, { headers: obj.headers });
+        case 'devise#oauth2':
+            return axios.post(`${API_URL}/auth/google_oauth2`)
         case 'accounts#index':
             return axios.get(`${API_URL}/accounts`, { headers: obj.headers });
         case 'accounts#create':
@@ -17,7 +20,8 @@ export const api = (func, obj) => {
             return axios.patch(`${API_URL}/accounts/${obj.id}/deposit`, obj.body, { headers: obj.headers })
         case 'accounts#transfer':
             return axios.patch(`${API_URL}/accounts/${obj.id}/transfer?account_number=${obj.transferId}`, obj.body, { headers: obj.headers })
-
+        case 'users#show':
+            return axios.get(`${API_URL}/user`, { headers: obj.headers })
         default:
             return 0;
     }

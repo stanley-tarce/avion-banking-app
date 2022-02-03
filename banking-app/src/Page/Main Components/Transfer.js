@@ -5,14 +5,14 @@ import TransactionList from '../Other Components/TransactionList'
 import TransactionValidation from '../../Components2/Functions/TransactionValidation'
 import ValidateModal from '../../Components2/ValidateModal'
 import { CreateContext } from '../../Data';
-import { createFullName, fetchInfo } from '../../Function'
+import { fetchInfo } from '../../Function'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../../Utility/API'
+import { api } from '../../Utility/API';
 
 const useStyles = makeStyles(() => ({
         root: {
                 fontFamily: 'Roboto',
-                fontSize: '10px',
+                // fontSize: '10px',
                 fontWeight: 400,
                 height: '70vh',
                 width: 'inherit',
@@ -54,15 +54,16 @@ const useStyles = makeStyles(() => ({
                         boxShadow: '0px 0px 0px 0px',
                 },
                 textTransform: 'none',
-                marginTop: '20px',
-                marginLeft: '14em'
+                // marginTop: '20px',
+                marginLeft: '2em'
         },
         transFer: {
                 width: '100%',
                 // overflowY: 'scroll',
         },
         typography: {
-                fontSize: '10px'
+                marginLeft: '2em'
+                // fontSize: '10px'
         },
         transfercontainer: {
                 position: 'relative',
@@ -70,7 +71,7 @@ const useStyles = makeStyles(() => ({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'start',
                 maxHeight: '100vh',
                 // overflowY: 'auto',
 
@@ -78,15 +79,17 @@ const useStyles = makeStyles(() => ({
         tabledata: {
                 position: 'absolute',
                 top: '0px',
-                right: '20px'
+                right: '13em'
         },
 }))
+
+
 
 
 export default function Transfer() {
         const { accounts, setAccounts, transferToSendAccountNumber,
                 setTransferToSendAccountNumber, transferToReceiveAccountNumber,
-                setTransferToReceiveAccountNumber, } = useContext(CreateContext)
+                setTransferToReceiveAccountNumber, token } = useContext(CreateContext)
         const classes = useStyles()
         const navigate = useNavigate()
         const { transfer } = transactions
@@ -107,7 +110,6 @@ export default function Transfer() {
         const { customValidateForTransfer } = TransactionValidation
         const transferbutton = (event) => {
                 event.preventDefault()
-                let token = localStorage.getItem('token')
                 let data = {
                         id: transferToSendAccountNumber,
                         transferId: transferToReceiveAccountNumber,
@@ -119,14 +121,14 @@ export default function Transfer() {
                         setTransferToReceiveAccountNumber('')
                         setTransferToSendAccountNumber('')
                         setAmount(0)
-                }).catch(err => console.log(err.response)).then(r => {
+                }).catch(err => {
+                        setError(err.response.data)
+                        throw new Error(err)
+                }).then(r => {
                         let obj = { headers: { Authorization: token } }
                         api('accounts#index', obj).then(res => { setAccounts(res.data) }).catch(error => console.log(error.response))
-                }).then(r => navigate('/main'))
+                }).then(r => navigate('/main')).catch(e => e)
         }
-
-        // React.useEffect(() => { hookUserData(accountNum1, setName1, createFullName, setAccountType1, setBalance1, setTransaction1) }, [accountNum1, createFullName, hookUserData])
-        // React.useEffect(() => { hookUserData(accountNum2, setName2, createFullName, setAccountType2, setBalance2, setTransaction2) }, [accountNum2, createFullName, hookUserData])
         let objectData1 = fetchInfo(accounts, transferToSendAccountNumber)
         let objectData2 = fetchInfo(accounts, transferToReceiveAccountNumber)
         return (
@@ -138,8 +140,9 @@ export default function Transfer() {
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Number
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={transferToSendAccountNumber} onChange={(event) => setTransferToSendAccountNumber(event.target.value)}
-                                                        // {...(error.accountNumber && { error: true, helperText: error.accountNumber })} 
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={transferToSendAccountNumber}
+                                                                onChange={(e) => setTransferToSendAccountNumber(e.target.value)}
+                                                                {...(error?.errors?.account_number && { error: true, helperText: error?.errors?.account_number[0] })}
 
                                                         />
                                                 </Container>
@@ -147,19 +150,19 @@ export default function Transfer() {
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Type
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountType} onChange={(event) => setAccountType1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountType} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Full Name
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountName} onChange={(event) => setName1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.accountName} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Balance
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.balance} onChange={(event) => setBalance1(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData1.balance} disabled />
                                                 </Container>
 
                                                 <Container className={classes.container}>
@@ -167,7 +170,8 @@ export default function Transfer() {
                                                                 Sending to
                                                         </Typography>
                                                         <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={transferToReceiveAccountNumber} onChange={(event) => setTransferToReceiveAccountNumber(event.target.value)}
-                                                        // {...(error.accountNumber2 && { error: true, helperText: error.accountNumber2 })} 
+                                                                // {...(error.accountNumber2 && { error: true, helperText: error.accountNumber2 })} 
+                                                                {...(error?.errors?.account_number2 && { error: true, helperText: error?.errors?.account_number2[0] })}
 
                                                         />
                                                 </Container>
@@ -175,27 +179,27 @@ export default function Transfer() {
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Account Type
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountType} onChange={(event) => setAccountType2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountType} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Full Name
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountName} onChange={(event) => setName2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.accountName} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Balance
                                                         </Typography>
-                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.balance} onChange={(event) => setBalance2(event.target.value)} disabled />
+                                                        <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData2.balance} disabled />
                                                 </Container>
                                                 <Container className={classes.container}>
                                                         <Typography className={classes.typography} variant="h6" align="left">
                                                                 Amount
                                                         </Typography>
                                                         <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)}
-                                                        // {...(error.amount && { error: true, helperText: error.amount })} 
-
+                                                                // {...(error.amount && { error: true, helperText: error.amount })} 
+                                                                {...(error?.errors?.amount && { error: true, helperText: error?.errors?.amount[0] })}
                                                         />
                                                 </Container>
                                                 <Container className={classes.container}>

@@ -108,8 +108,6 @@ const UserList = () => {
         };
     }, []);
 
-    const USER_DATA = JSON.parse(localStorage.getItem('userData'))
-    const dataContainer = [...USER_DATA]
     return (
         <div>
             <div

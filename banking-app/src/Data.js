@@ -18,13 +18,17 @@ export default function Data({ children }) {
         account_type: '',
         balance: 0
     })
+    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : null)
     const [accounts, setAccounts] = useState([])
     const [depositAccountNumber, setDepositAccountNumber] = useState('')
     const [withdrawAccountNumber, setWithdrawAccountNumber] = useState('')
     const [transferToSendAccountNumber, setTransferToSendAccountNumber] = useState('')
     const [transferToReceiveAccountNumber, setTransferToReceiveAccountNumber] = useState('')
+    const [user, setUser] = useState({})
     let context =
     {
+        user,
+        setUser,
         state,
         setState,
         depositAccountNumber,
@@ -36,7 +40,8 @@ export default function Data({ children }) {
         transferToReceiveAccountNumber,
         setTransferToReceiveAccountNumber,
         accounts,
-        setAccounts
+        setAccounts, token,
+        setToken
     }
     return (
         <CreateContext.Provider value={context}>

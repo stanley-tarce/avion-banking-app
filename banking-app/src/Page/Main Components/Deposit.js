@@ -1,10 +1,7 @@
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import React from 'react'
-import { createFullName, fetchInfo } from '../../Function/'
-import transactions from '../../Components2/Functions/transaction'
+import { fetchInfo } from '../../Function/'
 import TransactionList from '../Other Components/TransactionList'
-import TransactionValidation from '../../Components2/Functions/TransactionValidation'
-import ValidateModal from '../../Components2/ValidateModal'
 import { CreateContext } from '../../Data';
 import { useContext } from 'react'
 import { api } from '../../Utility/API'
@@ -55,31 +52,20 @@ const useStyles = makeStyles(() => ({
    tabledata: {
       position: 'absolute',
       top: '0',
-      right: '0px',
+      right: '13em',
    }
 }))
 
 
 export default function Deposit() {
    const { depositAccountNumber,
-      setDepositAccountNumber, accounts, setAccounts } = useContext(CreateContext)
-   const { validate } = TransactionValidation
+      setDepositAccountNumber, accounts, setAccounts, token } = useContext(CreateContext)
    const classes = useStyles()
-   const { deposit } = transactions
-   const [transactionlist, setTransactionList] = React.useState([])
    const [amount, setAmount] = React.useState(0)
-   const [balance, setBalance] = React.useState(0)
-   // const [accountNumber, setAccountNumber] = React.useState('')  //accountNumber === accountID
-   const [accountName, setAccountName] = React.useState('')
-   const [accountType, setAccountType] = React.useState('')
    const [error, setError] = React.useState({})
-   const [result, setResult] = React.useState({})
-   const [open, setOpen] = React.useState(false)
-   // const [message, setMessage] = React.userState('')
    const navigate = useNavigate()
    const button = (event) => {
 
-      let token = localStorage.getItem('token')
       event.preventDefault()
       let obj = {
          headers: { Authorization: token },
@@ -89,23 +75,23 @@ export default function Deposit() {
          id: depositAccountNumber
       }
       api('accounts#deposit', obj).then(response => {
-         setDepositAccountNumber(0)
-         console.log(response)
-      }).catch(e => console.log(e)).then(i => {
+         setDepositAccountNumber('')
+         return response
+      }).catch(e => {
+         setError(e.response.data)
+         throw new Error(e)
+      }).then(i => {
+         setError({})
          let a = {
             headers: { Authorization: token }
          }
-         api('accounts#index', a).then(response => { setAccounts(response.data) }).catch(e => console.log(e))
-      }).then(r => navigate('/main'))
+         api('accounts#index', a).then(response => { setAccounts(response.data) }).catch(e => {
+
+         })
+      }).then(r => navigate('/main')).catch(e => console.log(e))
 
    }
-
-
    let objectData = fetchInfo(accounts, depositAccountNumber)
-   // React.useEffect(() => hookUserData(depositAccountNumber, setAccountName, createFullName, setAccountType, setBalance, setTransactionList), [depositAccountNumber, createFullName, hookUserData])
-   // React.useEffect(() => {
-   //    console.log(fetchInfo(userData, depositAccountNumber))
-   // }, [fetchInfo])
    return (
       <>
          <Grid className={classes.root} container spacing={3}>
@@ -115,31 +101,31 @@ export default function Deposit() {
                      <Typography variant="h6" align="left">
                         Account Number
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setDepositAccountNumber(event.target.value)} />
+                     <TextField InputProps={{ disableUnderline: true }} value={depositAccountNumber} className={classes.textfield} onChange={(event) => setDepositAccountNumber(event.target.value)} {...(error?.errors?.account_number && { error: true, helperText: error?.errors?.account_number[0] })} />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Name
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountName} onChange={(event) => setAccountName(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountName} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Type
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountType} onChange={(event) => setAccountType(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountType} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Balance
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.balance} onChange={(event) => setBalance(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.balance} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Amount
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)}{...(error.amount && { error: true, helperText: error.amount })} />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={amount} onChange={(event) => setAmount(event.target.value)}{...(error?.errors?.amount && { error: true, helperText: error?.errors?.amount })} />
                   </Container>
                   <Container>
                      <Button className={classes.submitbutton} variant="contained" color="primary" onClick={button}>
@@ -147,13 +133,11 @@ export default function Deposit() {
                      </Button>
                   </Container>
                </Container>
-
             </Grid>
             <Grid className={classes.tabledata} item xs={6}>
                <TransactionList tabledata={objectData.transactions} />
             </Grid>
          </Grid>
-         <ValidateModal open={open} setOpen={setOpen} result={result} />
       </>
    )
 }

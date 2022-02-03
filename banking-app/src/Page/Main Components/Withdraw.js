@@ -1,10 +1,7 @@
 import React, { useContext } from 'react'
-import transactions from '../../Components2/Functions/transaction'
 import TransactionList from '../Other Components/TransactionList'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
-import TransactionValidation from '../../Components2/Functions/TransactionValidation'
-import ValidateModal from '../../Components2/ValidateModal'
-import { createFullName, fetchInfo } from '../../Function'
+import { fetchInfo } from '../../Function'
 import { CreateContext } from '../../Data'
 import { api } from '../../Utility/API'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +50,7 @@ const useStyles = makeStyles(() => ({
    tabledata: {
       position: 'absolute',
       top: '0',
-      right: '0px',
+      right: '13em',
    }
 }))
 
@@ -62,18 +59,8 @@ export default function Withdraw() {
    const { withdrawAccountNumber, setWithdrawAccountNumber, accounts, setAccounts } = useContext(CreateContext)
    const classes = useStyles()
    const navigate = useNavigate()
-   const { withdraw } = transactions
-   const { validate } = TransactionValidation
-
-   const [amount, setAmount] = React.useState(0)
-   const [balance, setBalance] = React.useState(0)
-   const [accountNumber, setAccountNumber] = React.useState("")  //accountNumber === accountID
-   const [accountName, setAccountName] = React.useState('')
-   const [accountType, setAccountType] = React.useState('')
-   const [transactionlist, setTransactionList] = React.useState([])
-   const [open, setOpen] = React.useState(false)
+   const [amount, setAmount] = React.useState('')
    const [error, setError] = React.useState({})
-   const [result, setResult] = React.useState({})
    const button = event => {
       event.preventDefault()
       let token = localStorage.getItem('token')
@@ -85,12 +72,15 @@ export default function Withdraw() {
       api('accounts#withdraw', data).then(r => {
          setWithdrawAccountNumber('')
          console.log(r)
-      }).catch(e => console.log(e.response)).then(r => {
+      }).catch(e => {
+         setError(e.response.data)
+         throw new Error(e)
+      }).then(r => {
          let obj = { headers: { Authorization: token } }
          api('accounts#index', obj).then(res => {
             setAccounts(res.data)
          }).catch(e => console.log(e.response))
-      }).then(r => navigate('/main'))
+      }).then(r => navigate('/main')).catch(e => e)
 
    }
    let objectData = fetchInfo(accounts, withdrawAccountNumber)
@@ -103,8 +93,8 @@ export default function Withdraw() {
                      <Typography variant="h6" align="left">
                         Account Number
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setWithdrawAccountNumber(event.target.value)}
-                     // {...(error.accountNumber && { error: true, helperText: error.accountNumber })} 
+                     <TextField InputProps={{ disableUnderline: true }} value={withdrawAccountNumber} className={classes.textfield} onChange={(event) => setWithdrawAccountNumber(event.target.value)}
+                        {...(error?.errors?.account_number && { error: true, helperText: error?.errors?.account_number[0] })}
 
                      />
                   </Container>
@@ -112,26 +102,26 @@ export default function Withdraw() {
                      <Typography variant="h6" align="left">
                         Account Name
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountName} onChange={(event) => setAccountName(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountName} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Account Type
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountType} onChange={(event) => setAccountType(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.accountType} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Balances
                      </Typography>
-                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.balance} onChange={(event) => setBalance(event.target.value)} disabled />
+                     <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} value={objectData.balance} disabled />
                   </Container>
                   <Container>
                      <Typography variant="h6" align="left">
                         Amount
                      </Typography>
                      <TextField InputProps={{ disableUnderline: true }} className={classes.textfield} onChange={(event) => setAmount(event.target.value)}
-                     // {...(error.amount && { error: true, helperText: error.amount })} 
+                        {...(error?.errors?.amount && { error: true, helperText: error?.errors?.amount })}
 
                      />
                   </Container>
@@ -147,6 +137,6 @@ export default function Withdraw() {
                <TransactionList tabledata={objectData.transactions} />
             </Grid>
          </Grid>
-         <ValidateModal open={open} setOpen={setOpen} result={result} /> </>
+      </>
    )
 }

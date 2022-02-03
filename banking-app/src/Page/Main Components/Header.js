@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core';
-import user from '../../assets/user.svg';
+import baseimage from '../../assets/user.svg';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import philippines from '../../assets/flags/philippines.png';
 import united from '../../assets/flags/united.png';
@@ -9,6 +9,8 @@ import unitedK from '../../assets/flags/unitedK.png';
 import china from '../../assets/flags/china.png';
 import MyAccount from './MyAccount';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { api } from '../../Utility/API';
+import { CreateContext } from '../../Data';
 
 const useStyles = makeStyles({
     card: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
         borderRadius: '50%',
         objectFit: 'cover',
         top: '81px',
-        right: '134px'
+        right: '200px'
     },
     user: {
         position: 'absolute',
@@ -83,7 +85,7 @@ const useStyles = makeStyles({
 
 
 const Header = (props) => {
-
+    const { user, setUser, token } = useContext(CreateContext)
     const todayMonth = new Date().toLocaleString('en-us', { month: 'short' });
     const todayDate = new Date().toLocaleString('en-us', { day: 'numeric' });
     const todayYear = new Date().getFullYear();
@@ -100,21 +102,30 @@ const Header = (props) => {
     const [sgd, setSgd] = useState();
     const [jpy, setJpy] = useState();
 
-    // const api = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
-    // const fetchCurrency = () => {
-    //     fetch(api)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             const { USD, PHP, GBP, CNY } = data.rates
+    const GET_CURRENCY_URL = 'http://data.fixer.io/api/latest?access_key=303bd3298954de3bac20d002582cf351';
+    const fetchCurrency = () => {
+        fetch(GET_CURRENCY_URL)
+            .then(response => response.json())
+            .then(data => {
+                const { USD, PHP, GBP, CNY } = data.rates
 
-    //             setUsd(USD.toFixed(2))
-    //             setPhp(PHP.toFixed(2))
-    //             setSgd(GBP.toFixed(2))
-    //             setJpy(CNY.toFixed(2))
-    //         })
-    // }
+                setUsd(USD.toFixed(2))
+                setPhp(PHP.toFixed(2))
+                setSgd(GBP.toFixed(2))
+                setJpy(CNY.toFixed(2))
+            })
+    }
+    useEffect(() => {
+        fetchCurrency()
+    }, [])
+    useEffect(() => {
+        let obj = { headers: { Authorization: token } }
+        api('users#show', obj).then(res => {
+            let data = res.data
+            setUser(data)
+        })
+    }, [])
 
-    // fetchCurrency()
 
     const classes = useStyles();
     return (
@@ -148,7 +159,7 @@ const Header = (props) => {
                     }} />
                 <img
                     className={classes.image}
-                    src={user}
+                    src={user?.image ? user?.image : baseimage}
                     alt=""
                 />
                 <h4
@@ -156,7 +167,7 @@ const Header = (props) => {
                     onClick={showAccount}
                     style={{ userSelect: 'none' }}
                 >
-                    {localStorage.getItem('googleSignIn') ? JSON.parse(localStorage.getItem('googleSignIn')).givenName : "Admin"}
+                    {user?.email ? user?.email.split('@')[0] : 'User'}
                 </h4>
                 <ArrowDropDownIcon className={`${classes.icon} acct-icon`}
                     onClick={showAccount}

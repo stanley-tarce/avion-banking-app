@@ -1,6 +1,6 @@
 
 // import GoogleSignUp from './GoogleSignUp';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from '../assets/login/chart.svg';
@@ -13,6 +13,7 @@ import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
+import { CreateContext } from '../Data'
 import axios from 'axios'
 // import FirebaseOtp from './FirebaseOtp';
 import { api } from '../Utility/API'
@@ -163,7 +164,7 @@ const Login = (props) => {
     const handleMouseDown = (e) => {
         e.preventDefault();
     }
-
+    const { setToken } = useContext(CreateContext)
     /***** handling sign in of user ******/
     const signIn = (e) => {
         e.preventDefault();
@@ -178,18 +179,12 @@ const Login = (props) => {
         }
         api('devise#login', data).then(res => {
             localStorage.setItem('token', res.headers.authorization)
+            setToken(res.headers.authorization)
             console.log(localStorage.getItem('token'))
-        })
-        return navigate('/main')
+        }).finally(r => navigate('/'))
+
     }
 
-    const [otpDisplay, setOtpDisplay] = useState(false);
-    const [otpValidation, setOtpValidation] = useState(false);
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         return navigate('/main')
-    //     }
-    // }, []) 
     return (
         <div
             className={classes.root}>
@@ -379,8 +374,7 @@ const Login = (props) => {
                                 style={{ paddingRight: '1rem' }}
                                 src={GoogleLogo}
                                 alt="google-logo"
-                            /> Sign in with Google
-
+                            />
                             {/* <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain} /> */}
                         </div>
                     </form>

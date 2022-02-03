@@ -1,11 +1,43 @@
 import Card from '@material-ui/core/Card';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { React, useContext } from 'react';
+import { api } from '../../Utility/API';
+import { CreateContext } from '../../Data'
+import { createAccountID } from '../../Function'
+import { useNavigate } from 'react-router-dom';
+
 
 const MyAccount = (props) => {
-
+    const navigate = useNavigate()
+    const { setAccounts, setUser, setState, token, setDepositAccountNumber, setWithdrawAccountNumber, setTransferToSendAccountNumber, setTransferToReceiveAccountNumber } = useContext(CreateContext)
     const logOff = () => {
-        props.setLogOff(true)
-        localStorage.removeItem('googleSignIn')
+        let object = { headers: { Authorization: token } }
+        api('devise#logout', object).then(response => {
+            console.log(response)
+            localStorage.removeItem('token')
+            setAccounts([])
+            setUser({})
+            setState({
+                account_number: createAccountID(),
+                last_name: '',
+                first_name: '',
+                middle_name: '',
+                contact_number: '',
+                email: '',
+                gender: '',
+                home_address: '',
+                zip_code: '',
+                city: '',
+                birth_date: '',
+                account_type: '',
+                balance: 0
+            })
+            setDepositAccountNumber('')
+            setWithdrawAccountNumber('')
+            setTransferToSendAccountNumber('')
+            setTransferToReceiveAccountNumber('')
+            return navigate('/')
+        })
     }
 
     return (
@@ -15,7 +47,7 @@ const MyAccount = (props) => {
                 right: '48px',
                 top: '20%',
                 width: '135px',
-                height: '88px',
+                height: 'auto',
                 zIndex: '10',
                 border: '1px solid #C6C6C6',
                 borderRadius: '5px',
@@ -25,7 +57,7 @@ const MyAccount = (props) => {
                 justifyContent: 'space-between',
             }}
         >
-            <div
+            {/* <div
                 className='my-account'
                 style={{ height: '45px', backgroundColor: 'rgb(235, 235, 235);' }}>
                 <h5
@@ -35,7 +67,7 @@ const MyAccount = (props) => {
                         marginTop: '12px',
                         cursor: 'pointer'
                     }}>My Account</h5>
-            </div>
+            </div> */}
             <div
                 className='log-out'
                 style={{

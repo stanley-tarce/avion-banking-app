@@ -12,6 +12,8 @@ import { set, useForm } from 'react-hook-form';
 import { CreateContext } from '../../Data'
 import { api } from '../../Utility/API'
 import { useNavigate } from 'react-router-dom'
+import { parseError, createAccountID } from '../../Function/'
+
 const styles = makeStyles(() => ({
     root: {
         marginTop: '20px',
@@ -97,19 +99,25 @@ const styles = makeStyles(() => ({
 }));
 
 function Registerv3() {
+
+
     const navigate = useNavigate()
     let token = localStorage.getItem('token')
     const { state, setState, accounts, setAccounts } = useContext(CreateContext)
+    const [error, setError] = useState({})
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = { account: state }
         let headers = { Authorization: token }
         let obj = { body: data, headers: headers }
         api('accounts#create', obj).then(response => {
-            console.log(response)
             let o = { headers: headers }
             api('accounts#index', o).then(response => setAccounts([...response.data])).catch(e => console.log(e.response))
-        }).catch(e => console.log(e.response)).then(r => navigate(-1))
+            setState({ ...state, account_number: createAccountID(), account_type: '', balance: 0, last_name: '', first_name: '', middle_name: '', contact_number: '', email: '', gender: '', home_address: '', city: '', zip_code: '', birth_date: '' })
+        }).catch(e => {
+            setError(parseError(e.response.data.errors))
+            throw new Error(e)
+        }).then(r => navigate(-1)).catch(e => e)
     }
     const classes = styles();
     const handleFirstNameChange = (e) => {
@@ -129,15 +137,6 @@ function Registerv3() {
     }
     const handleContactNumberChange = event => {
         setState({ ...state, contact_number: event.target.value })
-        // const onlyNums = event.target.value.replace(/[^0-9]/g, '');
-        // if (onlyNums.length < 11) {
-        //     setState({ ...state, contact_number: event.target.value });
-        // }
-        // else if (onlyNums.length === 11) {
-        //     const number = onlyNums.replace(/(\d{4})(\d{3})(\d{4})/, "($1)-$2-$3");
-        //     setState({ ...state, contactnumber: number });
-        // }
-
     }
     const handleHomeAddressChange = (e) => {
         setState({ ...state, home_address: e.target.value });
@@ -153,23 +152,9 @@ function Registerv3() {
     }
     const handleZipCodeChange = event => {
         setState({ ...state, zip_code: event.target.value });
-        // const onlyNums = event.target.value.replace(/[^0-9]/g, '');
-        // if (onlyNums.length < 4) {
-        //     setState({ ...state, zip_code: event.target.value });
-        // }
-        // else if (onlyNums.length === 4) {
-        //     const number = onlyNums.replace(/(\d{2})(\d{2})/, "$1-$2");
-        //     setState({ ...state, zip_code: number });
-        // }
     }
     const handleParseInt = event => {
         setState({ ...state, balance: parseInt(event.target.value) });
-    }
-    const handleResultChange = properties => {
-        setState({ ...state, result: properties });
-    }
-    const handleModalChange = boolean => {
-        return setState({ ...state, open: boolean });
     }
     return <div className={classes.root}>
         <Grid container spacing={6}>
@@ -181,7 +166,7 @@ function Registerv3() {
                         type="text"
                         name={"last Name"}
                         id="lastname"
-                        value={state.lastname}
+                        value={state.last_name}
                         onChange={(e) => handleLastNameChange(e)}
                         InputProps={{
                             disableUnderline: true,
@@ -189,7 +174,7 @@ function Registerv3() {
                         className={classes.textfield}
                         fullWidth
                         required
-                    // {...(state.errors.lastname && { error: true, helperText: state.errors.lastname })}
+                        {...error?.last_name && { error: true, helperText: error.last_name }}
                     />
                 </Container>
             </Grid>
@@ -202,12 +187,12 @@ function Registerv3() {
                         placeholder="First Name"
                         name={"first Name"}
                         id="lastname"
-                        value={state.firstname}
+                        value={state.first_name}
                         onChange={(e) => handleFirstNameChange(e)}
                         InputProps={{
                             disableUnderline: true,
                         }}
-                        // {...(state.errors.firstname && { error: true, helperText: state.errors.firstname })}
+                        {...error?.first_name && { error: true, helperText: error.first_name }}
                         className={classes.textfield}
                     />
                 </Container>
@@ -221,12 +206,12 @@ function Registerv3() {
                         placeholder="Middle Name"
                         name={"middle Name"}
                         id="middlename"
-                        value={state.middlename}
+                        value={state.middle_name}
                         onChange={(e) => handleMiddleNameChange(e)}
                         InputProps={{
                             disableUnderline: true,
                         }}
-                        // {...(state.errors.middlename && { error: true, helperText: state.errors.middlename })}
+                        {...error?.middle_name && { error: true, helperText: error.middle_name }}
                         className={classes.textfield} />
                 </Container>
             </Grid>
@@ -246,7 +231,7 @@ function Registerv3() {
                         InputProps={{
                             disableUnderline: true,
                         }}
-                        // {...(state.errors.email && { error: true, helperText: state.errors.email })}
+                        {...error?.email && { error: true, helperText: error.email }}
                         className={classes.textfield} />
                 </Container>
             </Grid>
@@ -262,13 +247,13 @@ function Registerv3() {
                         placeholder="Contact Number"
                         name={"Contact Number"}
                         id="contactnumber"
-                        value={state.contactnumber}
+                        value={state.contact_number}
                         onChange={(e) => handleContactNumberChange(e)}
                         InputProps={{
                             maxLength: 11,
                             disableUnderline: true,
                         }}
-                        // {...(state.errors.contactnumber && { error: true, helperText: state.errors.contactnumber })}
+                        {...(error?.contact_number && { error: true, helperText: error?.contact_number })}
                         className={classes.textfield} />
                 </Container>
             </Grid>
@@ -282,7 +267,7 @@ function Registerv3() {
                             <FormControlLabel value={'Male'} label="Male" control={<Radio />} />
                             <FormControlLabel value={'Female'} label="Female" control={<Radio />} />
                         </RadioGroup>
-                        {/* <FormHelperText>{state.errors.gender}</FormHelperText> */}
+                        <FormHelperText style={{ color: 'red' }}>{error?.gender}</FormHelperText>
                     </FormControl>
                 </Container>
 
@@ -298,12 +283,13 @@ function Registerv3() {
                         placeholder="Home Address"
                         name={"Home Address"}
                         id="homeaddress"
-                        value={state.homeaddress}
+                        value={state.home_address}
                         onChange={(e) => handleHomeAddressChange(e)}
                         InputProps={{
                             disableUnderline: true,
                         }}
                         // {...(state.errors.homeaddress && { error: true, helperText: state.errors.homeaddress })}
+                        {...error?.home_address && { error: true, helperText: error.home_address }}
                         className={classes.textfield} />
                 </Container>
             </Grid>
@@ -321,6 +307,7 @@ function Registerv3() {
                         value={state.city}
                         onChange={(e) => handleCityChange(e)}
                         // {...(state.errors.city && { error: true, helperText: state.errors.city })}
+                        {...error?.city && { error: true, helperText: error.city }}
                         InputProps={{
                             disableUnderline: true,
                         }}
@@ -339,9 +326,10 @@ function Registerv3() {
                         placeholder="Zip Code"
                         name={"Zip Code"}
                         id="zipcode"
-                        value={state.zipcode}
+                        value={state.zip_code}
                         onChange={(e) => handleZipCodeChange(e)}
                         // {...(state.errors.zipcode && { error: true, helperText: state.errors.zipcode })}
+                        {...error?.zip_code && { error: true, helperText: error.zip_code }}
                         InputProps={{
                             maxLength: 4,
                             disableUnderline: true,
@@ -360,7 +348,7 @@ function Registerv3() {
                         placeholder="Date of Birth"
                         name={"Date of Birth"}
                         id="dateofbirth"
-                        value={state.dateofbirth}
+                        value={state.birth_date}
                         onChange={(e) => handleDateOfBirthChange(e)}
 
                         InputProps={{
@@ -371,7 +359,8 @@ function Registerv3() {
                         className={classes.textfielddate}
 
                         fullWidth
-                    // {...(state.errors.dateofbirth && { error: true, helperText: state.errors.dateofbirth })} 
+                        // {...(state.errors.dateofbirth && { error: true, helperText: state.errors.dateofbirth })} 
+                        {...error?.birth_date && { error: true, helperText: error.birth_date }}
                     />
                 </Container>
             </Grid>
@@ -387,7 +376,7 @@ function Registerv3() {
                                 fontSize: '18px',
                             }
                         }}
-                        className={classes.accountnum}
+                        className={classes.account_number}
                         InputProps={{ disableUnderline: true, }}
                         id="accountID"
                         value={state.account_number}
@@ -401,7 +390,7 @@ function Registerv3() {
                     <FormControl fullWidth >
                         <Select
                             className={classes.textfield}
-                            value={state.accountype}
+                            value={state.account_type}
                             onChange={(e) => handleAccountTypeChange(e)}
                             disableUnderline={true}
                             fullWidth
@@ -412,7 +401,7 @@ function Registerv3() {
                             <MenuItem className={classes.selectfont} value={'Savings'}>Savings</MenuItem>
                             <MenuItem className={classes.selectfont} value={'Checking'}>Checking</MenuItem>
                         </Select>
-                        {/* <FormHelperText style={{ color: 'red' }}>{state.errors.accountype}</FormHelperText> */}
+                        <FormHelperText style={{ color: 'red' }}>{error?.account_type}</FormHelperText>
                     </FormControl>
                 </Container>
             </Grid>
@@ -431,6 +420,7 @@ function Registerv3() {
                             disableUnderline: true,
                         }}
                         className={classes.textfield}
+                        {...(error?.balance && { error: true, helperText: error?.balance })}
 
                     />
                 </Container>
@@ -450,8 +440,6 @@ function Registerv3() {
 
             </Grid>
         </Grid>
-
-        {/* <ValidateModal open={state.open} setOpen={handleModalChange} result={state.result} /> */}
 
     </div>
 }

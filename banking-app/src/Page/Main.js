@@ -15,8 +15,9 @@ import { api } from '../Utility/API';
 
 
 const Main = (props) => {
-    const { state, setState, accounts, setAccounts } = useContext(CreateContext)
-    console.log(state)
+
+    const { state, setState, accounts, setAccounts, token } = useContext(CreateContext)
+    console.log(process.env.GOOGLE_CLIENT_ID)
     /***** Declaring states for all dashboard options *****/
     const [userList, setUserList] = useState(true);
     const [createUser, setCreateUser] = useState(false);
@@ -25,7 +26,7 @@ const Main = (props) => {
     const [transfer, setTransfer] = useState(false);
     const [logOut, setLogOut] = useState(false);
     useEffect(() => {
-        let obj = { headers: { Authorization: localStorage.getItem('token') } }
+        let obj = { headers: { Authorization: token } }
         api('accounts#index', obj).then(response => {
             setAccounts(response.data)
         }).catch(e => console.log(e))

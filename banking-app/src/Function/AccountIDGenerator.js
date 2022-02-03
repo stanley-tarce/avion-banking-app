@@ -6,7 +6,7 @@ export function createAccountID() {
     const accountNumber = () => {
         let randomAccountNumber = Math.floor(Math.random() * 1000000).toString();
         if (randomAccountNumber.length !== 6) {
-            return createAccountID
+            return createAccountID()
         }
         return randomAccountNumber;
 

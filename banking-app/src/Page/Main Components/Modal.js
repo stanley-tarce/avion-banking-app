@@ -1,8 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles, Typography } from '@material-ui/core';
 import bg from '../../assets/bg.svg';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { CreateContext } from '../../Data';
 
@@ -40,11 +40,9 @@ const Modal = () => {
 
     const navigate = useNavigate()
     const [searchParams] = useSearchParams()
-    let dataContainer = JSON.parse(localStorage.getItem('userData'))
     const accountID = searchParams.get('accountID')
     const classes = useStyle();
     let objects = accounts.find(data => data.account_number === accountID)
-    console.log(objects)
     return (
         <div
             style={{

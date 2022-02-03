@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './App.css';
 import Data from './Data'
 import Login from './Page/Login';
@@ -6,6 +6,7 @@ import { useRoutes } from 'react-router-dom'
 import Blank from './Page/Blank';
 import Main from './Page/Main';
 import { UserList, Modal, Transfer, Withdraw, Deposit, Registerv3 } from './Page/Main Components'
+import './assets/toast.css'
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Data>
         {routes}
       </Data>
+
     </div>
   );
 }

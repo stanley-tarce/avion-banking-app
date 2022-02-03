@@ -10,6 +10,7 @@ function Blank() {
         else {
             navigate('/signin')
         }
+        // eslint-disable-next-line
     }, [])
     return (<div></div>);
 }

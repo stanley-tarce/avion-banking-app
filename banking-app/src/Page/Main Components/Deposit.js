@@ -22,8 +22,6 @@ const useStyles = makeStyles(() => ({
 
    },
    textfield: {
-      // marginTop: '15px',
-      // marginBottom: '25px',
       borderRadius: '0px',
       border: '1px solid black',
       backgroundColor: 'white',
@@ -47,7 +45,6 @@ const useStyles = makeStyles(() => ({
       textTransform: 'none',
    },
    deposit: {
-      // width: '100%'
    },
    tabledata: {
       position: 'absolute',

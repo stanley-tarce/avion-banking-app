@@ -1,4 +1,4 @@
-import { withStyles, makeStyles, Table, TableBody, TableCell, TableHead, TableContainer, Container, TableRow, TablePagination, TableFooter } from '@material-ui/core'
+import { makeStyles, Table, TableBody, TableCell, TableHead, TableContainer, Container, TableRow, TablePagination } from '@material-ui/core'
 import React from 'react'
 
 
@@ -39,7 +39,8 @@ const useStyle = makeStyles(() => ({
 
 function TransactionTable(props) {
      const [page, setPage] = React.useState(0);
-     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+     // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+     const rowsPerPage = 5
      // const rowsPerPage = 3;
 
      const { tabledata } = props //Table data is an array of objects

@@ -1,21 +1,18 @@
 
 // import GoogleSignUp from './GoogleSignUp';
-import React, { useState, useEffect, useContext } from 'react'
-import { Divider, InputAdornment, makeStyles, TextField } from '@material-ui/core';
+import React, { useState, useContext } from 'react'
+import { InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import chart from '../assets/login/chart.svg';
 import contract from '../assets/login/contract.svg';
 import dollarSymbol from '../assets/login/dollarSymbol.svg';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import Asset from '../assets/login/Asset.svg';
 import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
 import { CreateContext } from '../Data'
-import axios from 'axios'
-// import FirebaseOtp from './FirebaseOtp';
 import { api } from '../Utility/API'
 
 const useStyles = makeStyles({
@@ -51,6 +48,7 @@ const useStyles = makeStyles({
         height: '100vh',
         width: '100vw',
         background: '#aa4b6b',  /* fallback for old browsers */
+        // eslint-disable-next-line no-dupe-keys
         background: 'linear-gradient(to right, #8e9eab, #eef2f3)'
 
     },
@@ -140,16 +138,10 @@ const Login = (props) => {
         showPassword: false
     });
 
-    const admins = {
-        userName: 'admin1',
-        passCode: 'adminpass'
-    }
 
-    const [user, setUser] = useState('');
+    // const [user, setUser] = useState('');
 
-    const userInput = (e) => {
-        setUser(...e.target.value)
-    }
+
 
     /****** functions for handling input password ******/
 
@@ -180,7 +172,6 @@ const Login = (props) => {
         api('devise#login', data).then(res => {
             localStorage.setItem('token', res.headers.authorization)
             setToken(res.headers.authorization)
-            console.log(localStorage.getItem('token'))
         }).finally(r => navigate('/'))
 
     }
@@ -231,24 +222,7 @@ const Login = (props) => {
                         }}>
                         Step right up and take a look, it's time for Yamishibai!
                     </p>
-                    {/* <div
-                        style={{
-                            marginTop: '6em'
-                        }}>
-                        <div
-                            style={{
-                                height: '0.65rem',
-                                width: '1.8rem',
-                                backgroundColor: 'white',
-                                borderRadius: '32.5px',
-                                position: 'absolute',
-                                bottom: '15%',
-                                left: '43.7%'
-                            }}></div>
-                        <FiberManualRecordIcon className={classes.circle} />
-                        <FiberManualRecordIcon className={classes.circle} />
-                        <FiberManualRecordIcon className={classes.circle} />
-                    </div> */}
+
                 </div>
                 <div
                     className={classes.login}>
@@ -291,7 +265,7 @@ const Login = (props) => {
                         <TextField
                             type='text'
                             label='Username'
-                            defaultValue={user}
+
                             onChange={handleChange('userName')}
                             variant='outlined'
                             style={{
@@ -375,7 +349,6 @@ const Login = (props) => {
                                 src={GoogleLogo}
                                 alt="google-logo"
                             />
-                            {/* <GoogleSignUp showLogin={props.showLogin} showMain={props.showMain} /> */}
                         </div>
                     </form>
                 </div>

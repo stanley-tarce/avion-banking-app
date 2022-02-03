@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import transactions from '../../Components2/Functions/transaction'
+// import transactions from '../../Components2/Functions/transaction'
 import { Container, Grid, makeStyles, TextField, Typography, Button } from '@material-ui/core'
 import TransactionList from '../Other Components/TransactionList'
-import TransactionValidation from '../../Components2/Functions/TransactionValidation'
-import ValidateModal from '../../Components2/ValidateModal'
+// import TransactionValidation from '../../Components2/Functions/TransactionValidation'
+// import ValidateModal from '../../Components2/ValidateModal'
 import { CreateContext } from '../../Data';
 import { fetchInfo } from '../../Function'
 import { useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
         root: {
                 fontFamily: 'Roboto',
                 // fontSize: '10px',
+                marginTop: '20vh',
                 fontWeight: 400,
                 height: '70vh',
                 width: 'inherit',
@@ -48,6 +49,7 @@ const useStyles = makeStyles(() => ({
                 width: '200px',
                 borderRadius: '32.5px',
                 boxShadow: '0px 0px 0px 0px',
+                marginBottom: '-20px',
                 color: 'white',
                 '&:hover': {
                         backgroundColor: '#446181',
@@ -92,22 +94,8 @@ export default function Transfer() {
                 setTransferToReceiveAccountNumber, token } = useContext(CreateContext)
         const classes = useStyles()
         const navigate = useNavigate()
-        const { transfer } = transactions
-        const [accountNum1, setAccountNum1] = React.useState('')
-        const [accountNum2, setAccountNum2] = React.useState('')
-        const [balance1, setBalance1] = React.useState(0)
-        const [balance2, setBalance2] = React.useState(0)
         const [amount, setAmount] = React.useState(0)
-        const [name1, setName1] = React.useState('')
-        const [name2, setName2] = React.useState('')
-        const [accountType1, setAccountType1] = React.useState('')
-        const [accountType2, setAccountType2] = React.useState('')
-        const [transaction1, setTransaction1] = React.useState([])
-        const [transaction2, setTransaction2] = React.useState([]) //dummy array
         const [error, setError] = React.useState({})
-        const [result, setResult] = React.useState({})
-        const [open, setOpen] = React.useState(false)
-        const { customValidateForTransfer } = TransactionValidation
         const transferbutton = (event) => {
                 event.preventDefault()
                 let data = {
@@ -213,7 +201,6 @@ export default function Transfer() {
                                         <TransactionList tabledata={objectData1.transactions} />
                                 </Grid>
                         </Grid>
-                        <ValidateModal open={open} setOpen={setOpen} result={result} />
                 </>
 
 

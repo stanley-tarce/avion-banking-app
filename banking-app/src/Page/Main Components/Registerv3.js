@@ -1,18 +1,15 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     Select, MenuItem, TextField, FormControlLabel,
     RadioGroup, Radio, Button, Typography, FormControl, FormHelperText,
 } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-import { PropTypes } from 'prop-types';
 import { Container, Grid } from '@material-ui/core';
-import validate from '../../Components2/Functions/RegisterValidation'
-import ValidateModal from '../../Components2/ValidateModal';
-import { set, useForm } from 'react-hook-form';
 import { CreateContext } from '../../Data'
 import { api } from '../../Utility/API'
 import { useNavigate } from 'react-router-dom'
 import { parseError, createAccountID } from '../../Function/'
+import toast from 'react-hot-toast';
 
 const styles = makeStyles(() => ({
     root: {
@@ -90,10 +87,16 @@ const styles = makeStyles(() => ({
     }
     , accountNumContainer: {
         display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
         flexDirection: 'column',
-
+    },
+    div: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        border: '2px solid black'
     }
 
 }));
@@ -103,7 +106,7 @@ function Registerv3() {
 
     const navigate = useNavigate()
     let token = localStorage.getItem('token')
-    const { state, setState, accounts, setAccounts } = useContext(CreateContext)
+    const { state, setState, setAccounts } = useContext(CreateContext)
     const [error, setError] = useState({})
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -115,6 +118,7 @@ function Registerv3() {
             api('accounts#index', o).then(response => setAccounts([...response.data])).catch(e => console.log(e.response))
             setState({ ...state, account_number: createAccountID(), account_type: '', balance: 0, last_name: '', first_name: '', middle_name: '', contact_number: '', email: '', gender: '', home_address: '', city: '', zip_code: '', birth_date: '' })
         }).catch(e => {
+            toast.error('Hello')
             setError(parseError(e.response.data.errors))
             throw new Error(e)
         }).then(r => navigate(-1)).catch(e => e)
@@ -272,7 +276,7 @@ function Registerv3() {
                 </Container>
 
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
                 <Container fullWidth>
                     <Typography>
                         Home Address
@@ -315,7 +319,7 @@ function Registerv3() {
                     />
                 </Container>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
                 <Container fullWidth>
                     <Typography>
                         Zip Code
@@ -366,22 +370,24 @@ function Registerv3() {
             </Grid>
             <Grid item xs={4}>
                 <Container className={classes.accountNumContainer}>
-                    <Typography>Account Number</Typography>
-                    <TextField
-                        inputProps={{
+                    <div className={classes.div}>
+                        <Typography>Account Number</Typography>
+                        <TextField
+                            inputProps={{
 
-                            style: {
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                fontSize: '18px',
-                            }
-                        }}
-                        className={classes.account_number}
-                        InputProps={{ disableUnderline: true, }}
-                        id="accountID"
-                        value={state.account_number}
+                                style: {
+                                    textAlign: 'center',
+                                    fontWeight: 'bold',
+                                    fontSize: '18px',
+                                }
+                            }}
+                            className={classes.account_number}
+                            InputProps={{ disableUnderline: true, }}
+                            id="accountID"
+                            value={state.account_number}
 
-                        disabled />
+                            disabled />
+                    </div>
                 </Container>
             </Grid>
             <Grid item xs={4}>

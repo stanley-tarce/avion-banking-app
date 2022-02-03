@@ -6,10 +6,9 @@ React Modules Used:
 
 # To use the file, please enter the following credentials:
 
-**username:** admin1
-**password:** adminpass
+**username:** admin123@gmail.com
+**password:** Admin123
 For OTP codes
-'6Y70nw','pI4vW8', 2qZB7n'
 
 # Images
 

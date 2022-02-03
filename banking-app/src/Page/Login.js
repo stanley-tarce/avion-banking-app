@@ -8,7 +8,6 @@ import contract from '../assets/login/contract.svg';
 import dollarSymbol from '../assets/login/dollarSymbol.svg';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Asset from '../assets/login/Asset.svg';
-import GoogleLogo from '../assets/login/GoogleLogo.svg';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
@@ -299,7 +298,7 @@ const Login = (props) => {
                         <div
                             style={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
+                                justifyContent: 'center',
                                 alignItems: 'center',
                                 marginTop: '2.9em'
                             }}>
@@ -311,16 +310,16 @@ const Login = (props) => {
                                     style={{
                                         height: '22px',
                                     }} /></button>
-                            <h5
+                            {/* <h5
                                 className='forgotPass'
                                 style={{
                                     fontWeight: 'lighter',
                                     fontSize: '0.9rem',
                                     cursor: 'pointer',
                                     userSelect: 'none'
-                                }}>Forgot password?</h5>
+                                }}>Forgot password?</h5> */}
                         </div>
-                        <div
+                        {/* <div
                             style={{
                                 display: 'flex',
                                 justifyContent: 'center',
@@ -349,7 +348,7 @@ const Login = (props) => {
                                 src={GoogleLogo}
                                 alt="google-logo"
                             />
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             </div>

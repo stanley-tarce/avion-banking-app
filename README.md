@@ -37,7 +37,14 @@ To create the frontend app, we used the following frameworks:
  3. React Router
 
 ### Snapshots 
-
+<p align="center">
+  <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20SignIn.jpeg" width="900" alt="Picture1">
+  <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20Main.jpeg" width="900" alt="Picture2">
+  <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20CreateUser.jpeg" width="900" alt="Picture3">
+ <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20Deposit.jpeg" width="900" alt="Picture3">
+ <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20Withdraw.jpeg" width="900" alt="Picture3">
+ <img src="./banking-app/Pictures/Avion%20Bank/Avion%20Banking%20Transfer.jpeg" width="900" alt="Picture3">
+</p>
 
 
 ### Installation 

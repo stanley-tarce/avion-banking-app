@@ -13,8 +13,8 @@ Avion Banking React App  is the frontend website for the Avion Banking App.
  2. !!Google Sign in is disabled in the meantime
 
  
-### Live/Demo
-Please use this [link](https://avion-banking-app.vercel.app/signin) to access the app
+### Live/Demo (Updated Version)
+Please use this [link](https://avion-banking-app.vercel.app/signin) to access the app 
 
 ### Credentials
 Since it only has one account, use this to access the app: 
